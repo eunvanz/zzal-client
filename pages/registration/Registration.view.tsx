@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import { Container, CssBaseline, Box } from "@mui/material";
 
 export interface RegistrationProps {}
