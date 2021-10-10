@@ -1,13 +1,5 @@
 import { useCallback, useState } from "react";
-import {
-  Box,
-  Slider,
-  Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Box, Slider, Typography, FormControl, Select, MenuItem } from "@mui/material";
 import { debounce } from "lodash-es";
 import Cropper, { CropperProps } from "react-easy-crop";
 import { Area } from "react-easy-crop/types";
@@ -16,9 +8,10 @@ import getCroppedImg from "~/helpers/imageHelpers";
 export interface ImageCropProps extends Pick<CropperProps, "image"> {
   image: string;
   onChange: (image: string) => void;
+  height?: number;
 }
 
-const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange }) => {
+const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -35,12 +28,13 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange }) => {
   return (
     <Box
       sx={{
-        display: "relative",
+        position: "relative",
+        height,
       }}
     >
       <Box
         sx={{
-          display: "absolute",
+          position: "absolute",
           top: 0,
           left: 0,
           right: 0,
