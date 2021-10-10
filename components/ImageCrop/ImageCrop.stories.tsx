@@ -6,14 +6,14 @@ export default {
   title: "Components/ImageCrop",
   component: ImageCrop,
   argTypes: {
-    onChangeCrop: {
-      action: "onChangeCrop",
+    onChange: {
+      action: "onChange",
     },
   },
   args: {
     image:
       "https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000",
-    aspect: 4 / 3,
+    aspect: 2 / 1,
   },
 } as ComponentMeta<typeof ImageCrop>;
 
