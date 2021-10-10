@@ -101,6 +101,9 @@ const FriendChat: React.FC<ChatProps> = ({ text, name, isFirst }) => {
         sx={{
           borderRadius: "50%",
           backgroundColor: "#90ADC6",
+          backgroundImage:
+            "url(https://avatars.githubusercontent.com/u/17351661?s=40&v=4)",
+          backgroundSize: "cover",
           flexShrink: 1,
           width: 32,
           height: 32,
