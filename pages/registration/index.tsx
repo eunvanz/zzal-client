@@ -9,8 +9,8 @@ const RegistrationPage: React.FC<void> = () => {
     <>
       <Head>
         <title></title>
-        <Registration {...props} />;
       </Head>
+      <Registration {...props} />;
     </>
   );
 };
