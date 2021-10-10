@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Box,
   FormControl,
@@ -38,7 +38,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     formState,
   } = useForm<RegistrationFormValues>({
     mode: "onChange",
+    defaultValues: {
+      title: "",
+      path: "",
+      thumbnail: "",
+      description: "",
+    },
   });
+
+  const [selectAndCropKey, setSelectAndCropKey] = useState(0);
 
   const { path, title, description, thumbnail } = watch() as RegistrationFormValues;
 
@@ -63,6 +71,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       thumbnail,
     });
   }, [description, onChangeForm, path, thumbnail, title]);
+
+  const handleOnReset = useCallback(() => {
+    reset();
+    setSelectAndCropKey((key) => ++key);
+  }, [reset]);
 
   return (
     <Box
@@ -109,7 +122,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-          <SelectAndCrop onSettleImage={handleOnSettleImage} />
+          <SelectAndCrop key={selectAndCropKey} onSettleImage={handleOnSettleImage} />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="title">Title</InputLabel>
@@ -148,7 +161,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           }}
         >
           <Stack direction="row" spacing={1}>
-            <Button onClick={() => reset()}>Reset</Button>
+            <Button onClick={handleOnReset}>Reset</Button>
             <Button onClick={handleOnSubmit} variant="contained">
               Submit
             </Button>

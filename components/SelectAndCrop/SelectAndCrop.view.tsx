@@ -71,6 +71,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage }) => {
               alt="thumbnail"
               style={{
                 maxHeight: 400,
+                maxWidth: "100%",
               }}
             />
           </Box>
