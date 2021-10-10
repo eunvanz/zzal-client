@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { AnimatePresence, motion } from "framer-motion";
 import Preview, { PreviewProps } from "../Preview";
 
@@ -8,6 +9,8 @@ export interface ExampleProps extends PreviewProps {
 }
 
 const Example: React.FC<ExampleProps> = ({ path, ...previewProps }) => {
+  const theme = useTheme();
+
   const [step, setStep] = useState(0);
   const timerRef = useRef<number | null>(null);
 
@@ -37,7 +40,7 @@ const Example: React.FC<ExampleProps> = ({ path, ...previewProps }) => {
       sx={{
         borderRadius: 3,
         p: 2,
-        backgroundColor: "#333652",
+        backgroundColor: theme.palette.primary.main,
         display: "flex",
         flexDirection: "column",
       }}
@@ -140,6 +143,8 @@ const FriendChat: React.FC<ChatProps> = ({ text, name, isFirst }) => {
 };
 
 const MyChat: React.FC<ChatProps> = ({ text, children, isLink, isFirst }) => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -153,7 +158,7 @@ const MyChat: React.FC<ChatProps> = ({ text, children, isLink, isFirst }) => {
           sx={{
             borderRadius: 3,
             borderTopRightRadius: isFirst ? 4 : 12,
-            backgroundColor: "#FAD02C",
+            backgroundColor: theme.palette.secondary.light,
             p: 1.5,
             color: isLink ? "#2E8BC0" : undefined,
           }}

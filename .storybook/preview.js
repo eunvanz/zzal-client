@@ -1,4 +1,6 @@
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "~/helpers/themeHelpers"
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -16,5 +18,12 @@ export const parameters = {
     viewports: INITIAL_VIEWPORTS,
   },
   layout: "fullscreen",
-  decorators: [],
 };
+
+export const decorators = [
+  (Story) => (
+    <ThemeProvider theme={theme}>
+      <Story />
+    </ThemeProvider>
+  )
+]
