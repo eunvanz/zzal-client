@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Box, Slider, Typography, FormControl, Select, MenuItem } from "@mui/material";
 import { debounce } from "lodash-es";
 import Cropper, { CropperProps } from "react-easy-crop";
@@ -14,15 +14,30 @@ export interface ImageCropProps extends Pick<CropperProps, "image"> {
 const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+  const rotationRef = useRef<number>(0);
   const [rotation, setRotation] = useState(0);
   const [aspect, setAspect] = useState(16 / 9);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>();
 
   const onCropComplete = useCallback(
     debounce(async (_, croppedAreaPixels: Area) => {
-      const croppedImg = await getCroppedImg(image, croppedAreaPixels);
+      setCroppedAreaPixels(croppedAreaPixels);
+      const croppedImg = await getCroppedImg(
+        image,
+        croppedAreaPixels,
+        rotationRef.current,
+      );
       onChange(croppedImg);
     }, 1000),
     [image, onChange],
+  );
+
+  const onRotationChange = useCallback(
+    debounce(async (rotation) => {
+      const croppedImg = await getCroppedImg(image, croppedAreaPixels!, rotation);
+      onChange(croppedImg);
+    }, 1000),
+    [image, onChange, croppedAreaPixels],
   );
 
   return (
@@ -59,7 +74,11 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) 
             onCropChange={setCrop}
             onCropComplete={onCropComplete}
             onZoomChange={setZoom}
-            onRotationChange={setRotation}
+            onRotationChange={(v) => {
+              setRotation(v);
+              rotationRef.current = v;
+              onRotationChange(v);
+            }}
           />
         </Box>
         <Box
@@ -181,7 +200,11 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) 
                 step={1}
                 aria-labelledby="rotation"
                 valueLabelDisplay="auto"
-                onChange={(_, rotation) => setRotation(rotation as number)}
+                onChange={(_, rotation) => {
+                  setRotation(rotation as number);
+                  rotationRef.current = rotation as number;
+                  onRotationChange(rotation as number);
+                }}
                 size="small"
               />
             </Box>

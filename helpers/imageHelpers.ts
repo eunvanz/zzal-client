@@ -16,6 +16,10 @@ const createImage = (url: string) =>
     image.src = url;
   });
 
+const getRadianAngle = (degreeValue: number) => {
+  return (degreeValue * Math.PI) / 180;
+};
+
 /**
  * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
  * @param {File} image - Image File url
@@ -25,6 +29,7 @@ const createImage = (url: string) =>
 export default async function getCroppedImg(
   imageSrc: string,
   pixelCrop: { x: number; y: number; width: number; height: number },
+  rotation: number,
 ) {
   const image = await createImage(imageSrc);
   const canvas = document.createElement("canvas");
@@ -40,6 +45,7 @@ export default async function getCroppedImg(
 
   // translate canvas context to a central location on image to allow rotating around the center.
   ctx!.translate(safeArea / 2, safeArea / 2);
+  ctx!.rotate(getRadianAngle(rotation));
   ctx!.translate(-safeArea / 2, -safeArea / 2);
 
   // draw rotated image and store data.
