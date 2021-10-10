@@ -28,30 +28,22 @@ const FileDrop: React.FC<FileDropProps> = ({ maxFiles = 0, onChangeFiles }) => {
         justifyContent: "center",
         bgcolor: "grey.50",
         borderRadius: 1,
-        border: "2px dashed",
+        border: "1px dashed",
         borderColor: "text.disabled",
         transition: "background 500ms",
+        color: "text.secondary",
         ":hover": {
           bgcolor: "grey.200",
+          borderColor: "primary.main",
+          color: "primary.main",
         },
       }}
       {...getRootProps()}
     >
-      <Box
-        sx={{
-          color: "text.secondary",
-        }}
-      >
+      <Box>
         <FileUpload />
       </Box>
-      <Box
-        sx={{
-          color: "text.secondary",
-          fontWeight: "bold",
-        }}
-      >
-        Drag and drop some files here, or click to select files
-      </Box>
+      <Box>Drag and drop some files here, or click to select files</Box>
       <input {...getInputProps()} />
     </Box>
   );
