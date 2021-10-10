@@ -19,7 +19,7 @@ const Example: React.FC<ExampleProps> = ({ path, ...previewProps }) => {
       if (currentStep === totalSteps) {
         timerRef.current && clearInterval(timerRef.current);
       }
-    }, 1000);
+    }, 500);
     return () => {
       timerRef.current && clearInterval(timerRef.current);
     };

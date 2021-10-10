@@ -1,16 +1,14 @@
 import { Box } from "@mui/material";
 
+const DEFAULT_TITLE = "zzal.me - share your memes";
+
 export interface PreviewProps {
   thumbnail?: string;
   title?: string;
   description?: string;
 }
 
-const Preview: React.FC<PreviewProps> = ({
-  thumbnail,
-  title = "zzal.me - share your memes",
-  description,
-}) => {
+const Preview: React.FC<PreviewProps> = ({ thumbnail, title, description }) => {
   return (
     <Box
       sx={{
@@ -44,28 +42,20 @@ const Preview: React.FC<PreviewProps> = ({
         <Box
           sx={{
             color: "text.primary",
-            mb: 0.5,
+            mb: description ? 0.5 : 0,
           }}
         >
-          {title}
+          {title || DEFAULT_TITLE}
         </Box>
         {description && (
           <Box
             sx={{
               color: "text.secondary",
-              mb: 0.5,
             }}
           >
             {description}
           </Box>
         )}
-        <Box
-          sx={{
-            color: "text.disabled",
-          }}
-        >
-          zzal.me
-        </Box>
       </Box>
     </Box>
   );

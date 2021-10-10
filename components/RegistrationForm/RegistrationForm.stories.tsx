@@ -5,6 +5,11 @@ import RegistrationForm from "./RegistrationForm.view";
 export default {
   title: "Components/RegistrationForm",
   component: RegistrationForm,
+  argTypes: {
+    onChangeForm: {
+      action: "onChangeForm",
+    },
+  },
   args: {},
 } as ComponentMeta<typeof RegistrationForm>;
 

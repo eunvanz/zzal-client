@@ -13,9 +13,11 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage }) => {
   const [image, setImage] = useState<string | null>(null);
 
   const handleOnChangeFiles = useCallback(async (files: File[]) => {
-    const base64Image = await convertFileToBase64(files[0]);
-    setImage(base64Image as string);
-    setStep("crop");
+    if (files[0]) {
+      const base64Image = await convertFileToBase64(files[0]);
+      setImage(base64Image as string);
+      setStep("crop");
+    }
   }, []);
 
   const handleOnChangeCrop = useCallback(
@@ -34,7 +36,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage }) => {
   return (
     <>
       {step === "select" ? (
-        <FileDrop onChangeFiles={handleOnChangeFiles} />
+        <FileDrop onChangeFiles={handleOnChangeFiles} height={200} />
       ) : step === "crop" ? (
         <>
           <ImageCrop image={image!} onChange={handleOnChangeCrop} height={400} />
@@ -46,19 +48,31 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage }) => {
               justifyContent: "end",
             }}
           >
-            <Button variant="outlined" onClick={() => setStep("select")}>
+            <Button variant="outlined" size="small" onClick={() => setStep("select")}>
               Select another image
             </Button>
-            <Button variant="outlined" onClick={() => setStep("notCrop")}>
+            <Button variant="outlined" size="small" onClick={() => setStep("notCrop")}>
               Not crop
             </Button>
           </Stack>
         </>
       ) : step === "notCrop" ? (
         <>
-          <Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              padding: 2,
+            }}
+          >
             {/* eslint-disable-next-line */}
-            <img src={image!} alt="thumbnail" />
+            <img
+              src={image!}
+              alt="thumbnail"
+              style={{
+                maxHeight: 400,
+              }}
+            />
           </Box>
           <Stack
             direction="row"
@@ -68,10 +82,10 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage }) => {
               justifyContent: "end",
             }}
           >
-            <Button variant="outlined" onClick={() => setStep("select")}>
+            <Button variant="outlined" size="small" onClick={() => setStep("select")}>
               Select another image
             </Button>
-            <Button variant="outlined" onClick={() => setStep("crop")}>
+            <Button variant="outlined" size="small" onClick={() => setStep("crop")}>
               Crop
             </Button>
           </Stack>

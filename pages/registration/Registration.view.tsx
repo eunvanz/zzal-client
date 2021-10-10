@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Container, Box } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import Example from "~/components/Example";
-import RegistrationForm from "~/components/RegistrationForm/RegistrationForm.view";
+import RegistrationForm, { RegistrationFormValues } from "~/components/RegistrationForm";
 
 export interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = ({}) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [formValues, setFormValues] = useState<Partial<RegistrationFormValues>>({});
 
   useEffect(() => {
     setTimeout(() => {
       setIsFormVisible(true);
-    }, 5000);
+    }, 2000);
   }, []);
+
+  const handleOnChangeForm = useCallback((values: RegistrationFormValues) => {
+    setFormValues(values);
+  }, []);
+
+  const handleOnSubmit = useCallback(() => {}, []);
 
   return (
     <>
@@ -32,13 +39,14 @@ const Registration: React.FC<RegistrationProps> = ({}) => {
               width: "100%",
             }}
           >
-            <Example />
+            <Example {...formValues} />
           </Box>
           <Box
             sx={{
               height: "100%",
               transition: "width 500ms",
               width: "100%",
+              p: 2,
             }}
           >
             <AnimatePresence>
@@ -52,7 +60,10 @@ const Registration: React.FC<RegistrationProps> = ({}) => {
                   }}
                   transition={{ delay: 1 }}
                 >
-                  <RegistrationForm />
+                  <RegistrationForm
+                    onChangeForm={handleOnChangeForm}
+                    onSubmit={handleOnSubmit}
+                  />
                 </motion.div>
               )}
             </AnimatePresence>

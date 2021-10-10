@@ -6,9 +6,14 @@ import { useDropzone } from "react-dropzone";
 export interface FileDropProps {
   maxFiles?: number;
   onChangeFiles: (files: File[]) => void;
+  height?: number;
 }
 
-const FileDrop: React.FC<FileDropProps> = ({ maxFiles = 0, onChangeFiles }) => {
+const FileDrop: React.FC<FileDropProps> = ({
+  maxFiles = 0,
+  onChangeFiles,
+  height = 500,
+}) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     maxFiles,
@@ -37,6 +42,7 @@ const FileDrop: React.FC<FileDropProps> = ({ maxFiles = 0, onChangeFiles }) => {
           borderColor: "primary.main",
           color: "primary.main",
         },
+        height,
       }}
       {...getRootProps()}
     >

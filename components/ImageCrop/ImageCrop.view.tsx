@@ -94,7 +94,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) 
             </Box>
             <Box
               sx={{
-                px: 2,
+                px: 1,
                 flexGrow: 1,
               }}
             >
@@ -106,9 +106,10 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) 
                   onChange={(e) => setAspect(e.target.value as number)}
                   label="Aspect"
                 >
-                  <MenuItem value={16 / 9}>16:9</MenuItem>
-                  <MenuItem value={4 / 3}>4:3</MenuItem>
                   <MenuItem value={1}>1:1</MenuItem>
+                  <MenuItem value={4 / 3}>4:3</MenuItem>
+                  <MenuItem value={16 / 9}>16:9</MenuItem>
+                  <MenuItem value={2 / 1}>2:1</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -145,6 +146,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) 
                 aria-labelledby="zoom"
                 valueLabelDisplay="auto"
                 onChange={(_, zoom) => setZoom(zoom as number)}
+                size="small"
               />
             </Box>
           </Box>
@@ -180,6 +182,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) 
                 aria-labelledby="rotation"
                 valueLabelDisplay="auto"
                 onChange={(_, rotation) => setRotation(rotation as number)}
+                size="small"
               />
             </Box>
           </Box>

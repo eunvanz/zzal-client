@@ -1,3 +1,4 @@
+import { useCallback, useEffect } from "react";
 import {
   Box,
   FormControl,
@@ -5,39 +6,155 @@ import {
   Input,
   InputAdornment,
   Typography,
+  Stack,
+  Button,
+  FormHelperText,
 } from "@mui/material";
-import FileDrop from "../FileDrop";
+import { Controller, useForm } from "react-hook-form";
+import SelectAndCrop from "../SelectAndCrop";
 
-export interface RegistrationFormProps {}
+export interface RegistrationFormValues {
+  title: string;
+  path: string;
+  thumbnail: string;
+  description: string;
+}
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({}) => {
+export interface RegistrationFormProps {
+  onChangeForm: (values: RegistrationFormValues) => void;
+  onSubmit: (values: RegistrationFormValues) => void;
+}
+
+const RegistrationForm: React.FC<RegistrationFormProps> = ({
+  onChangeForm,
+  onSubmit,
+}) => {
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState,
+  } = useForm<RegistrationFormValues>({
+    mode: "onChange",
+  });
+
+  const { path, title, description, thumbnail } = watch() as RegistrationFormValues;
+
+  const handleOnSettleImage = useCallback(
+    (image: string) => {
+      setValue("thumbnail", image);
+    },
+    [setValue],
+  );
+
+  const handleOnSubmit = useCallback(async () => {
+    await handleSubmit((values) => {
+      onSubmit(values);
+    })();
+  }, [handleSubmit, onSubmit]);
+
+  useEffect(() => {
+    onChangeForm({
+      path,
+      title,
+      description,
+      thumbnail,
+    });
+  }, [description, onChangeForm, path, thumbnail, title]);
+
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        pr: 2,
+        p: 2,
       }}
     >
-      <Typography variant="h6">Which meme do you like to show?</Typography>
-      <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-        <InputLabel htmlFor="path">Path</InputLabel>
-        <Input
-          id="path"
-          startAdornment={<InputAdornment position="start">zzal.me/</InputAdornment>}
-        />
-      </FormControl>
-      <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-        <FileDrop onChangeFiles={() => {}} />
-      </FormControl>
-      <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-        <InputLabel htmlFor="title">Title</InputLabel>
-        <Input id="title" />
-      </FormControl>
-      <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-        <InputLabel htmlFor="description">Description</InputLabel>
-        <Input id="description" />
-      </FormControl>
+      <Stack direction="column" spacing={2}>
+        <Typography variant="h6">Which meme do you like to show?</Typography>
+        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+          <InputLabel htmlFor="path">Path *</InputLabel>
+          <Controller
+            name="path"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "Path is required",
+              minLength: 1,
+              maxLength: { value: 100, message: "Path is too long" },
+              pattern: {
+                value: /\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+                message: "Invalid character is included",
+              },
+              validate: {
+                hasSpace: (v: string) => {
+                  return !v.includes(" ") || "Space is not allowed";
+                },
+              },
+            }}
+            render={({ field }) => (
+              <>
+                <Input
+                  {...field}
+                  startAdornment={
+                    <InputAdornment position="start">zzal.me/</InputAdornment>
+                  }
+                  error={!!formState.errors.path}
+                />
+                <FormHelperText error>{formState.errors.path?.message}</FormHelperText>
+              </>
+            )}
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+          <SelectAndCrop onSettleImage={handleOnSettleImage} />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+          <InputLabel htmlFor="title">Title</InputLabel>
+          <Controller
+            name="title"
+            control={control}
+            defaultValue=""
+            rules={{
+              maxLength: {
+                value: 100,
+                message: "Title is too long",
+              },
+            }}
+            render={({ field }) => <Input {...field} />}
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+          <InputLabel htmlFor="description">Description</InputLabel>
+          <Controller
+            name="description"
+            control={control}
+            defaultValue=""
+            rules={{
+              maxLength: {
+                value: 255,
+                message: "Description is too long",
+              },
+            }}
+            render={({ field }) => <Input {...field} />}
+          />
+        </FormControl>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "end",
+          }}
+        >
+          <Stack direction="row" spacing={1}>
+            <Button onClick={() => reset()}>Reset</Button>
+            <Button onClick={handleOnSubmit} variant="contained">
+              Submit
+            </Button>
+          </Stack>
+        </Box>
+      </Stack>
     </Box>
   );
 };
