@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 export interface PreviewProps {
   thumbnail?: string;
@@ -14,7 +14,7 @@ const Preview: React.FC<PreviewProps> = ({
   return (
     <Box
       sx={{
-        borderRadius: 10,
+        borderRadius: 3,
         bgcolor: "white",
         display: "flex",
         flexDirection: "column",
@@ -24,8 +24,8 @@ const Preview: React.FC<PreviewProps> = ({
         <Box
           sx={{
             "& img": {
-              borderTopRightRadius: 10,
-              borderTopLeftRadius: 10,
+              borderTopRightRadius: 12,
+              borderTopLeftRadius: 12,
               width: "100%",
             },
           }}
@@ -38,13 +38,12 @@ const Preview: React.FC<PreviewProps> = ({
         sx={{
           display: "flex",
           flexDirection: "column",
-          p: 1,
+          p: 1.5,
         }}
       >
         <Box
           sx={{
             color: "text.primary",
-            fontSize: "small",
             mb: 0.5,
           }}
         >
@@ -54,7 +53,6 @@ const Preview: React.FC<PreviewProps> = ({
           <Box
             sx={{
               color: "text.secondary",
-              fontSize: "small",
               mb: 0.5,
             }}
           >
@@ -64,7 +62,6 @@ const Preview: React.FC<PreviewProps> = ({
         <Box
           sx={{
             color: "text.disabled",
-            fontSize: "small",
           }}
         >
           zzal.me
