@@ -15,10 +15,12 @@
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
+    "lodash-es": "^4.17.21",
     "next": "11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-dropzone": "^11.4.2",
+    "react-easy-crop": "^3.5.3",
     "react-hook-form": "^7.17.2"
   },
   "devDependencies": {
@@ -28,6 +30,7 @@
     "@storybook/addon-links": "^6.3.10",
     "@storybook/react": "^6.3.10",
     "@trivago/prettier-plugin-sort-imports": "^2.0.4",
+    "@types/lodash-es": "^4.17.5",
     "@types/react": "17.0.26",
     "babel-loader": "^8.2.2",
     "eslint": "7.32.0",
