@@ -34,9 +34,9 @@ const Registration: React.FC<RegistrationProps> = ({}) => {
         >
           <Box
             sx={{
-              p: 2,
               transition: "width 500ms",
               width: "100%",
+              pt: 2,
             }}
           >
             <Example {...formValues} />
@@ -46,7 +46,6 @@ const Registration: React.FC<RegistrationProps> = ({}) => {
               height: "100%",
               transition: "width 500ms",
               width: "100%",
-              p: 2,
             }}
           >
             <AnimatePresence>
