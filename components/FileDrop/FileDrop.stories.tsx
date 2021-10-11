@@ -20,3 +20,7 @@ export const Default = createStoryComponent(Template);
 export const SingleFile = createStoryComponent(Template, {
   maxFiles: 1,
 });
+
+export const HasError = createStoryComponent(Template, {
+  errorMessage: "Error message",
+});

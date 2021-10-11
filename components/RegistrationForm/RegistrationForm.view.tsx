@@ -36,6 +36,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     setValue,
     reset,
     formState,
+    setError,
+    clearErrors,
   } = useForm<RegistrationFormValues>({
     mode: "onChange",
     defaultValues: {
@@ -53,15 +55,20 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const handleOnSettleImage = useCallback(
     (image: string) => {
       setValue("thumbnail", image);
+      clearErrors("thumbnail");
     },
-    [setValue],
+    [clearErrors, setValue],
   );
 
   const handleOnSubmit = useCallback(async () => {
     await handleSubmit((values) => {
-      onSubmit(values);
+      if (values.thumbnail) {
+        onSubmit(values);
+      } else {
+        setError("thumbnail", { message: "Image is required" });
+      }
     })();
-  }, [handleSubmit, onSubmit]);
+  }, [handleSubmit, onSubmit, setError]);
 
   useEffect(() => {
     onChangeForm({
@@ -86,7 +93,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       }}
     >
       <Stack direction="column" spacing={2}>
-        <Typography variant="h6">Which meme do you like to show?</Typography>
+        <Typography variant="h6">What meme do you like to show?</Typography>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="path">Path *</InputLabel>
           <Controller
@@ -161,8 +168,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           }}
         >
           <Stack direction="row" spacing={1}>
-            <Button onClick={handleOnReset}>Reset</Button>
-            <Button onClick={handleOnSubmit} variant="contained">
+            <Button onClick={handleOnReset} size="large">
+              Reset
+            </Button>
+            <Button onClick={handleOnSubmit} variant="contained" size="large">
               Submit
             </Button>
           </Stack>
