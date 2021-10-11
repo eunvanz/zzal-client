@@ -57,7 +57,6 @@ const Registration: React.FC<RegistrationProps> = ({}) => {
                   animate={{
                     opacity: 1,
                   }}
-                  transition={{ delay: 1 }}
                 >
                   <RegistrationForm
                     onChangeForm={handleOnChangeForm}

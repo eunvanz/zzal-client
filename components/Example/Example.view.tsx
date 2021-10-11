@@ -11,30 +11,6 @@ export interface ExampleProps extends PreviewProps {
 const Example: React.FC<ExampleProps> = ({ path, ...previewProps }) => {
   const theme = useTheme();
 
-  const [step, setStep] = useState(0);
-  const timerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const totalSteps = 5;
-    let currentStep = 0;
-    timerRef.current = window.setInterval(() => {
-      setStep(() => ++currentStep);
-      if (currentStep === totalSteps) {
-        timerRef.current && clearInterval(timerRef.current);
-      }
-    }, 500);
-    return () => {
-      timerRef.current && clearInterval(timerRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (path) {
-      timerRef.current && clearInterval(timerRef.current);
-      setStep(6);
-    }
-  }, [path]);
-
   return (
     <Box
       sx={{
@@ -45,27 +21,20 @@ const Example: React.FC<ExampleProps> = ({ path, ...previewProps }) => {
         flexDirection: "column",
       }}
     >
-      <Animate currentStep={step} triggerStep={1}>
+      <Animate delay={0}>
         <FriendChat name="Benjamin" text="Hey man" isFirst />
       </Animate>
-      <Animate currentStep={step} triggerStep={2}>
-        <MyChat text="What up bro" isFirst />
+      <Animate delay={!path ? 0.5 : 0}>
+        <FriendChat name="Benjamin" text="I'm so bored. Don't you have any fun memes?" />
       </Animate>
-      <Animate currentStep={step} triggerStep={3}>
-        <FriendChat
-          name="Benjamin"
-          text="I'm so bored. Don't you have any fun memes?"
-          isFirst
-        />
+      <Animate delay={!path ? 1 : 0}>
+        <MyChat text="I just got one thing you'll love" isFirst />
       </Animate>
-      <Animate currentStep={step} triggerStep={4}>
-        <MyChat text="Oh I just got one thing you'll love" isFirst />
-      </Animate>
-      <Animate currentStep={step} triggerStep={5}>
-        <MyChat text="Just wait for a second" />
+      <Animate delay={!path ? 1.5 : 0}>
+        <MyChat text="Wait for a second" />
       </Animate>
       {path && (
-        <Animate currentStep={step} triggerStep={6}>
+        <Animate delay={0}>
           <MyChat text={`zzal.me/${path}`} isLink />
           <MyChat>
             <Box
@@ -101,17 +70,26 @@ const FriendChat: React.FC<ChatProps> = ({ text, name, isFirst }) => {
       }}
     >
       <Box
-        sx={{
-          borderRadius: "50%",
-          backgroundColor: "#90ADC6",
-          backgroundImage:
-            "url(https://avatars.githubusercontent.com/u/17351661?s=40&v=4)",
-          backgroundSize: "cover",
-          flexShrink: 1,
-          width: 32,
-          height: 32,
-          mr: 1,
-        }}
+        sx={
+          isFirst
+            ? {
+                borderRadius: "50%",
+                backgroundColor: "#90ADC6",
+                backgroundImage:
+                  "url(https://avatars.githubusercontent.com/u/17351661?s=40&v=4)",
+                backgroundSize: "cover",
+                flexShrink: 1,
+                width: 32,
+                height: 32,
+                mr: 1,
+              }
+            : {
+                flexShrink: 1,
+                width: 32,
+                height: 32,
+                mr: 1,
+              }
+        }
       />
       <Box
         sx={{
@@ -119,14 +97,16 @@ const FriendChat: React.FC<ChatProps> = ({ text, name, isFirst }) => {
           flexDirection: "column",
         }}
       >
-        <Box
-          sx={{
-            color: "white",
-            mb: 0.5,
-          }}
-        >
-          {name}
-        </Box>
+        {isFirst && (
+          <Box
+            sx={{
+              color: "white",
+              mb: 0.5,
+            }}
+          >
+            {name}
+          </Box>
+        )}
         <Box
           sx={{
             borderRadius: 3,
@@ -171,27 +151,25 @@ const MyChat: React.FC<ChatProps> = ({ text, children, isLink, isFirst }) => {
 };
 
 interface AnimateProps {
-  currentStep: number;
-  triggerStep: number;
+  delay: number;
 }
 
-const Animate: React.FC<AnimateProps> = ({ currentStep, triggerStep, children }) => {
+const Animate: React.FC<AnimateProps> = ({ delay, children }) => {
   return (
     <AnimatePresence>
-      {currentStep >= triggerStep && (
-        <motion.div
-          initial={{
-            opacity: 0,
-            height: 0,
-          }}
-          animate={{
-            opacity: 1,
-            height: "inherit",
-          }}
-        >
-          {children}
-        </motion.div>
-      )}
+      <motion.div
+        initial={{
+          opacity: 0,
+          height: 0,
+        }}
+        animate={{
+          opacity: 1,
+          height: "inherit",
+        }}
+        transition={{ delay }}
+      >
+        {children}
+      </motion.div>
     </AnimatePresence>
   );
 };
