@@ -2,7 +2,7 @@ import { Content } from "~/types";
 import requester from "./requester";
 
 const getContent = async (path: string) => {
-  const { data } = await requester.get<Content>("/content", {
+  const { data } = await requester.get<Content>("/contents", {
     params: {
       path,
     },
@@ -24,7 +24,7 @@ const postContent = async ({ path, title, description, images }: CreateContentDt
   images.forEach((image) => {
     formData.append("images", image);
   });
-  await requester.post("/content", formData, {
+  await requester.post("/contents", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

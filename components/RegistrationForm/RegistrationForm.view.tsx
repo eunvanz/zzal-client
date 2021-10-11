@@ -93,7 +93,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       }}
     >
       <Stack direction="column" spacing={2}>
-        <Typography variant="h6">What meme do you like to show?</Typography>
+        <Typography variant="h6">What meme do you like to share?</Typography>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="path">Path *</InputLabel>
           <Controller

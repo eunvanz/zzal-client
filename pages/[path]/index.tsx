@@ -9,7 +9,7 @@ export interface ContentDetailPageProps {
   content: Content;
 }
 
-const ContentDetailPage: React.FC<ContentDetailPageProps> = ({ content }) => {
+export const CommonContentDetail = ({ content }: ContentDetailPageProps) => {
   return (
     <>
       <Head>
@@ -29,8 +29,13 @@ const ContentDetailPage: React.FC<ContentDetailPageProps> = ({ content }) => {
   );
 };
 
+export const ContentDetailPage: React.FC<ContentDetailPageProps> = ({ content }) => {
+  return <CommonContentDetail content={content} />;
+};
+
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { params } = context;
+
   const { path } = params as { path: string };
 
   const content = await api.getContent(path);

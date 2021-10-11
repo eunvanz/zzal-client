@@ -1,5 +1,4 @@
 import { Container, Box, Typography } from "@mui/material";
-import Image from "next/image";
 import { Content } from "~/types";
 
 export interface ContentDetailProps {
@@ -28,11 +27,8 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ content }) => {
             maxWidth: "100%",
           }}
         >
-          <Image
-            src={content.images[0].url}
-            layout="fill"
-            alt={content.title || "untitled"}
-          />
+          {/* eslint-disable-next-line */}
+          <img src={content.images[0].url} alt={content.title || "untitled"} />
         </Box>
         <Typography variant="h5" sx={{ my: 1 }}>
           {content.title}

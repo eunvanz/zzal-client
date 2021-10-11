@@ -16,7 +16,7 @@ module.exports = (phase) => {
     env,
     reactStrictMode: true,
     images: {
-      domains: ["amazonaws.com"],
+      domains: ["s3.ap-northeast-2.amazonaws.com"],
       minimumCacheTTL: 9999999999,
     },
   };
