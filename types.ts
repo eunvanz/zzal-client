@@ -17,4 +17,7 @@ export interface Image extends TimeRecord {
   url: string;
   seq: number;
   contentId: number;
+  type: string;
+  width: number;
+  height: number;
 }

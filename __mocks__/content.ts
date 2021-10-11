@@ -17,6 +17,9 @@ const content: Content = {
         "https://s3.ap-northeast-2.amazonaws.com/files.zzal.me/images/test/test_1633962045140.jpeg",
       seq: 1,
       contentId: 2,
+      type: "image/jpeg",
+      width: 269,
+      height: 187,
     },
   ],
 };

@@ -16,6 +16,7 @@
     "@fontsource/roboto": "^4.5.1",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
+    "axios": "^0.22.0",
     "framer-motion": "^4.1.17",
     "lodash-es": "^4.17.21",
     "next": "11.1.2",
@@ -23,7 +24,8 @@
     "react-dom": "17.0.2",
     "react-dropzone": "^11.4.2",
     "react-easy-crop": "^3.5.3",
-    "react-hook-form": "^7.17.2"
+    "react-hook-form": "^7.17.2",
+    "react-query": "^3.26.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
