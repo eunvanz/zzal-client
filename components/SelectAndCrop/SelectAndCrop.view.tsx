@@ -6,9 +6,10 @@ import ImageCrop from "../ImageCrop";
 
 export interface SelectAndCropProps {
   onSettleImage: (image: string) => void;
+  errorMessage?: string;
 }
 
-const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage }) => {
+const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage, errorMessage }) => {
   const [step, setStep] = useState<"select" | "crop" | "notCrop">("select");
   const [image, setImage] = useState<string | null>(null);
 
@@ -36,7 +37,11 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage }) => {
   return (
     <>
       {step === "select" ? (
-        <FileDrop onChangeFiles={handleOnChangeFiles} height={200} />
+        <FileDrop
+          onChangeFiles={handleOnChangeFiles}
+          height={200}
+          errorMessage={errorMessage}
+        />
       ) : step === "crop" ? (
         <>
           <ImageCrop image={image!} onChange={handleOnChangeCrop} height={400} />

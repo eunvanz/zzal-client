@@ -129,7 +129,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-          <SelectAndCrop key={selectAndCropKey} onSettleImage={handleOnSettleImage} />
+          <SelectAndCrop
+            key={selectAndCropKey}
+            onSettleImage={handleOnSettleImage}
+            errorMessage={formState.errors.thumbnail?.message}
+          />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="title">Title</InputLabel>

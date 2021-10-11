@@ -56,7 +56,7 @@ const FileDrop: React.FC<FileDropProps> = ({
         <input {...getInputProps()} />
       </Box>
       {errorMessage && (
-        <Typography variant="caption" sx={{ color: "error.main" }}>
+        <Typography variant="caption" sx={{ color: "error.main", mt: 0.5 }}>
           {errorMessage}
         </Typography>
       )}
