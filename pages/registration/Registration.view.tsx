@@ -23,52 +23,50 @@ const Registration: React.FC<RegistrationProps> = ({}) => {
   const handleOnSubmit = useCallback(() => {}, []);
 
   return (
-    <>
-      <Container maxWidth="sm">
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            transition: "width 500ms",
+            width: "100%",
+            pt: 2,
           }}
         >
-          <Box
-            sx={{
-              transition: "width 500ms",
-              width: "100%",
-              pt: 2,
-            }}
-          >
-            <Example {...formValues} />
-          </Box>
-          <Box
-            sx={{
-              height: "100%",
-              transition: "width 500ms",
-              width: "100%",
-            }}
-          >
-            <AnimatePresence>
-              {isFormVisible && (
-                <motion.div
-                  initial={{
-                    opacity: 0,
-                  }}
-                  animate={{
-                    opacity: 1,
-                  }}
-                >
-                  <RegistrationForm
-                    onChangeForm={handleOnChangeForm}
-                    onSubmit={handleOnSubmit}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </Box>
+          <Example {...formValues} />
         </Box>
-      </Container>
-    </>
+        <Box
+          sx={{
+            height: "100%",
+            transition: "width 500ms",
+            width: "100%",
+          }}
+        >
+          <AnimatePresence>
+            {isFormVisible && (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+              >
+                <RegistrationForm
+                  onChangeForm={handleOnChangeForm}
+                  onSubmit={handleOnSubmit}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
