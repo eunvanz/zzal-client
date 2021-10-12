@@ -3,11 +3,16 @@ import { useTheme } from "@mui/material/styles";
 import { AnimatePresence, motion } from "framer-motion";
 import Preview, { PreviewProps } from "../Preview";
 
-export interface ExampleProps extends PreviewProps {
-  path?: string;
+export interface PreviewItem extends PreviewProps {
+  path: string;
 }
 
-const Example: React.FC<ExampleProps> = ({ path, ...previewProps }) => {
+export interface ExampleProps {
+  items?: PreviewItem[];
+  completeCount?: number;
+}
+
+const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
   const theme = useTheme();
 
   return (
@@ -23,18 +28,18 @@ const Example: React.FC<ExampleProps> = ({ path, ...previewProps }) => {
       <Animate delay={0}>
         <FriendChat name="Benjamin" text="Hey man" isFirst />
       </Animate>
-      <Animate delay={!path ? 0.5 : 0}>
+      <Animate delay={!items ? 0.5 : 0}>
         <FriendChat name="Benjamin" text="I'm so bored. Don't you have any fun memes?" />
       </Animate>
-      <Animate delay={!path ? 1 : 0}>
-        <MyChat text="I just got one thing you'll love" isFirst />
+      <Animate delay={!items ? 1 : 0}>
+        <MyChat text="Oh, I just got one thing you'll love" isFirst />
       </Animate>
-      <Animate delay={!path ? 1.5 : 0}>
+      <Animate delay={!items ? 1.5 : 0}>
         <MyChat text="Wait for a second" />
       </Animate>
-      {path && (
+      {items?.[0] && (
         <Animate delay={0}>
-          <MyChat text={`zzal.me/${path}`} isLink />
+          <MyChat text={`zzal.me/${items[0].path}`} isLink />
           <MyChat>
             <Box
               sx={{
@@ -43,12 +48,60 @@ const Example: React.FC<ExampleProps> = ({ path, ...previewProps }) => {
                 minWidth: 250,
               }}
             >
-              <Preview {...previewProps} />
+              <Preview
+                thumbnail={items[0].thumbnail}
+                title={items[0].title}
+                description={items[0].description}
+              />
             </Box>
           </MyChat>
         </Animate>
       )}
+      {completeCount &&
+        Array.from({ length: completeCount }).map((_, index) => (
+          <ExtraChat item={items![index + 1]} key={index} />
+        ))}
     </Box>
+  );
+};
+
+interface ExtraChatProps {
+  item?: PreviewItem;
+}
+
+const ExtraChat: React.FC<ExtraChatProps> = ({ item }) => {
+  return (
+    <>
+      <Animate delay={1}>
+        <FriendChat name="Benjamin" text="loooooooool" isFirst />
+      </Animate>
+      <Animate delay={1.5}>
+        <FriendChat name="Benjamin" text="That's really fun!" />
+      </Animate>
+      <Animate delay={2}>
+        <FriendChat name="Benjamin" text="Don't you have more?" />
+      </Animate>
+      {item && (
+        <Animate delay={0}>
+          <MyChat text={`zzal.me/${item.path}`} isLink />
+          <MyChat>
+            <Box
+              sx={{
+                width: "50%",
+                maxWidth: 350,
+                minWidth: 250,
+              }}
+            >
+              <Preview
+                thumbnail={item.thumbnail}
+                title={item.title}
+                description={item.description}
+              />
+            </Box>
+          </MyChat>
+        </Animate>
+      )}
+    </>
   );
 };
 
