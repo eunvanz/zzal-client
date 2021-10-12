@@ -10,6 +10,8 @@ export interface ContentDetailPageProps {
 }
 
 export const CommonContentDetail = ({ content }: ContentDetailPageProps) => {
+  const image = content.images[0];
+
   return (
     <>
       <Head>
@@ -17,12 +19,12 @@ export const CommonContentDetail = ({ content }: ContentDetailPageProps) => {
         {content.description && (
           <meta property="og:description" content={content.description} />
         )}
-        <meta property="og:image" content={content.images[0].url} />
-        <meta property="og:image:url" content={content.images[0].url} />
-        <meta property="og:image:secure_url" content={content.images[0].url} />
-        <meta property="og:image:type" content={content.images[0].type} />
-        <meta property="og:image:width" content={content.images[0].width.toString()} />
-        <meta property="og:image:height" content={content.images[0].height.toString()} />
+        <meta property="og:image" content={image.url} />
+        <meta property="og:image:url" content={image.url} />
+        <meta property="og:image:secure_url" content={image.url} />
+        <meta property="og:image:type" content={image.type} />
+        <meta property="og:image:width" content={image.width.toString()} />
+        <meta property="og:image:height" content={image.height.toString()} />
       </Head>
       <ContentDetail content={content} />;
     </>

@@ -4,9 +4,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import Example from "~/components/Example";
 import RegistrationForm, { RegistrationFormValues } from "~/components/RegistrationForm";
 
-export interface RegistrationProps {}
+export interface RegistrationProps {
+  onSubmit: (values: RegistrationFormValues) => void;
+}
 
-const Registration: React.FC<RegistrationProps> = ({}) => {
+const Registration: React.FC<RegistrationProps> = ({ onSubmit }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [formValues, setFormValues] = useState<Partial<RegistrationFormValues>>({});
 
@@ -19,8 +21,6 @@ const Registration: React.FC<RegistrationProps> = ({}) => {
   const handleOnChangeForm = useCallback((values: RegistrationFormValues) => {
     setFormValues(values);
   }, []);
-
-  const handleOnSubmit = useCallback(() => {}, []);
 
   return (
     <Container maxWidth="sm">
@@ -57,10 +57,7 @@ const Registration: React.FC<RegistrationProps> = ({}) => {
                   opacity: 1,
                 }}
               >
-                <RegistrationForm
-                  onChangeForm={handleOnChangeForm}
-                  onSubmit={handleOnSubmit}
-                />
+                <RegistrationForm onChangeForm={handleOnChangeForm} onSubmit={onSubmit} />
               </motion.div>
             )}
           </AnimatePresence>

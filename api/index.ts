@@ -31,9 +31,19 @@ const postContent = async ({ path, title, description, images }: CreateContentDt
   });
 };
 
+const checkIsExistingPath = async (path: string) => {
+  const { data } = await requester.get<boolean>("/contents/exist", {
+    params: {
+      path,
+    },
+  });
+  return data;
+};
+
 const api = {
   getContent,
   postContent,
+  checkIsExistingPath,
 };
 
 export default api;
