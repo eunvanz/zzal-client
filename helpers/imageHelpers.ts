@@ -7,6 +7,15 @@ export const convertFileToBase64 = async (file: File) => {
   });
 };
 
+export const convertURLtoFile = async (url: string, extension?: string) => {
+  const response = await fetch(url);
+  const data = await response.blob();
+  const ext = extension || url.split(".").pop();
+  const filename = url.split("/").pop();
+  const metadata = { type: `image/${ext}` };
+  return new File([data], `${filename!}${extension ? `.${extension}` : ""}`, metadata);
+};
+
 const createImage = (url: string) =>
   new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
