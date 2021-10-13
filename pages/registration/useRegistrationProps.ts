@@ -18,7 +18,7 @@ const useRegistrationProps: () => RegistrationProps = () => {
         const isConfirmed = await Alert.confirm({
           content: "The path already exists. Do you want to overwrite?",
         });
-        if (!isConfirmed) return;
+        if (!isConfirmed) return false;
       }
       const image = await convertURLtoFile(values.thumbnail);
       const newContent = {
@@ -32,6 +32,7 @@ const useRegistrationProps: () => RegistrationProps = () => {
         ...uploadedContents,
         { ...newContent, thumbnail: values.thumbnail },
       ]);
+      return true;
     },
     [setUploadedContents, uploadedContents],
   );

@@ -153,6 +153,7 @@ const FriendChat: React.FC<ChatProps> = ({ text, name, isFirst }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
+          maxWidth: "80%",
         }}
       >
         {isFirst && (
@@ -171,7 +172,6 @@ const FriendChat: React.FC<ChatProps> = ({ text, name, isFirst }) => {
             borderTopLeftRadius: isFirst ? 4 : 12,
             backgroundColor: "#E9EAEC",
             p: 1.5,
-            maxWidth: "80%",
           }}
         >
           {text}

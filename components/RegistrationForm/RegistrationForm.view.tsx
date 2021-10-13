@@ -22,7 +22,7 @@ export interface RegistrationFormValues {
 
 export interface RegistrationFormProps {
   onChangeForm: (values: RegistrationFormValues) => void;
-  onSubmit: (values: RegistrationFormValues) => Promise<void>;
+  onSubmit: (values: RegistrationFormValues) => Promise<boolean>;
 }
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
@@ -77,8 +77,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const handleOnSubmit = useCallback(async () => {
     await handleSubmit(async (values) => {
       if (values.thumbnail) {
-        await onSubmit(values);
-        handleOnReset();
+        const isSuccessful = await onSubmit(values);
+        if (isSuccessful) {
+          handleOnReset();
+        }
       } else {
         setError("thumbnail", { message: "Image is required" });
       }
