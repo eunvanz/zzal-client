@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { AnimatePresence, motion } from "framer-motion";
@@ -16,6 +17,10 @@ export interface ExampleProps {
 const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
   const theme = useTheme();
 
+  const isItemExisting = useMemo(() => {
+    return !!items?.[0].path;
+  }, [items]);
+
   return (
     <Box
       sx={{
@@ -29,13 +34,13 @@ const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
       <Animate delay={0}>
         <FriendChat name="Benjamin" text="Hey man" isFirst />
       </Animate>
-      <Animate delay={!items ? 0.5 : 0}>
+      <Animate delay={!isItemExisting ? 0.5 : 0}>
         <FriendChat name="Benjamin" text="I'm so bored. Don't you have any fun memes?" />
       </Animate>
-      <Animate delay={!items ? 1 : 0}>
+      <Animate delay={!isItemExisting ? 1 : 0}>
         <MyChat text="Oh, I just got one thing you'll love" isFirst />
       </Animate>
-      <Animate delay={!items ? 1.5 : 0}>
+      <Animate delay={!isItemExisting ? 1.5 : 0}>
         <MyChat text="Wait for a second" />
       </Animate>
       {items?.[0] && items[0].path && (
@@ -58,7 +63,7 @@ const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
           </MyChat>
         </Animate>
       )}
-      {completeCount &&
+      {!!completeCount &&
         Array.from({ length: completeCount }).map((_, index) => (
           <ExtraChat item={items![index + 1]} key={index} />
         ))}
@@ -166,6 +171,7 @@ const FriendChat: React.FC<ChatProps> = ({ text, name, isFirst }) => {
             borderTopLeftRadius: isFirst ? 4 : 12,
             backgroundColor: "#E9EAEC",
             p: 1.5,
+            maxWidth: "80%",
           }}
         >
           {text}
@@ -194,6 +200,7 @@ const MyChat: React.FC<ChatProps> = ({ text, children, isLink, isFirst }) => {
             backgroundColor: theme.palette.secondary.light,
             p: 1.5,
             color: isLink ? "#2E8BC0" : undefined,
+            maxWidth: "80%",
           }}
         >
           {text}

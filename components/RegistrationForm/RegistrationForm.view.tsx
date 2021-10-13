@@ -22,7 +22,7 @@ export interface RegistrationFormValues {
 
 export interface RegistrationFormProps {
   onChangeForm: (values: RegistrationFormValues) => void;
-  onSubmit: (values: RegistrationFormValues) => void;
+  onSubmit: (values: RegistrationFormValues) => Promise<void>;
 }
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
@@ -60,16 +60,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     [clearErrors, setValue],
   );
 
-  const handleOnSubmit = useCallback(async () => {
-    await handleSubmit((values) => {
-      if (values.thumbnail) {
-        onSubmit(values);
-      } else {
-        setError("thumbnail", { message: "Image is required" });
-      }
-    })();
-  }, [handleSubmit, onSubmit, setError]);
-
   useEffect(() => {
     onChangeForm({
       path,
@@ -83,6 +73,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     reset();
     setSelectAndCropKey((key) => ++key);
   }, [reset]);
+
+  const handleOnSubmit = useCallback(async () => {
+    await handleSubmit(async (values) => {
+      if (values.thumbnail) {
+        await onSubmit(values);
+        handleOnReset();
+      } else {
+        setError("thumbnail", { message: "Image is required" });
+      }
+    })();
+  }, [handleOnReset, handleSubmit, onSubmit, setError]);
 
   return (
     <Box

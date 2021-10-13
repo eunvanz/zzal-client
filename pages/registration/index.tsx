@@ -8,9 +8,9 @@ const RegistrationPage: React.FC<void> = () => {
   return (
     <>
       <Head>
-        <title></title>
+        <title>zzal.me - 짤 등록</title>
       </Head>
-      <Registration {...props} />;
+      <Registration {...props} />
     </>
   );
 };
