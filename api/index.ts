@@ -32,7 +32,7 @@ const postContent = async ({ path, title, description, images }: CreateContentDt
 };
 
 const checkIsExistingPath = async (path: string) => {
-  const { data } = await requester.get<boolean>("/contents/exist", {
+  const { data } = await requester.get<boolean>("/contents/existing", {
     params: {
       path,
     },

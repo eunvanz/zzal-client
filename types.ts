@@ -21,3 +21,7 @@ export interface Image extends TimeRecord {
   width: number;
   height: number;
 }
+
+export enum STATE_KEY {
+  UPLOADED_CONTENTS = "UPLOADED_CONTENTS",
+}

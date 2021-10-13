@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { Container, Box } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRecoilState } from "recoil";
 import Example from "~/components/Example";
 import RegistrationForm, { RegistrationFormValues } from "~/components/RegistrationForm";
+import { convertContentToPreview } from "~/helpers/projectHelpers";
+import uploadedContentsState from "~/state/uploadedContents";
 
 export interface RegistrationProps {
   onSubmit: (values: RegistrationFormValues) => void;
@@ -11,6 +14,8 @@ export interface RegistrationProps {
 const Registration: React.FC<RegistrationProps> = ({ onSubmit }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [formValues, setFormValues] = useState<Partial<RegistrationFormValues>>({});
+
+  const [uploadedContents, setUploadedContents] = useRecoilState(uploadedContentsState);
 
   useEffect(() => {
     setTimeout(() => {
@@ -38,7 +43,13 @@ const Registration: React.FC<RegistrationProps> = ({ onSubmit }) => {
             pt: 2,
           }}
         >
-          <Example {...formValues} />
+          <Example
+            items={[
+              ...uploadedContents.map((content) => convertContentToPreview(content)),
+              formValues,
+            ]}
+            completeCount={uploadedContents.length}
+          />
         </Box>
         <Box
           sx={{

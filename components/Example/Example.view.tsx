@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { AnimatePresence, motion } from "framer-motion";
+import { Content } from "~/types";
 import Preview, { PreviewProps } from "../Preview";
 
 export interface PreviewItem extends PreviewProps {
-  path: string;
+  path?: Content["path"];
 }
 
 export interface ExampleProps {
@@ -37,7 +38,7 @@ const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
       <Animate delay={!items ? 1.5 : 0}>
         <MyChat text="Wait for a second" />
       </Animate>
-      {items?.[0] && (
+      {items?.[0] && items[0].path && (
         <Animate delay={0}>
           <MyChat text={`zzal.me/${items[0].path}`} isLink />
           <MyChat>
@@ -81,7 +82,7 @@ const ExtraChat: React.FC<ExtraChatProps> = ({ item }) => {
       <Animate delay={2}>
         <FriendChat name="Benjamin" text="Don't you have more?" />
       </Animate>
-      {item && (
+      {item && item.path && (
         <Animate delay={0}>
           <MyChat text={`zzal.me/${item.path}`} isLink />
           <MyChat>

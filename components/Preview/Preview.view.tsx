@@ -1,11 +1,12 @@
 import { Box } from "@mui/material";
+import { Content } from "~/types";
 
 const DEFAULT_TITLE = "zzal.me - share your memes";
 
 export interface PreviewProps {
   thumbnail?: string;
-  title?: string;
-  description?: string;
+  title?: Content["title"];
+  description?: Content["description"];
 }
 
 const Preview: React.FC<PreviewProps> = ({ thumbnail, title, description }) => {
