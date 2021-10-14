@@ -1,3 +1,5 @@
 *.stories.tsx
+*.test.ts
+*.test.tsx
 __mocks__
 .storybook
