@@ -19,7 +19,7 @@ const useRegistrationProps: () => RegistrationProps = () => {
       const isExistingPath = await api.checkIsExistingPath(path);
       if (isExistingPath) {
         const isConfirmed = await Alert.confirm({
-          content: "The path already exists. Do you want to overwrite?",
+          content: "경로에 짤이 이미 존재합니다. 이 짤로 교체할까요?",
         });
         if (!isConfirmed) {
           setIsSubmitting(false);
