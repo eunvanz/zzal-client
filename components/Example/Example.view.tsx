@@ -32,16 +32,16 @@ const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
       }}
     >
       <Animate delay={0}>
-        <FriendChat name="호랭이형님" text="어흥~~" isFirst />
+        <FriendChat name="호랭이성님" text="어흥~~" isFirst />
       </Animate>
       <Animate delay={!isItemExisting ? 0.5 : 0}>
-        <FriendChat name="호랭이형님" text="짤 하나 주면 안잡아먹지" />
+        <FriendChat name="호랭이성님" text="짤 하나 주면 안잡아먹지~~ 😼" />
       </Animate>
       <Animate delay={!isItemExisting ? 1 : 0}>
-        <MyChat text="깜짝이야" isFirst />
+        <MyChat text="어익후" isFirst />
       </Animate>
       <Animate delay={!isItemExisting ? 1.5 : 0}>
-        <MyChat text="좀만 기둘려봐" />
+        <MyChat text="짤 드릴테니 목숨만은 살려주십쇼 😖" />
       </Animate>
       {items?.[0] && items[0].path && (
         <Animate delay={0}>
@@ -79,13 +79,13 @@ const ExtraChat: React.FC<ExtraChatProps> = ({ item }) => {
   return (
     <>
       <Animate delay={1}>
-        <FriendChat name="호랭이형님" text="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ" isFirst />
+        <FriendChat name="호랭이성님" text="ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ" isFirst />
       </Animate>
       <Animate delay={1.5}>
-        <FriendChat name="호랭이형님" text="잼나는구만" />
+        <FriendChat name="호랭이성님" text="잼나는구먼 😹" />
       </Animate>
       <Animate delay={2}>
-        <FriendChat name="호랭이형님" text="좀 더 없어?" />
+        <FriendChat name="호랭이성님" text="좀 더 없음?" />
       </Animate>
       {item && item.path && (
         <Animate delay={0}>
