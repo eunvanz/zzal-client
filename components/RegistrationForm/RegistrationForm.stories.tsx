@@ -18,3 +18,5 @@ const Template: ComponentStory<typeof RegistrationForm> = (args) => (
 );
 
 export const Default = createStoryComponent(Template);
+
+export const Submitting = createStoryComponent(Template, { isSubmitting: true });

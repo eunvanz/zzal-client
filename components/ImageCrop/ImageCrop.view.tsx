@@ -9,9 +9,15 @@ export interface ImageCropProps extends Pick<CropperProps, "image"> {
   image: string;
   onChange: (image: string) => void;
   height?: number;
+  disabled: boolean;
 }
 
-const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) => {
+const ImageCrop: React.FC<ImageCropProps> = ({
+  image,
+  onChange,
+  height = 500,
+  disabled,
+}) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const rotationRef = useRef<number>(0);
@@ -124,6 +130,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) 
                   value={aspect}
                   onChange={(e) => setAspect(e.target.value as number)}
                   label="Aspect"
+                  disabled={disabled}
                 >
                   <MenuItem value={1}>1:1</MenuItem>
                   <MenuItem value={4 / 3}>4:3</MenuItem>
@@ -166,6 +173,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) 
                 valueLabelDisplay="auto"
                 onChange={(_, zoom) => setZoom(zoom as number)}
                 size="small"
+                disabled={disabled}
               />
             </Box>
           </Box>
@@ -206,6 +214,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ image, onChange, height = 500 }) 
                   onRotationChange(rotation as number);
                 }}
                 size="small"
+                disabled={disabled}
               />
             </Box>
           </Box>

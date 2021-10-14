@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useRecoilState } from "recoil";
 import api from "~/api";
 import Alert from "~/components/Alert";
@@ -10,15 +10,21 @@ import { RegistrationProps } from "./Registration.view";
 const useRegistrationProps: () => RegistrationProps = () => {
   const [uploadedContents, setUploadedContents] = useRecoilState(uploadedContentsState);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const onSubmit = useCallback(
     async (values: RegistrationFormValues) => {
+      setIsSubmitting(true);
       const { path } = values;
       const isExistingPath = await api.checkIsExistingPath(path);
       if (isExistingPath) {
         const isConfirmed = await Alert.confirm({
           content: "The path already exists. Do you want to overwrite?",
         });
-        if (!isConfirmed) return false;
+        if (!isConfirmed) {
+          setIsSubmitting(false);
+          return false;
+        }
       }
       const image = await convertURLtoFile(values.thumbnail);
       const newContent = {
@@ -32,6 +38,7 @@ const useRegistrationProps: () => RegistrationProps = () => {
         ...uploadedContents,
         { ...newContent, thumbnail: values.thumbnail },
       ]);
+      setIsSubmitting(false);
       return true;
     },
     [setUploadedContents, uploadedContents],
@@ -40,6 +47,7 @@ const useRegistrationProps: () => RegistrationProps = () => {
   return {
     onSubmit,
     uploadedContents,
+    isSubmitting,
   };
 };
 

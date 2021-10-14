@@ -23,11 +23,13 @@ export interface RegistrationFormValues {
 export interface RegistrationFormProps {
   onChangeForm: (values: RegistrationFormValues) => void;
   onSubmit: (values: RegistrationFormValues) => Promise<boolean>;
+  isSubmitting: boolean;
 }
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   onChangeForm,
   onSubmit,
+  isSubmitting,
 }) => {
   const {
     control,
@@ -125,6 +127,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                     <InputAdornment position="start">zzal.me/</InputAdornment>
                   }
                   error={!!formState.errors.path}
+                  disabled={isSubmitting}
                 />
                 <FormHelperText error>{formState.errors.path?.message}</FormHelperText>
               </>
@@ -136,6 +139,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             key={selectAndCropKey}
             onSettleImage={handleOnSettleImage}
             errorMessage={formState.errors.thumbnail?.message}
+            disabled={isSubmitting}
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
@@ -150,7 +154,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 message: "Title is too long",
               },
             }}
-            render={({ field }) => <Input {...field} />}
+            render={({ field }) => <Input {...field} disabled={isSubmitting} />}
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
@@ -175,7 +179,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           }}
         >
           <Stack direction="row" spacing={1}>
-            <Button onClick={handleOnReset} size="large">
+            <Button onClick={handleOnReset} size="large" disabled={isSubmitting}>
               Reset
             </Button>
             <Button onClick={handleOnSubmit} variant="contained" size="large">

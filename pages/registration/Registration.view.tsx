@@ -9,9 +9,14 @@ import RegistrationForm, { RegistrationFormValues } from "~/components/Registrat
 export interface RegistrationProps {
   onSubmit: (values: RegistrationFormValues) => Promise<boolean>;
   uploadedContents: PreviewProps[];
+  isSubmitting: boolean;
 }
 
-const Registration: React.FC<RegistrationProps> = ({ onSubmit, uploadedContents }) => {
+const Registration: React.FC<RegistrationProps> = ({
+  onSubmit,
+  uploadedContents,
+  isSubmitting,
+}) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [formValues, setFormValues] = useState<Partial<RegistrationFormValues>>({});
 
@@ -63,7 +68,11 @@ const Registration: React.FC<RegistrationProps> = ({ onSubmit, uploadedContents 
                   opacity: 1,
                 }}
               >
-                <RegistrationForm onChangeForm={handleOnChangeForm} onSubmit={onSubmit} />
+                <RegistrationForm
+                  onChangeForm={handleOnChangeForm}
+                  onSubmit={onSubmit}
+                  isSubmitting={isSubmitting}
+                />
               </motion.div>
             )}
           </AnimatePresence>

@@ -7,9 +7,14 @@ import ImageCrop from "../ImageCrop";
 export interface SelectAndCropProps {
   onSettleImage: (image: string) => void;
   errorMessage?: string;
+  disabled: boolean;
 }
 
-const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage, errorMessage }) => {
+const SelectAndCrop: React.FC<SelectAndCropProps> = ({
+  onSettleImage,
+  errorMessage,
+  disabled,
+}) => {
   const [step, setStep] = useState<"select" | "crop" | "notCrop">("select");
   const [image, setImage] = useState<string | null>(null);
 
@@ -44,7 +49,12 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage, errorMessa
         />
       ) : step === "crop" ? (
         <>
-          <ImageCrop image={image!} onChange={handleOnChangeCrop} height={400} />
+          <ImageCrop
+            image={image!}
+            onChange={handleOnChangeCrop}
+            height={400}
+            disabled={disabled}
+          />
           <Stack
             direction="row"
             spacing={1}
@@ -88,10 +98,20 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({ onSettleImage, errorMessa
               justifyContent: "end",
             }}
           >
-            <Button variant="outlined" size="small" onClick={() => setStep("select")}>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => setStep("select")}
+              disabled={disabled}
+            >
               Select another image
             </Button>
-            <Button variant="outlined" size="small" onClick={() => setStep("crop")}>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => setStep("crop")}
+              disabled={disabled}
+            >
               Crop
             </Button>
           </Stack>
