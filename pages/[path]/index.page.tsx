@@ -33,7 +33,14 @@ export const CommonContentDetail = ({ content }: ContentDetailPageProps) => {
         <meta property="og:image:width" content={image.width.toString()} />
         <meta property="og:image:height" content={image.height.toString()} />
       </Head>
-      <ContentDetail content={content} />;
+      <ContentDetail
+        content={{
+          ...content,
+          title: t || content.title,
+          description: d || content.description,
+        }}
+      />
+      ;
     </>
   );
 };
