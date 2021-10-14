@@ -110,7 +110,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               minLength: 1,
               maxLength: { value: 100, message: "경로가 너무 길어요" },
               pattern: {
-                value: /([-a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣()@:%_\+.~#?&//=]*)/,
+                value: /([-a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣()@:%_\+.~&//=]*)/,
                 message: "허용되지 않은 문자가 포함되어있어요",
               },
               validate: {
