@@ -79,7 +79,7 @@ const ExtraChat: React.FC<ExtraChatProps> = ({ item }) => {
   return (
     <>
       <Animate delay={1}>
-        <FriendChat name="호랭이성님" text="ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ" isFirst />
+        <FriendChat name="호랭이성님" text="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ" isFirst />
       </Animate>
       <Animate delay={1.5}>
         <FriendChat name="호랭이성님" text="잼나는구먼 😹" />
