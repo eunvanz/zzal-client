@@ -25,6 +25,9 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ content }) => {
         <Box
           sx={{
             maxWidth: "100%",
+            "& img": {
+              maxWidth: "100%",
+            },
           }}
         >
           {/* eslint-disable-next-line */}
