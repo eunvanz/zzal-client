@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { DEFAULT_TITLE } from "~/constants/text";
 
 const Home: NextPage = () => {
@@ -11,7 +12,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>공사중</main>
+      <main>
+        <Link href="/registration">짤 등록하러 가기</Link>
+      </main>
     </>
   );
 };
