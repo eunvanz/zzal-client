@@ -186,7 +186,7 @@ const MyChat: React.FC<ChatProps> = ({ text, children, isLink, isFirst }) => {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "end",
+        justifyContent: "flex-end",
         my: 1,
       }}
     >

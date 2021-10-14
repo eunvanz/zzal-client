@@ -175,22 +175,30 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <Box
           sx={{
             display: "flex",
-            justifyContent: "end",
           }}
         >
-          <Stack direction="row" spacing={1}>
-            <Button onClick={handleOnReset} size="large" disabled={isSubmitting}>
+          <Box sx={{ flexGrow: 1 }}>
+            <Button
+              onClick={handleOnReset}
+              size="large"
+              variant="outlined"
+              fullWidth
+              disabled={isSubmitting}
+            >
               초기화
             </Button>
+          </Box>
+          <Box sx={{ flexGrow: 2, pl: 1 }}>
             <Button
               onClick={handleOnSubmit}
               variant="contained"
               size="large"
+              fullWidth
               disabled={isSubmitting}
             >
               {isSubmitting ? "등록 중.." : "등록"}
             </Button>
-          </Stack>
+          </Box>
         </Box>
       </Stack>
     </Box>
