@@ -46,6 +46,7 @@ const FileDrop: React.FC<FileDropProps> = ({
             color: "primary.main",
           },
           height,
+          cursor: "pointer",
         }}
         {...getRootProps()}
       >
