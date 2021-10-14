@@ -19,6 +19,7 @@ module.exports = (phase) => {
       domains: ["s3.ap-northeast-2.amazonaws.com"],
       minimumCacheTTL: 9999999999,
     },
+    pageExtensions: ["index.tsx"],
   };
 
   return result;
