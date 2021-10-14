@@ -32,16 +32,16 @@ const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
       }}
     >
       <Animate delay={0}>
-        <FriendChat name="Benjamin" text="Hey man" isFirst />
+        <FriendChat name="호랭이형님" text="어흥~~" isFirst />
       </Animate>
       <Animate delay={!isItemExisting ? 0.5 : 0}>
-        <FriendChat name="Benjamin" text="I'm so bored. Don't you have any fun memes?" />
+        <FriendChat name="호랭이형님" text="짤 하나 주면 안잡아먹지" />
       </Animate>
       <Animate delay={!isItemExisting ? 1 : 0}>
-        <MyChat text="Oh, I just got one thing you'll love" isFirst />
+        <MyChat text="깜짝이야" isFirst />
       </Animate>
       <Animate delay={!isItemExisting ? 1.5 : 0}>
-        <MyChat text="Wait for a second" />
+        <MyChat text="좀만 기둘려봐" />
       </Animate>
       {items?.[0] && items[0].path && (
         <Animate delay={0}>
@@ -79,13 +79,13 @@ const ExtraChat: React.FC<ExtraChatProps> = ({ item }) => {
   return (
     <>
       <Animate delay={1}>
-        <FriendChat name="Benjamin" text="loooooooool" isFirst />
+        <FriendChat name="호랭이형님" text="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ" isFirst />
       </Animate>
       <Animate delay={1.5}>
-        <FriendChat name="Benjamin" text="That's really fun!" />
+        <FriendChat name="호랭이형님" text="잼나는구만" />
       </Animate>
       <Animate delay={2}>
-        <FriendChat name="Benjamin" text="Don't you have more?" />
+        <FriendChat name="호랭이형님" text="좀 더 없어?" />
       </Animate>
       {item && item.path && (
         <Animate delay={0}>
@@ -133,8 +133,6 @@ const FriendChat: React.FC<ChatProps> = ({ text, name, isFirst }) => {
             ? {
                 borderRadius: "50%",
                 backgroundColor: "#90ADC6",
-                backgroundImage:
-                  "url(https://avatars.githubusercontent.com/u/17351661?s=40&v=4)",
                 backgroundSize: "cover",
                 flexShrink: 1,
                 width: 32,
