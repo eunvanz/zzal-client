@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
+import { DEFAULT_TITLE } from "~/constants/text";
 import { Content } from "~/types";
-
-const DEFAULT_TITLE = "zzal.me - share your memes";
 
 export interface PreviewProps {
   thumbnail?: string;
