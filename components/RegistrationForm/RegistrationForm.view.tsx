@@ -169,7 +169,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 message: "세부내용이 너무 길어요",
               },
             }}
-            render={({ field }) => <Input {...field} />}
+            render={({ field }) => <Input {...field} disabled={isSubmitting} />}
           />
         </FormControl>
         <Box
