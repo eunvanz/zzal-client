@@ -105,7 +105,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
             spacing={1}
             sx={{
               display: "flex",
-              justifyContent: "end",
+              justifyContent: "flex-end",
             }}
           >
             <Button
