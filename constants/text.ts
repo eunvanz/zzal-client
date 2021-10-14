@@ -1,1 +1,1 @@
-export const DEFAULT_TITLE = "zzal.me - share your memes";
+export const DEFAULT_TITLE = "zzal.me - 링크 속의 짤";

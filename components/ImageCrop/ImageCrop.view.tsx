@@ -22,7 +22,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({
   const [zoom, setZoom] = useState(1);
   const rotationRef = useRef<number>(0);
   const [rotation, setRotation] = useState(0);
-  const [aspect, setAspect] = useState(16 / 9);
+  const [aspect, setAspect] = useState(2 / 1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>();
 
   const onCropComplete = useCallback(
