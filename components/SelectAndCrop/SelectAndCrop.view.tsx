@@ -63,11 +63,21 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
               justifyContent: "end",
             }}
           >
-            <Button variant="outlined" size="small" onClick={() => setStep("select")}>
-              Select another image
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => setStep("select")}
+              disabled={disabled}
+            >
+              다른 이미지 선택
             </Button>
-            <Button variant="outlined" size="small" onClick={() => setStep("notCrop")}>
-              Not crop
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => setStep("notCrop")}
+              disabled={disabled}
+            >
+              원본 유지
             </Button>
           </Stack>
         </>
@@ -104,7 +114,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
               onClick={() => setStep("select")}
               disabled={disabled}
             >
-              Select another image
+              다른 이미지 선택
             </Button>
             <Button
               variant="outlined"
@@ -112,7 +122,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
               onClick={() => setStep("crop")}
               disabled={disabled}
             >
-              Crop
+              이미지 편집
             </Button>
           </Stack>
         </>
