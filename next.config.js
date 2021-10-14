@@ -8,7 +8,7 @@ module.exports = (phase) => {
   const isProd = phase === PHASE_PRODUCTION_BUILD;
 
   const env = {
-    API_HOST: isDev ? "http://localhost:4000" : "http://api.zzal.me",
+    API_HOST: isDev ? "http://localhost:4000" : "https://api.zzal.me",
     SERVICE_HOST: isDev ? "http://localhost:3000" : "https://zzal.me",
   };
 
