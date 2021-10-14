@@ -9,9 +9,6 @@ const themeOptions: ThemeOptions = {
       main: "#FAD02C",
     },
   },
-  typography: {
-    fontFamily: ["Noto Sans KR", "sans-serif"].join(","),
-  },
 };
 
 export const theme = createTheme(themeOptions);
