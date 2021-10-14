@@ -53,7 +53,7 @@ const FileDrop: React.FC<FileDropProps> = ({
         <Box>
           <FileUpload />
         </Box>
-        <Box>파일을 끌어서 놓거나, 선택하기 위해 클릭해주세요</Box>
+        <Box>파일을 끌어서 놓거나, 클릭해서 선택해주세요</Box>
         <input {...getInputProps()} />
       </Box>
       {errorMessage && (
