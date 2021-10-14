@@ -84,7 +84,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           handleOnReset();
         }
       } else {
-        setError("thumbnail", { message: "Image is required" });
+        setError("thumbnail", { message: "이미지를 선택해주세요" });
       }
     })();
   }, [handleOnReset, handleSubmit, onSubmit, setError]);
@@ -98,24 +98,24 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       }}
     >
       <Stack direction="column" spacing={2}>
-        <Typography variant="h6">What meme do you like to share?</Typography>
+        <Typography variant="h6">어떤 짤을 공유하고 싶으신가요?</Typography>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="path">Path *</InputLabel>
+          <InputLabel htmlFor="path">경로 *</InputLabel>
           <Controller
             name="path"
             control={control}
             defaultValue=""
             rules={{
-              required: "Path is required",
+              required: "경로를 입력해주세요",
               minLength: 1,
-              maxLength: { value: 100, message: "Path is too long" },
+              maxLength: { value: 100, message: "경로가 너무 길어요" },
               pattern: {
-                value: /\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
-                message: "Invalid character is included",
+                value: /([-a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣()@:%_\+.~#?&//=]*)/,
+                message: "허용되지 않은 문자가 포함되어있어요",
               },
               validate: {
                 hasSpace: (v: string) => {
-                  return !v.includes(" ") || "Space is not allowed";
+                  return !v.includes(" ") || "공백은 허용되지 않아요";
                 },
               },
             }}
@@ -143,7 +143,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="title">Title</InputLabel>
+          <InputLabel htmlFor="title">제목</InputLabel>
           <Controller
             name="title"
             control={control}
@@ -151,14 +151,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             rules={{
               maxLength: {
                 value: 100,
-                message: "Title is too long",
+                message: "제목이 너무 길어요",
               },
             }}
             render={({ field }) => <Input {...field} disabled={isSubmitting} />}
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="description">Description</InputLabel>
+          <InputLabel htmlFor="description">세부내용</InputLabel>
           <Controller
             name="description"
             control={control}
@@ -166,7 +166,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             rules={{
               maxLength: {
                 value: 255,
-                message: "Description is too long",
+                message: "세부내용이 너무 길어요",
               },
             }}
             render={({ field }) => <Input {...field} />}
@@ -180,10 +180,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         >
           <Stack direction="row" spacing={1}>
             <Button onClick={handleOnReset} size="large" disabled={isSubmitting}>
-              Reset
+              초기화
             </Button>
-            <Button onClick={handleOnSubmit} variant="contained" size="large">
-              Submit
+            <Button
+              onClick={handleOnSubmit}
+              variant="contained"
+              size="large"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "등록 중.." : "등록"}
             </Button>
           </Stack>
         </Box>
