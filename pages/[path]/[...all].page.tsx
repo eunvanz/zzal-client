@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import api from "~/api";
-import { CommonContentDetail, ContentDetailPageProps } from ".";
+import { CommonContentDetail, ContentDetailPageProps } from "./index.page";
 
 const ContentDetailPage: React.FC<ContentDetailPageProps> = ({ content }) => {
   return <CommonContentDetail content={content} />;
