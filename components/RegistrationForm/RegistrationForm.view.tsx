@@ -14,6 +14,7 @@ import {
 import { debounce } from "lodash-es";
 import { Controller, useForm } from "react-hook-form";
 import useExistingPathQuery from "~/queries/useExistingPathQuery";
+import Alert from "../Alert";
 import SelectAndCrop from "../SelectAndCrop";
 
 export interface RegistrationFormValues {
@@ -79,19 +80,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     setSelectAndCropKey((key) => ++key);
   }, [reset]);
 
-  const handleOnSubmit = useCallback(async () => {
-    await handleSubmit(async (values) => {
-      if (values.thumbnail) {
-        const isSuccessful = await onSubmit(values);
-        if (isSuccessful) {
-          handleOnReset();
-        }
-      } else {
-        setError("thumbnail", { message: "이미지를 선택해주세요" });
-      }
-    })();
-  }, [handleOnReset, handleSubmit, onSubmit, setError]);
-
   const {
     refetch,
     data: isExistingPath,
@@ -119,6 +107,30 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     }, 500),
     [],
   );
+
+  const handleOnSubmit = useCallback(async () => {
+    await handleSubmit(async (values) => {
+      if (isExistingPathFetching || isPathValidating) {
+        Alert.show({ content: "아직 경로 유효성 검증 중이에요." });
+        return;
+      }
+      if (values.thumbnail) {
+        const isSuccessful = await onSubmit(values);
+        if (isSuccessful) {
+          handleOnReset();
+        }
+      } else {
+        setError("thumbnail", { message: "이미지를 선택해주세요" });
+      }
+    })();
+  }, [
+    handleOnReset,
+    handleSubmit,
+    isExistingPathFetching,
+    isPathValidating,
+    onSubmit,
+    setError,
+  ]);
 
   return (
     <Box
