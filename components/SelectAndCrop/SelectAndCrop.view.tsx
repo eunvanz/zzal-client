@@ -89,7 +89,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
             sx={{
               display: "flex",
               justifyContent: "center",
-              padding: 2,
+              pb: 2,
             }}
           >
             {/* eslint-disable-next-line */}
