@@ -5,7 +5,7 @@ import FileDrop from "../FileDrop";
 import ImageCrop from "../ImageCrop";
 
 export interface SelectAndCropProps {
-  onSettleImage: (image: string) => void;
+  onSettleImage: (image: string, file: File) => void;
   errorMessage?: string;
   disabled: boolean;
 }
@@ -17,27 +17,29 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
 }) => {
   const [step, setStep] = useState<"select" | "crop" | "notCrop">("select");
   const [image, setImage] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   const handleOnChangeFiles = useCallback(async (files: File[]) => {
     if (files[0]) {
       const base64Image = await convertFileToBase64(files[0]);
       setImage(base64Image as string);
+      setFile(files[0]);
       setStep("crop");
     }
   }, []);
 
   const handleOnChangeCrop = useCallback(
     (croppedImage: string) => {
-      onSettleImage(croppedImage);
+      onSettleImage(croppedImage, file as File);
     },
-    [onSettleImage],
+    [file, onSettleImage],
   );
 
   useEffect(() => {
     if (step === "notCrop") {
-      onSettleImage(image as string);
+      onSettleImage(image as string, file as File);
     }
-  }, [image, onSettleImage, step]);
+  }, [file, image, onSettleImage, step]);
 
   return (
     <>

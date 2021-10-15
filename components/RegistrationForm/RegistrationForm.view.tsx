@@ -22,6 +22,7 @@ export interface RegistrationFormValues {
   path: string;
   thumbnail: string;
   description: string;
+  file?: File;
 }
 
 export interface RegistrationFormProps {
@@ -59,8 +60,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const { path, title, description, thumbnail } = watch() as RegistrationFormValues;
 
   const handleOnSettleImage = useCallback(
-    (image: string) => {
+    (image: string, file: File) => {
       setValue("thumbnail", image);
+      setValue("file", file);
       clearErrors("thumbnail");
     },
     [clearErrors, setValue],

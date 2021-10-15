@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import path from "path";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 import api, { CreateContentDto } from "~/api";
@@ -13,7 +14,8 @@ const usePostContentMutation = () => {
 
   return useMutation(
     async (values: RegistrationFormValues) => {
-      const image = await convertURLtoFile(values.thumbnail);
+      const { file } = values;
+      const image = await convertURLtoFile(values.thumbnail, path.extname(file!.name));
       newContentRef.current = {
         path: values.path,
         images: [image],
