@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import { QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
 import { theme } from "~/helpers/themeHelpers";
 import queryClient from "~/queries/queryClient";
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </ThemeProvider>
       </RecoilRoot>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

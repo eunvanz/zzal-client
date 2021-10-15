@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Box,
   FormControl,
@@ -9,8 +9,11 @@ import {
   Stack,
   Button,
   FormHelperText,
+  CircularProgress,
 } from "@mui/material";
+import { debounce } from "lodash-es";
 import { Controller, useForm } from "react-hook-form";
+import useExistingPathQuery from "~/queries/useExistingPathQuery";
 import SelectAndCrop from "../SelectAndCrop";
 
 export interface RegistrationFormValues {
@@ -89,6 +92,34 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     })();
   }, [handleOnReset, handleSubmit, onSubmit, setError]);
 
+  const {
+    refetch,
+    data: isExistingPath,
+    isFetched: isExistingPathFetched,
+    remove: resetExistingPath,
+    isFetching: isExistingPathFetching,
+  } = useExistingPathQuery(path, {
+    enabled: false,
+  });
+
+  const existingMessage = useMemo(() => {
+    return isExistingPathFetched
+      ? isExistingPath
+        ? "이미 등록된 짤이 있어요. 기존의 짤을 덮어씌웁니다."
+        : "새로운 짤을 등록합니다."
+      : undefined;
+  }, [isExistingPath, isExistingPathFetched]);
+
+  const [isPathValidating, setIsPathValidating] = useState(false);
+
+  const handleOnChangePath = useCallback(
+    debounce(() => {
+      refetch();
+      setIsPathValidating(false);
+    }, 500),
+    [],
+  );
+
   return (
     <Box
       sx={{
@@ -123,13 +154,40 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               <>
                 <Input
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    const { value } = e.target;
+                    if (!value) {
+                      resetExistingPath();
+                    } else {
+                      setIsPathValidating(true);
+                      handleOnChangePath();
+                    }
+                  }}
                   startAdornment={
                     <InputAdornment position="start">zzal.me/</InputAdornment>
+                  }
+                  endAdornment={
+                    <InputAdornment position="end">
+                      {
+                        <CircularProgress
+                          size={16}
+                          sx={{
+                            visibility:
+                              isExistingPathFetching || isPathValidating
+                                ? "visible"
+                                : "hidden",
+                          }}
+                        />
+                      }
+                    </InputAdornment>
                   }
                   error={!!formState.errors.path}
                   disabled={isSubmitting}
                 />
-                <FormHelperText error>{formState.errors.path?.message}</FormHelperText>
+                <FormHelperText error={!!formState.errors.path?.message}>
+                  {formState.errors.path?.message || existingMessage}
+                </FormHelperText>
               </>
             )}
           />

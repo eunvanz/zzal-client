@@ -15,17 +15,6 @@ const useRegistrationProps: () => RegistrationProps = () => {
   const onSubmit = useCallback(
     async (values: RegistrationFormValues) => {
       setIsSubmitting(true);
-      const { path } = values;
-      const isExistingPath = await api.checkIsExistingPath(path);
-      if (isExistingPath) {
-        const isConfirmed = await Alert.confirm({
-          content: "경로에 짤이 이미 존재합니다. 이 짤로 교체할까요?",
-        });
-        if (!isConfirmed) {
-          setIsSubmitting(false);
-          return false;
-        }
-      }
       const image = await convertURLtoFile(values.thumbnail);
       const newContent = {
         path: values.path,
