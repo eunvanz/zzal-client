@@ -54,7 +54,9 @@ const FileDrop: React.FC<FileDropProps> = ({
           <FileUpload />
         </Box>
         <Box sx={{ textAlign: "center" }}>
-          파일을 끌어서 놓거나, 클릭해서 선택해주세요
+          <Typography variant="body2">
+            파일을 끌어서 놓거나, 클릭해서 선택해주세요
+          </Typography>
         </Box>
         <input {...getInputProps()} />
       </Box>

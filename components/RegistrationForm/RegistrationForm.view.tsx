@@ -135,6 +135,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            gutterBottom
+            component="label"
+          >
+            이미지 *
+          </Typography>
           <SelectAndCrop
             key={selectAndCropKey}
             onSettleImage={handleOnSettleImage}
