@@ -114,7 +114,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({
               }}
             >
               <Typography variant="body2" sx={{ width: 60, display: "inline-block" }}>
-                Aspect
+                비율
               </Typography>
             </Box>
             <Box
@@ -155,7 +155,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({
               }}
             >
               <Typography variant="body2" sx={{ width: 60, display: "inline-block" }}>
-                Zoom
+                확대
               </Typography>
             </Box>
             <Box
@@ -192,7 +192,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({
               }}
             >
               <Typography variant="body2" sx={{ width: 60, display: "inline-block" }}>
-                Rotation
+                회전
               </Typography>
             </Box>
             <Box
