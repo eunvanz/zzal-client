@@ -7,7 +7,9 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  ThemeProvider,
 } from "@mui/material";
+import { theme } from "~/helpers/themeHelpers";
 
 export interface AlertProps {
   title?: string;
@@ -102,21 +104,25 @@ function promiseAlert({
         setIsVisible(true);
       }, []);
 
-      return isConfirm ? (
-        <Alert
-          isOpen={isVisible}
-          okText={okText}
-          cancelText={cancelText}
-          onClose={() => onClose(undefined)}
-          onCancel={() => onClose(false)}
-          onOk={() => onClose(true)}
-        >
-          {content}
-        </Alert>
-      ) : (
-        <Alert isOpen={isVisible} okText={okText} onClose={() => onClose(undefined)}>
-          {content}
-        </Alert>
+      return (
+        <ThemeProvider theme={theme}>
+          {isConfirm ? (
+            <Alert
+              isOpen={isVisible}
+              okText={okText}
+              cancelText={cancelText}
+              onClose={() => onClose(undefined)}
+              onCancel={() => onClose(false)}
+              onOk={() => onClose(true)}
+            >
+              {content}
+            </Alert>
+          ) : (
+            <Alert isOpen={isVisible} okText={okText} onClose={() => onClose(undefined)}>
+              {content}
+            </Alert>
+          )}
+        </ThemeProvider>
       );
     };
 
