@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useSnackbar } from "notistack";
 import { useRecoilValue } from "recoil";
 import { RegistrationFormValues } from "~/components/RegistrationForm";
 import usePostContentMutation from "~/queries/usePostContentMutation";
@@ -10,12 +11,15 @@ const useRegistrationProps: () => RegistrationProps = () => {
 
   const { mutateAsync, isLoading: isSubmitting } = usePostContentMutation();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const onSubmit = useCallback(
     async (values: RegistrationFormValues) => {
       await mutateAsync(values);
+      enqueueSnackbar("짤이 등록되었습니다.");
       return true;
     },
-    [mutateAsync],
+    [enqueueSnackbar, mutateAsync],
   );
 
   return {

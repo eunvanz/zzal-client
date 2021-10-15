@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps } from "next/app";
+import { SnackbarProvider } from "notistack";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
@@ -15,7 +16,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
+          <SnackbarProvider maxSnack={3}>
+            <Component {...pageProps} />
+          </SnackbarProvider>
         </ThemeProvider>
       </RecoilRoot>
       <ReactQueryDevtools initialIsOpen={false} />
