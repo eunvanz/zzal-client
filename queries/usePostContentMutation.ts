@@ -15,7 +15,10 @@ const usePostContentMutation = () => {
   return useMutation(
     async (values: RegistrationFormValues) => {
       const { file } = values;
-      const image = await convertURLtoFile(values.thumbnail, path.extname(file!.name));
+      const image = await convertURLtoFile(
+        values.thumbnail,
+        path.extname(file!.name.replace(".", "")),
+      );
       newContentRef.current = {
         path: values.path,
         images: [image],
