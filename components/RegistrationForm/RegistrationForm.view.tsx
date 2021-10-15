@@ -177,7 +177,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             display: "flex",
           }}
         >
-          <Box sx={{ flexGrow: 1 }}>
+          <Box sx={{ flexGrow: 1, pr: 0.5 }}>
             <Button
               onClick={handleOnReset}
               size="large"
@@ -188,7 +188,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               초기화
             </Button>
           </Box>
-          <Box sx={{ flexGrow: 2, pl: 1 }}>
+          <Box sx={{ flexGrow: 3, pl: 0.5 }}>
             <Button
               onClick={handleOnSubmit}
               variant="contained"
