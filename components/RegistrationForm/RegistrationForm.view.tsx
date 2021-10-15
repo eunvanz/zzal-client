@@ -77,11 +77,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     });
   }, [description, onChangeForm, path, thumbnail, title]);
 
-  const handleOnReset = useCallback(() => {
-    reset();
-    setSelectAndCropKey((key) => ++key);
-  }, [reset]);
-
   const {
     refetch,
     data: isExistingPath,
@@ -91,6 +86,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   } = useExistingPathQuery(path, {
     enabled: false,
   });
+
+  const handleOnReset = useCallback(() => {
+    reset();
+    setSelectAndCropKey((key) => ++key);
+    resetExistingPath();
+  }, [reset, resetExistingPath]);
 
   const existingMessage = useMemo(() => {
     return isExistingPathFetched
