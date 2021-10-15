@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { AnimatePresence, motion } from "framer-motion";
+import { random } from "lodash-es";
 import { Content } from "~/types";
 import Preview, { PreviewProps } from "../Preview";
 
@@ -75,18 +76,19 @@ interface ExtraChatProps {
   item?: PreviewItem;
 }
 
+const dialogData = [
+  ["ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ", "잼나는구먼 😹", "좀 더 없음?"],
+  ["껄껄껄", "찰진 짤이로구나~ 🍙", "하나 더 올려보거라"],
+];
+
 const ExtraChat: React.FC<ExtraChatProps> = ({ item }) => {
   return (
     <>
-      <Animate delay={1}>
-        <FriendChat name="호랭이성님" text="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ" isFirst />
-      </Animate>
-      <Animate delay={1.5}>
-        <FriendChat name="호랭이성님" text="잼나는구먼 😹" />
-      </Animate>
-      <Animate delay={2}>
-        <FriendChat name="호랭이성님" text="좀 더 없음?" />
-      </Animate>
+      {dialogData[random(dialogData.length - 1)].map((data, index) => (
+        <Animate delay={index + 1 - index * 0.5} key={index}>
+          <FriendChat name="호랭이성님" text={data} isFirst={index === 0} />
+        </Animate>
+      ))}
       {item && item.path && (
         <Animate delay={0}>
           <MyChat text={`zzal.me/${item.path}`} isLink />
