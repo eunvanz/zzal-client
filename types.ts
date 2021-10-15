@@ -25,3 +25,7 @@ export interface Image extends TimeRecord {
 export enum STATE_KEY {
   UPLOADED_CONTENTS = "UPLOADED_CONTENTS",
 }
+
+export enum QUERY_KEY {
+  EXISTING_CONTENT = "EXISTING_CONTENT",
+}
