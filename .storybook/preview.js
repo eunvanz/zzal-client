@@ -1,6 +1,8 @@
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "~/helpers/themeHelpers"
+import { QueryClientProvider } from "react-query";
+import { theme } from "~/helpers/themeHelpers";
+import queryClient from "~/queries/queryClient";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -22,8 +24,10 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={theme}>
-      <Story />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <Story />
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 ]

@@ -16,6 +16,7 @@ import { Controller, useForm } from "react-hook-form";
 import useExistingPathQuery from "~/queries/useExistingPathQuery";
 import Alert from "../Alert";
 import SelectAndCrop from "../SelectAndCrop";
+import TagsInput from "../TagsInput";
 
 export interface RegistrationFormValues {
   title: string;
@@ -23,6 +24,7 @@ export interface RegistrationFormValues {
   thumbnail: string;
   description: string;
   file?: File;
+  tags: string[];
 }
 
 export interface RegistrationFormProps {
@@ -52,12 +54,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       path: "",
       thumbnail: "",
       description: "",
+      tags: [],
     },
   });
 
   const [selectAndCropKey, setSelectAndCropKey] = useState(0);
 
-  const { path, title, description, thumbnail } = watch() as RegistrationFormValues;
+  const { path, title, description, thumbnail, tags } = watch() as RegistrationFormValues;
 
   const handleOnSettleImage = useCallback(
     (image: string, file: File) => {
@@ -74,8 +77,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       title,
       description,
       thumbnail,
+      tags,
     });
-  }, [description, onChangeForm, path, thumbnail, title]);
+  }, [description, onChangeForm, path, tags, thumbnail, title]);
 
   const {
     refetch,
@@ -253,9 +257,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             render={({ field }) => <Input {...field} disabled={isSubmitting} />}
           />
         </FormControl>
+        <Controller
+          name="tags"
+          control={control}
+          render={({ field }) => (
+            <TagsInput {...field} disabled={isSubmitting} max={10} label="태그" />
+          )}
+        />
         <Box
           sx={{
             display: "flex",
+            pt: 2,
           }}
         >
           <Box sx={{ flexGrow: 1, pr: 0.5 }}>

@@ -24,6 +24,7 @@ const usePostContentMutation = () => {
         images: [image],
         description: values.description,
         title: values.title,
+        tags: values.tags,
       };
       return api.postContent(newContentRef.current);
     },

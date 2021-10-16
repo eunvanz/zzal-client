@@ -15,8 +15,15 @@ export interface CreateContentDto {
   title?: string;
   description?: string;
   images: File[];
+  tags: string[];
 }
-const postContent = async ({ path, title, description, images }: CreateContentDto) => {
+const postContent = async ({
+  path,
+  title,
+  description,
+  images,
+  tags,
+}: CreateContentDto) => {
   const formData = new FormData();
   formData.append("path", path);
   title && formData.append("title", title);
@@ -24,6 +31,7 @@ const postContent = async ({ path, title, description, images }: CreateContentDt
   images.forEach((image) => {
     formData.append("images", image);
   });
+  tags.length && formData.append("tags", tags.join(","));
   await requester.post("/contents", formData, {
     headers: {
       "Content-Type": "multipart/form-data",

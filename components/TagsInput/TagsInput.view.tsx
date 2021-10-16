@@ -1,5 +1,14 @@
 import { useCallback, useEffect, useState, forwardRef, useImperativeHandle } from "react";
-import { Input, FormHelperText, Button, Chip, Box, Typography } from "@mui/material";
+import {
+  Input,
+  FormHelperText,
+  Button,
+  Chip,
+  Box,
+  Typography,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 
 export interface TagsInputProps {
@@ -8,10 +17,12 @@ export interface TagsInputProps {
   name?: string;
   onBlur?: VoidFunction;
   value?: string[];
+  disabled?: boolean;
+  label?: string;
 }
 
 const TagsInput: React.FC<TagsInputProps> = forwardRef(
-  ({ max, onChange, name, onBlur, value }, ref) => {
+  ({ max, onChange, name, onBlur, value, disabled, label }, ref) => {
     const { control, handleSubmit, reset } = useForm<{ tag: string }>({
       mode: "onChange",
     });
@@ -29,10 +40,6 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
     );
 
     useEffect(() => {
-      onChange(tags);
-    }, [onChange, tags]);
-
-    useEffect(() => {
       value && setTags(value);
     }, [value]);
 
@@ -40,72 +47,84 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
       await handleSubmit(async (values) => {
         const { tag } = values;
         if (tag) {
-          setTags((tags) => [...tags, tag]);
+          const newTags = [...tags, tag];
+          setTags(newTags);
+          onChange(newTags);
           reset({ tag: "" });
         }
       })();
-    }, [handleSubmit, reset]);
+    }, [handleSubmit, onChange, reset, tags]);
 
-    const handleOnDeleteTag = useCallback((value: string) => {
-      setTags((tags) => tags.filter((tag) => tag !== value));
-    }, []);
+    const handleOnDeleteTag = useCallback(
+      (value: string) => {
+        const newTags = tags.filter((tag) => tag !== value);
+        setTags(newTags);
+        onChange(newTags);
+      },
+      [onChange, tags],
+    );
 
     return (
-      <>
+      <Box>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             onSubmit();
           }}
         >
-          <Controller
-            name="tag"
-            control={control}
-            defaultValue=""
-            rules={{
-              minLength: 1,
-              maxLength: { value: 50, message: "태그가 너무 길어요" },
-              validate: {
-                isExisting: (v: string) => {
-                  return !tags.includes(v) || "이미 추가된 태그예요";
+          <FormControl variant="standard">
+            {label && <InputLabel>{label}</InputLabel>}
+            <Controller
+              name="tag"
+              control={control}
+              defaultValue=""
+              rules={{
+                minLength: 1,
+                maxLength: { value: 50, message: "태그가 너무 길어요" },
+                validate: {
+                  isExisting: (v: string) => {
+                    return !tags.includes(v) || "이미 추가된 태그예요";
+                  },
                 },
-              },
-            }}
-            render={({ field, fieldState }) => (
-              <>
-                <Input
-                  {...field}
-                  endAdornment={
-                    <Button
-                      onClick={onSubmit}
-                      variant="outlined"
-                      size="small"
-                      disabled={field.value?.length === 0 || !!fieldState.error}
-                      sx={{ mb: 1 }}
-                      type="submit"
-                    >
-                      추가
-                    </Button>
-                  }
-                  sx={{
-                    display: tags?.length === max ? "none" : undefined,
-                  }}
-                  error={!!fieldState.error}
-                />
-                <FormHelperText error>{fieldState.error?.message}</FormHelperText>
-              </>
-            )}
-          />
+              }}
+              render={({ field, fieldState }) => (
+                <>
+                  <Input
+                    {...field}
+                    endAdornment={
+                      <Button
+                        onClick={onSubmit}
+                        variant="outlined"
+                        size="small"
+                        disabled={
+                          field.value?.length === 0 || !!fieldState.error || disabled
+                        }
+                        sx={{ mb: 1 }}
+                        type="submit"
+                      >
+                        추가
+                      </Button>
+                    }
+                    sx={{
+                      display: tags?.length === max ? "none" : undefined,
+                    }}
+                    error={!!fieldState.error}
+                    disabled={disabled}
+                  />
+                  <FormHelperText error>{fieldState.error?.message}</FormHelperText>
+                </>
+              )}
+            />
+          </FormControl>
         </form>
         <Box
-          component="ul"
           sx={{
             display: "flex",
             justifyContent: "start",
             flexWrap: "wrap",
             p: 0,
             m: 0,
-            mt: 1,
+            mt: 0.5,
           }}
         >
           {tags.length === 0 ? (
@@ -118,12 +137,12 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
                 sx={{ mr: 0.5 }}
                 key={tag}
                 label={tag}
-                onDelete={() => handleOnDeleteTag(tag)}
+                onDelete={() => !disabled && handleOnDeleteTag(tag)}
               />
             ))
           )}
         </Box>
-      </>
+      </Box>
     );
   },
 );
