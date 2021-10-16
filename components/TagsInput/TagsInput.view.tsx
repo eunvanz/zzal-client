@@ -16,6 +16,8 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+import { grey } from "@mui/material/colors";
+import { AnimatePresence, motion } from "framer-motion";
 import { Controller, useForm } from "react-hook-form";
 
 export interface TagsInputProps {
@@ -140,20 +142,58 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
             mt: 0.5,
           }}
         >
-          {tags.length === 0 ? (
-            <Typography variant="body2" sx={{ color: "text.secondary" }} component="i">
-              검색이 잘 될수 있도록 태그를 추가해주세요. (최대 {max}개)
-            </Typography>
-          ) : (
-            tags.map((tag) => (
-              <Chip
-                sx={{ mr: 0.5 }}
-                key={tag}
-                label={tag}
-                onDelete={() => !disabled && handleOnDeleteTag(tag)}
-              />
-            ))
-          )}
+          <AnimatePresence>
+            {tags.length === 0 ? (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  position: "absolute",
+                }}
+                animate={{
+                  opacity: 1,
+                  position: "relative",
+                }}
+                exit={{
+                  opacity: 0,
+                  position: "absolute",
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "text.secondary",
+                    py: 1,
+                  }}
+                  component="i"
+                >
+                  검색이 잘 될수 있도록 태그를 추가해주세요. (최대 {max}개)
+                </Typography>
+              </motion.div>
+            ) : (
+              tags.map((tag, index) => (
+                <motion.div
+                  key={tag}
+                  initial={{
+                    transform: "scale(0)",
+                  }}
+                  animate={{
+                    transform: "scale(1)",
+                  }}
+                  exit={{
+                    transform: "scale(0)",
+                    position: index === 0 ? "absolute" : undefined,
+                  }}
+                >
+                  <Chip
+                    sx={{ mr: 0.5 }}
+                    key={tag}
+                    label={tag}
+                    onDelete={() => !disabled && handleOnDeleteTag(tag)}
+                  />
+                </motion.div>
+              ))
+            )}
+          </AnimatePresence>
         </Box>
       </Box>
     );
