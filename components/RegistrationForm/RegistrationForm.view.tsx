@@ -168,9 +168,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 message: "허용되지 않은 문자가 포함되어있어요.",
               },
               validate: {
-                hasSpace: (v: string) => {
-                  return !v.includes(" ") || "공백은 허용되지 않아요.";
-                },
+                hasSpace: (v: string) => !v.includes(" ") || "공백은 허용되지 않아요.",
+                isRandom: (v: string) =>
+                  !v.startsWith("랜덤") || "'랜덤'으로 시작할 수 없어요.",
               },
             }}
             render={({ field }) => (

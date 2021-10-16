@@ -5,7 +5,6 @@ import Head from "next/head";
 import api from "~/api";
 import { DEFAULT_TITLE } from "~/constants/text";
 import { catchServerSideError } from "~/helpers/errorHelpers";
-import ROUTES from "~/routes";
 import { Content } from "~/types";
 import ContentDetail from "./ContentDetail.view";
 
@@ -43,7 +42,6 @@ export const CommonContentDetail: NextPage<ContentDetailPageProps> = ({ content 
           description: d || content.description,
         }}
       />
-      ;
     </>
   );
 };
@@ -58,7 +56,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { path } = params as { path: string };
 
   try {
-    const content = await api.getContent(path);
+    const isRandom = path.startsWith("랜덤");
+    let content: Content;
+    if (isRandom) {
+      const tagName = path.replace("랜덤", "");
+      content = await api.getRandomContent(tagName);
+    } else {
+      content = await api.getContent(path);
+    }
     return {
       props: {
         content,
