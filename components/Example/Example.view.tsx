@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { AnimatePresence, motion } from "framer-motion";
-import { random } from "lodash-es";
 import { Content } from "~/types";
 import Preview, { PreviewProps } from "../Preview";
 
@@ -66,7 +65,7 @@ const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
       )}
       {!!completeCount &&
         Array.from({ length: completeCount }).map((_, index) => (
-          <ExtraChat item={items![index + 1]} key={index} />
+          <ExtraChat item={items![index + 1]} key={index} seq={index} />
         ))}
     </Box>
   );
@@ -74,17 +73,15 @@ const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
 
 interface ExtraChatProps {
   item?: PreviewItem;
+  seq: number;
 }
 
-const dialogData = [
-  ["ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ", "잼나는구먼 😹", "좀 더 없음?"],
-  ["껄껄껄", "찰진 짤이로구나~ 🍙", "하나 더 올려보거라"],
-];
+const dialogData = [["ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ", "잼나는구먼 😹", "좀 더 없음?"]];
 
 const ExtraChat: React.FC<ExtraChatProps> = ({ item }) => {
   return (
     <>
-      {dialogData[random(dialogData.length - 1)].map((data, index) => (
+      {dialogData[0].map((data, index) => (
         <Animate delay={index + 1 - index * 0.5} key={index}>
           <FriendChat name="호랭이성님" text={data} isFirst={index === 0} />
         </Animate>

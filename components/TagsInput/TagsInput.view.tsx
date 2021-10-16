@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useState, forwardRef, useImperativeHandle } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useMemo,
+} from "react";
 import {
   Input,
   FormHelperText,
@@ -13,35 +20,41 @@ import { Controller, useForm } from "react-hook-form";
 
 export interface TagsInputProps {
   max: number;
-  onChange: (value: string[]) => void;
+  onChange: (value: string) => void;
   name?: string;
   onBlur?: VoidFunction;
-  value?: string[];
+  value?: string;
   disabled?: boolean;
   label?: string;
+  fullWidth?: boolean;
 }
 
 const TagsInput: React.FC<TagsInputProps> = forwardRef(
-  ({ max, onChange, name, onBlur, value, disabled, label }, ref) => {
+  ({ max, onChange, name, onBlur, value, disabled, label, fullWidth }, ref) => {
+    const valueArray = useMemo(() => {
+      return value?.length ? value.split(",") : [];
+    }, [value]);
+
     const { control, handleSubmit, reset } = useForm<{ tag: string }>({
       mode: "onChange",
     });
 
-    const [tags, setTags] = useState<string[]>(value || []);
+    const [tags, setTags] = useState<string[]>(valueArray || []);
 
     useImperativeHandle(
       ref,
       () => ({
         name,
-        value: tags,
         onBlur,
+        value: tags,
+        onChange: setTags,
       }),
       [name, onBlur, tags],
     );
 
     useEffect(() => {
-      value && setTags(value);
-    }, [value]);
+      valueArray && setTags(valueArray);
+    }, [value, valueArray]);
 
     const onSubmit = useCallback(async () => {
       await handleSubmit(async (values) => {
@@ -49,7 +62,7 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
         if (tag) {
           const newTags = [...tags, tag];
           setTags(newTags);
-          onChange(newTags);
+          onChange(newTags.join(","));
           reset({ tag: "" });
         }
       })();
@@ -59,7 +72,7 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
       (value: string) => {
         const newTags = tags.filter((tag) => tag !== value);
         setTags(newTags);
-        onChange(newTags);
+        onChange(newTags.join(","));
       },
       [onChange, tags],
     );
@@ -72,7 +85,7 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
             onSubmit();
           }}
         >
-          <FormControl variant="standard">
+          <FormControl variant="standard" fullWidth={fullWidth}>
             {label && <InputLabel>{label}</InputLabel>}
             <Controller
               name="tag"
@@ -80,10 +93,10 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
               defaultValue=""
               rules={{
                 minLength: 1,
-                maxLength: { value: 50, message: "태그가 너무 길어요" },
+                maxLength: { value: 50, message: "태그가 너무 길어요." },
                 validate: {
                   isExisting: (v: string) => {
-                    return !tags.includes(v) || "이미 추가된 태그예요";
+                    return !tags.includes(v) || "이미 추가된 태그입니다.";
                   },
                 },
               }}
@@ -129,7 +142,7 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
         >
           {tags.length === 0 ? (
             <Typography variant="body2" sx={{ color: "text.secondary" }} component="i">
-              태그를 추가하시면 검색이 쉬워져요
+              검색이 잘 될수 있도록 태그를 추가해주세요. (최대 {max}개)
             </Typography>
           ) : (
             tags.map((tag) => (

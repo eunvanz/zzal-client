@@ -7,7 +7,7 @@ import { PreviewProps } from "~/components/Preview";
 import RegistrationForm, { RegistrationFormValues } from "~/components/RegistrationForm";
 
 export interface RegistrationProps {
-  onSubmit: (values: RegistrationFormValues) => Promise<boolean>;
+  onSubmit: (values: RegistrationFormValues) => Promise<void>;
   uploadedContents: PreviewProps[];
   isSubmitting: boolean;
 }

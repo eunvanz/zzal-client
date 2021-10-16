@@ -12,6 +12,7 @@ export default {
   },
   args: {
     max: 5,
+    value: "",
   },
 } as ComponentMeta<typeof TagsInput>;
 

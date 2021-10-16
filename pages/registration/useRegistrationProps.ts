@@ -17,7 +17,6 @@ const useRegistrationProps: () => RegistrationProps = () => {
     async (values: RegistrationFormValues) => {
       await mutateAsync(values);
       enqueueSnackbar("짤이 등록되었습니다.");
-      return true;
     },
     [enqueueSnackbar, mutateAsync],
   );

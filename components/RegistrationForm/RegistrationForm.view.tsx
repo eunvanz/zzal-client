@@ -24,12 +24,12 @@ export interface RegistrationFormValues {
   thumbnail: string;
   description: string;
   file?: File;
-  tags: string[];
+  tags: string;
 }
 
 export interface RegistrationFormProps {
   onChangeForm: (values: RegistrationFormValues) => void;
-  onSubmit: (values: RegistrationFormValues) => Promise<boolean>;
+  onSubmit: (values: RegistrationFormValues) => Promise<void>;
   isSubmitting: boolean;
 }
 
@@ -54,7 +54,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       path: "",
       thumbnail: "",
       description: "",
-      tags: [],
+      tags: "",
     },
   });
 
@@ -92,7 +92,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   });
 
   const handleOnReset = useCallback(() => {
-    reset();
+    reset({
+      title: "",
+      path: "",
+      thumbnail: "",
+      description: "",
+      tags: "",
+    });
     setSelectAndCropKey((key) => ++key);
     resetExistingPath();
   }, [reset, resetExistingPath]);
@@ -122,12 +128,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         return;
       }
       if (values.thumbnail) {
-        const isSuccessful = await onSubmit(values);
-        if (isSuccessful) {
-          handleOnReset();
-        }
+        await onSubmit(values);
+        handleOnReset();
       } else {
-        setError("thumbnail", { message: "이미지를 선택해주세요" });
+        setError("thumbnail", { message: "이미지를 선택해주세요." });
       }
     })();
   }, [
@@ -156,16 +160,16 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             control={control}
             defaultValue=""
             rules={{
-              required: "경로를 입력해주세요",
+              required: "경로를 입력해주세요.",
               minLength: 1,
-              maxLength: { value: 100, message: "경로가 너무 길어요" },
+              maxLength: { value: 100, message: "경로가 너무 길어요." },
               pattern: {
                 value: /([-a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣()@:%_\+.~&//=]*)/,
-                message: "허용되지 않은 문자가 포함되어있어요",
+                message: "허용되지 않은 문자가 포함되어있어요.",
               },
               validate: {
                 hasSpace: (v: string) => {
-                  return !v.includes(" ") || "공백은 허용되지 않아요";
+                  return !v.includes(" ") || "공백은 허용되지 않아요.";
                 },
               },
             }}
@@ -236,7 +240,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             rules={{
               maxLength: {
                 value: 100,
-                message: "제목이 너무 길어요",
+                message: "제목이 너무 길어요.",
               },
             }}
             render={({ field }) => <Input {...field} disabled={isSubmitting} />}
@@ -251,7 +255,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             rules={{
               maxLength: {
                 value: 255,
-                message: "세부내용이 너무 길어요",
+                message: "세부내용이 너무 길어요.",
               },
             }}
             render={({ field }) => <Input {...field} disabled={isSubmitting} />}
@@ -261,7 +265,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           name="tags"
           control={control}
           render={({ field }) => (
-            <TagsInput {...field} disabled={isSubmitting} max={10} label="태그" />
+            <TagsInput
+              {...field}
+              disabled={isSubmitting}
+              max={10}
+              label="태그"
+              fullWidth
+            />
           )}
         />
         <Box
