@@ -1,6 +1,6 @@
 const ROUTES = {
   REGISTRATION: "/registration",
-  NOT_FOUND: "/404",
+  NOT_FOUND: "/not-found",
   COMMON_ERROR: "/error",
   SIGN_IN: "/sign-in",
 };
