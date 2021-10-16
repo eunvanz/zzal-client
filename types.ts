@@ -10,6 +10,7 @@ export interface Content extends TimeRecord {
   title?: string | null;
   description?: string | null;
   images: Image[];
+  tags: Tag[];
 }
 
 export interface Image extends TimeRecord {
@@ -20,6 +21,11 @@ export interface Image extends TimeRecord {
   type: string;
   width: number;
   height: number;
+}
+
+export interface Tag extends TimeRecord {
+  id: number;
+  name: string;
 }
 
 export enum STATE_KEY {
