@@ -48,10 +48,18 @@ const checkIsExistingPath = async (path: string) => {
   return data;
 };
 
+const getRandomContent = async (tagName: string) => {
+  const { data } = await requester.get<Content>(
+    `/contents/random/${encodeURIComponent(tagName)}`,
+  );
+  return data;
+};
+
 const api = {
   getContent,
   postContent,
   checkIsExistingPath,
+  getRandomContent,
 };
 
 export default api;

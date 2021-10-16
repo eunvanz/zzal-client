@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import { GetServerSidePropsContext } from "next";
 import api from "~/api";
 import { catchServerSideError } from "~/helpers/errorHelpers";
+import { Content } from "~/types";
 import { CommonContentDetail, ContentDetailPageProps } from "./index.page";
 
 const ContentDetailPage: React.FC<ContentDetailPageProps> = ({ content }) => {
@@ -14,7 +15,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { path, all } = params as { path: string; all: string[] };
 
   try {
-    const content = await api.getContent(`${path}/${all.join("/")}`);
+    let content: Content;
+    if (path === "r" && !!all.length) {
+      content = await api.getRandomContent(all.join("/"));
+    } else {
+      content = await api.getContent(`${path}/${all.join("/")}`);
+    }
     return {
       props: {
         content,
