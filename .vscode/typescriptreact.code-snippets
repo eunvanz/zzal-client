@@ -220,11 +220,12 @@
   "Page Index Template": {
     "prefix": "pidx",
     "body": [
+      "import { NextPage } from \"next\";",
       "import Head from \"next/head\";",
       "import $1 from \"./$1.view\";",
       "import use$1Props from \"./use$1Props\";",
       "",
-      "const $1Page: React.FC<void> = () => {",
+      "const $1Page: NextPage<void> = () => {",
       "  const props = use$1Props();",
       "",
       "  return (",
