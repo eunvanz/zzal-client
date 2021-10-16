@@ -22,6 +22,7 @@ const content: Content = {
       height: 187,
     },
   ],
+  tags: [],
 };
 
 const mockContent = {
