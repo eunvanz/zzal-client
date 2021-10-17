@@ -1,8 +1,5 @@
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
-import { ThemeProvider } from "@mui/material/styles";
-import { QueryClientProvider } from "react-query";
-import { theme } from "~/helpers/themeHelpers";
-import queryClient from "~/queries/queryClient";
+import withProviders from "./decorators/withProviders";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -22,12 +19,4 @@ export const parameters = {
   layout: "fullscreen",
 };
 
-export const decorators = [
-  (Story) => (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Story />
-      </ThemeProvider>
-    </QueryClientProvider>
-  )
-]
+export const decorators = [withProviders];

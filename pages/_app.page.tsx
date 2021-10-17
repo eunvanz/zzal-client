@@ -1,3 +1,4 @@
+import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import { SnackbarProvider } from "notistack";
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <SnackbarProvider maxSnack={3}>
             <Component {...pageProps} />
           </SnackbarProvider>
