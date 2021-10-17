@@ -15,6 +15,7 @@ import { grey } from "@mui/material/colors";
 import Clipboard from "clipboard";
 import { useRouter } from "next/dist/client/router";
 import { useSnackbar } from "notistack";
+import ContentDetailCard from "~/components/ContentDetailCard";
 import { Content } from "~/types";
 
 export interface ContentDetailProps {
@@ -57,50 +58,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ content }) => {
             justifyContent: "center",
           }}
         >
-          <Card sx={{ boxShadow: 20 }}>
-            <CardMedia
-              component="img"
-              image={content.images[0].url}
-              alt={content.title || "untitled"}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {content.title}
-              </Typography>
-              <Typography gutterBottom variant="body2" color="text.secondary">
-                {content.description}
-              </Typography>
-              {content.tags.length && (
-                <Box
-                  sx={{
-                    mt: 2,
-                  }}
-                >
-                  {content.tags.map((tag) => (
-                    <Chip sx={{ mr: 0.5, mb: 0.5 }} key={tag.id} label={tag.name} />
-                  ))}
-                </Box>
-              )}
-            </CardContent>
-            <CardActions>
-              <Button
-                size="small"
-                onClick={() => router.push("/registration")}
-                endIcon={<LinkOutlined />}
-                id="copy-to-clipboard"
-                data-clipboard-text={`https://zzal.me/${content.path}`}
-              >
-                링크 복사
-              </Button>
-              <Button
-                size="small"
-                onClick={() => router.push("/registration")}
-                endIcon={<AddOutlined />}
-              >
-                다른 짤 등록
-              </Button>
-            </CardActions>
-          </Card>
+          <ContentDetailCard content={content} />
         </Box>
       </Container>
     </Box>
