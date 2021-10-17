@@ -1,4 +1,15 @@
-import { Container, Box, Typography, Button } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Paper,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
 import { useRouter } from "next/dist/client/router";
 import { Content } from "~/types";
 
@@ -10,47 +21,49 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ content }) => {
   const router = useRouter();
 
   return (
-    <Container
-      maxWidth="sm"
+    <Box
       sx={{
-        height: "100vh",
+        bgcolor: grey[200],
       }}
     >
-      <Box
+      <Container
+        maxWidth="sm"
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
           height: "100vh",
         }}
       >
         <Box
           sx={{
-            maxWidth: "100%",
-            "& img": {
-              maxWidth: "100%",
-            },
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          {/* eslint-disable-next-line */}
-          <img src={content.images[0].url} alt={content.title || "untitled"} />
+          <Card>
+            <CardMedia
+              component="img"
+              image={content.images[0].url}
+              alt={content.title || "untitled"}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {content.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {content.description}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" onClick={() => router.push("/registration")}>
+                다른 짤 등록하기
+              </Button>
+            </CardActions>
+          </Card>
         </Box>
-        <Typography variant="h5" sx={{ my: 1 }}>
-          {content.title}
-        </Typography>
-        <Typography variant="body1">{content.description}</Typography>
-        <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end", mt: 2 }}>
-          <Button
-            size="small"
-            variant="outlined"
-            onClick={() => router.push("/registration")}
-          >
-            다른 짤 등록하기
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 };
 
