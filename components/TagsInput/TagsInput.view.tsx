@@ -16,6 +16,7 @@ import {
   Typography,
   FormControl,
   InputLabel,
+  IconButton,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { AnimatePresence, motion } from "framer-motion";
@@ -112,7 +113,7 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
                   <Input
                     {...field}
                     endAdornment={
-                      <Button
+                      <IconButton
                         onClick={onSubmit}
                         disabled={
                           field.value?.length === 0 || !!fieldState.error || disabled
@@ -120,7 +121,7 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
                         type="submit"
                       >
                         <AddOutlined />
-                      </Button>
+                      </IconButton>
                     }
                     error={!!fieldState.error}
                     disabled={disabled || isMaxReached}
