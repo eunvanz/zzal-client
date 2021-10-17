@@ -22,7 +22,38 @@ const content: Content = {
       height: 187,
     },
   ],
-  tags: [],
+  tags: [
+    {
+      createdAt: "2021-10-16T09:12:29.514Z",
+      updatedAt: "2021-10-16T09:12:29.514Z",
+      id: 1,
+      name: "test",
+    },
+    {
+      createdAt: "2021-10-16T09:12:29.514Z",
+      updatedAt: "2021-10-16T09:12:29.514Z",
+      id: 2,
+      name: "lorem",
+    },
+    {
+      createdAt: "2021-10-16T09:12:29.514Z",
+      updatedAt: "2021-10-16T09:12:29.514Z",
+      id: 3,
+      name: "ipsum",
+    },
+    {
+      createdAt: "2021-10-16T09:12:29.514Z",
+      updatedAt: "2021-10-16T09:12:29.514Z",
+      id: 4,
+      name: "apple",
+    },
+    {
+      createdAt: "2021-10-16T09:12:29.514Z",
+      updatedAt: "2021-10-16T09:12:29.514Z",
+      id: 5,
+      name: "banana",
+    },
+  ],
 };
 
 const mockContent = {

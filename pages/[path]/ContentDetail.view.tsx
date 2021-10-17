@@ -3,7 +3,7 @@ import {
   Box,
   Typography,
   Button,
-  Paper,
+  Chip,
   Card,
   CardMedia,
   CardContent,
@@ -41,7 +41,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ content }) => {
             justifyContent: "center",
           }}
         >
-          <Card>
+          <Card sx={{ boxShadow: 20 }}>
             <CardMedia
               component="img"
               image={content.images[0].url}
@@ -51,9 +51,20 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ content }) => {
               <Typography gutterBottom variant="h5" component="div">
                 {content.title}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography gutterBottom variant="body2" color="text.secondary">
                 {content.description}
               </Typography>
+              {content.tags.length && (
+                <Box
+                  sx={{
+                    mt: 2,
+                  }}
+                >
+                  {content.tags.map((tag) => (
+                    <Chip sx={{ mr: 0.5, mb: 0.5 }} key={tag.id} label={tag.name} />
+                  ))}
+                </Box>
+              )}
             </CardContent>
             <CardActions>
               <Button size="small" onClick={() => router.push("/registration")}>
