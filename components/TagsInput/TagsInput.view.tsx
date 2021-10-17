@@ -6,6 +6,7 @@ import {
   useImperativeHandle,
   useMemo,
 } from "react";
+import { AddOutlined } from "@mui/icons-material";
 import {
   Input,
   FormHelperText,
@@ -79,6 +80,10 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
       [onChange, tags],
     );
 
+    const isMaxReached = useMemo(() => {
+      return tags?.length === max;
+    }, [max, tags?.length]);
+
     return (
       <Box>
         <form
@@ -109,22 +114,17 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
                     endAdornment={
                       <Button
                         onClick={onSubmit}
-                        variant="outlined"
-                        size="small"
                         disabled={
                           field.value?.length === 0 || !!fieldState.error || disabled
                         }
-                        sx={{ mb: 1 }}
                         type="submit"
                       >
-                        추가
+                        <AddOutlined />
                       </Button>
                     }
-                    sx={{
-                      display: tags?.length === max ? "none" : undefined,
-                    }}
                     error={!!fieldState.error}
-                    disabled={disabled}
+                    disabled={disabled || isMaxReached}
+                    placeholder={isMaxReached ? "최대 갯수에 도달했습니다." : undefined}
                   />
                   <FormHelperText error>{fieldState.error?.message}</FormHelperText>
                 </>
@@ -185,7 +185,7 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
                   }}
                 >
                   <Chip
-                    sx={{ mr: 0.5 }}
+                    sx={{ mr: 0.5, mb: 0.5 }}
                     key={tag}
                     label={tag}
                     onDelete={() => !disabled && handleOnDeleteTag(tag)}
