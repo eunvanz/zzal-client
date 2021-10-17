@@ -63,7 +63,6 @@ const ContentDetailCard: React.FC<ContentDetailCardProps> = ({ content }) => {
       <CardActions>
         <Button
           size="small"
-          onClick={() => router.push("/registration")}
           endIcon={<LinkOutlined />}
           id="copy-to-clipboard"
           data-clipboard-text={`https://zzal.me/${content.path}`}
