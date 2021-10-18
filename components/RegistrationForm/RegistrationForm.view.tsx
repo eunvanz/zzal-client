@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { debounce, isEqual } from "lodash-es";
 import { Controller, useForm } from "react-hook-form";
+import { FORBIDDEN_PATHS } from "~/constants/rules";
 import useExistingPathQuery from "~/queries/useExistingPathQuery";
 import { Content } from "~/types";
 import Alert from "../Alert";
