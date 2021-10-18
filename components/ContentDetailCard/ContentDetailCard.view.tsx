@@ -1,5 +1,9 @@
 import { useEffect } from "react";
-import { AddOutlined, LinkOutlined } from "@mui/icons-material";
+import {
+  AddOutlined,
+  ContentCopyOutlined,
+  ModeEditOutlineOutlined,
+} from "@mui/icons-material";
 import {
   Box,
   Typography,
@@ -52,7 +56,7 @@ const ContentDetailCard: React.FC<ContentDetailCardProps> = ({ content }) => {
         {!!content.tags.length && (
           <Box
             sx={{
-              mt: 2,
+              my: 2,
             }}
           >
             {content.tags.map((tag) => (
@@ -60,16 +64,28 @@ const ContentDetailCard: React.FC<ContentDetailCardProps> = ({ content }) => {
             ))}
           </Box>
         )}
+        <Typography variant="body2" color="text.disabled">
+          zzal.me/{content.path}
+        </Typography>
       </CardContent>
       <CardActions>
         <Button
           size="small"
-          endIcon={<LinkOutlined />}
+          endIcon={<ContentCopyOutlined />}
           id="copy-to-clipboard"
           data-clipboard-text={`https://zzal.me/${content.path}`}
         >
           링크 복사
         </Button>
+        {!content.userId && (
+          <Button
+            size="small"
+            onClick={() => router.push(`${ROUTES.REGISTRATION}/${content.path}`)}
+            endIcon={<ModeEditOutlineOutlined />}
+          >
+            짤 수정
+          </Button>
+        )}
         <Button
           size="small"
           onClick={() => router.push(ROUTES.REGISTRATION__NEW)}
