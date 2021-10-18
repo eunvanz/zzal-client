@@ -70,7 +70,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({
             top: 0,
             left: 0,
             right: 0,
-            bottom: 150,
+            bottom: fixedRatio ? 120 : 150,
           }}
         >
           <Cropper
@@ -94,7 +94,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({
             position: "absolute",
             bottom: 0,
             width: "100%",
-            height: 150,
+            height: fixedRatio ? 120 : 150,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -166,6 +166,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({
               sx={{
                 px: 2,
                 flexGrow: 1,
+                pt: 1,
               }}
             >
               <Slider
@@ -203,6 +204,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({
               sx={{
                 px: 2,
                 flexGrow: 1,
+                pt: 1,
               }}
             >
               <Slider

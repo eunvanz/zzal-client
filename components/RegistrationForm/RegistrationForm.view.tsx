@@ -275,6 +275,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             errorMessage={formState.errors.thumbnail?.message}
             disabled={isSubmitting}
             defaultValue={defaultValues.thumbnail}
+            isCropOnly
+            fixedRatio={2 / 1}
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
