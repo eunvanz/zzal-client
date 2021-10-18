@@ -5,18 +5,20 @@ import FileDrop from "../FileDrop";
 import ImageCrop from "../ImageCrop";
 
 export interface SelectAndCropProps {
-  onSettleImage: (image: string, file: File) => void;
+  onSettleImage: (image: string, file?: File) => void;
   errorMessage?: string;
   disabled: boolean;
+  defaultValue?: string;
 }
 
 const SelectAndCrop: React.FC<SelectAndCropProps> = ({
   onSettleImage,
   errorMessage,
   disabled,
+  defaultValue,
 }) => {
   const [step, setStep] = useState<"select" | "crop" | "notCrop">("select");
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(defaultValue || null);
   const [file, setFile] = useState<File | null>(null);
 
   const handleOnChangeFiles = useCallback(async (files: File[]) => {
@@ -40,6 +42,13 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
       onSettleImage(image as string, file as File);
     }
   }, [file, image, onSettleImage, step]);
+
+  useEffect(() => {
+    if (defaultValue) {
+      setStep("notCrop");
+      setImage(defaultValue);
+    }
+  }, [defaultValue, onSettleImage]);
 
   return (
     <>

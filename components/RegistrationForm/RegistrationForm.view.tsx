@@ -11,9 +11,10 @@ import {
   FormHelperText,
   CircularProgress,
 } from "@mui/material";
-import { debounce } from "lodash-es";
+import { debounce, isEqual } from "lodash-es";
 import { Controller, useForm } from "react-hook-form";
 import useExistingPathQuery from "~/queries/useExistingPathQuery";
+import { Content } from "~/types";
 import Alert from "../Alert";
 import SelectAndCrop from "../SelectAndCrop";
 import TagsInput from "../TagsInput";
@@ -23,7 +24,7 @@ export interface RegistrationFormValues {
   path: string;
   thumbnail: string;
   description: string;
-  file?: File;
+  file?: File | null;
   tags: string;
 }
 
@@ -31,13 +32,36 @@ export interface RegistrationFormProps {
   onChangeForm: (values: RegistrationFormValues) => void;
   onSubmit: (values: RegistrationFormValues) => Promise<void>;
   isSubmitting: boolean;
+  content?: Content;
 }
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   onChangeForm,
   onSubmit,
   isSubmitting,
+  content,
 }) => {
+  const defaultValues = useMemo(() => {
+    return {
+      title: content?.title || "",
+      path: content?.path || "",
+      thumbnail: content?.images[0].url || "",
+      description: content?.description || "",
+      tags: content?.tags.map((tag) => tag.name).join(",") || "",
+      file: null,
+    };
+  }, [
+    content?.description,
+    content?.images,
+    content?.path,
+    content?.tags,
+    content?.title,
+  ]);
+
+  const isModification = useMemo(() => {
+    return !!content;
+  }, [content]);
+
   const {
     control,
     handleSubmit,
@@ -49,23 +73,23 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     clearErrors,
   } = useForm<RegistrationFormValues>({
     mode: "onChange",
-    defaultValues: {
-      title: "",
-      path: "",
-      thumbnail: "",
-      description: "",
-      tags: "",
-    },
+    defaultValues,
   });
 
   const [selectAndCropKey, setSelectAndCropKey] = useState(0);
 
-  const { path, title, description, thumbnail, tags } = watch() as RegistrationFormValues;
+  const watchedValues = watch();
+
+  const { path, title, description, thumbnail, tags } = watchedValues;
+
+  const isModified = useMemo(() => {
+    return !isEqual(defaultValues, watchedValues);
+  }, [defaultValues, watchedValues]);
 
   const handleOnSettleImage = useCallback(
-    (image: string, file: File) => {
+    (image: string, file?: File) => {
       setValue("thumbnail", image);
-      setValue("file", file);
+      file && setValue("file", file);
       clearErrors("thumbnail");
     },
     [clearErrors, setValue],
@@ -98,18 +122,33 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       thumbnail: "",
       description: "",
       tags: "",
+      file: null,
     });
     setSelectAndCropKey((key) => ++key);
     resetExistingPath();
   }, [reset, resetExistingPath]);
 
   const existingMessage = useMemo(() => {
-    return isExistingPathFetched
-      ? isExistingPath
-        ? "이미 등록된 짤이 있어요. 기존의 짤을 덮어씌웁니다."
-        : "새로운 짤을 등록합니다."
+    const message = isExistingPathFetched
+      ? (content ? isExistingPath && path !== content.path : isExistingPath)
+        ? "이미 등록된 경로입니다."
+        : "사용 가능한 경로입니다."
       : undefined;
-  }, [isExistingPath, isExistingPathFetched]);
+    if (message === "사용 가능한 경로입니다.") {
+      formState.errors?.path?.type === "isExisting" && clearErrors("path");
+    } else if (message === "이미 등록된 경로입니다.") {
+      setError("path", { type: "isExisting", message });
+    }
+    return message;
+  }, [
+    clearErrors,
+    content,
+    formState.errors?.path?.type,
+    isExistingPath,
+    isExistingPathFetched,
+    path,
+    setError,
+  ]);
 
   const [isPathValidating, setIsPathValidating] = useState(false);
 
@@ -129,12 +168,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       }
       if (values.thumbnail) {
         await onSubmit(values);
-        handleOnReset();
+        if (!content) {
+          handleOnReset();
+        }
       } else {
         setError("thumbnail", { message: "이미지를 선택해주세요." });
       }
     })();
   }, [
+    content,
     handleOnReset,
     handleSubmit,
     isExistingPathFetching,
@@ -171,6 +213,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 hasSpace: (v: string) => !v.includes(" ") || "공백은 허용되지 않아요.",
                 isRandom: (v: string) =>
                   !v.startsWith("랜덤") || "'랜덤'으로 시작할 수 없어요.",
+                isNew: (v: string) => v !== "new" || "'new'는 사용할 수 없어요.",
               },
             }}
             render={({ field }) => (
@@ -229,6 +272,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             onSettleImage={handleOnSettleImage}
             errorMessage={formState.errors.thumbnail?.message}
             disabled={isSubmitting}
+            defaultValue={defaultValues.thumbnail}
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
@@ -297,9 +341,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               variant="contained"
               size="large"
               fullWidth
-              disabled={isSubmitting}
+              disabled={isSubmitting || !isModified}
             >
-              {isSubmitting ? "등록 중.." : "등록"}
+              {isSubmitting
+                ? isModification
+                  ? "수정 중.."
+                  : "등록 중.."
+                : isModification
+                ? "수정"
+                : "등록"}
             </Button>
           </Box>
         </Box>

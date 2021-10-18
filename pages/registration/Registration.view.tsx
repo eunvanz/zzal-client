@@ -1,30 +1,42 @@
 import { useCallback, useEffect, useState } from "react";
 import { Container, Box } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRecoilState } from "recoil";
 import Example from "~/components/Example";
 import { PreviewProps } from "~/components/Preview";
 import RegistrationForm, { RegistrationFormValues } from "~/components/RegistrationForm";
+import { Content } from "~/types";
 
 export interface RegistrationProps {
   onSubmit: (values: RegistrationFormValues) => Promise<void>;
   uploadedContents: PreviewProps[];
   isSubmitting: boolean;
+  content?: Content;
 }
 
 const Registration: React.FC<RegistrationProps> = ({
   onSubmit,
   uploadedContents,
   isSubmitting,
+  content,
 }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [formValues, setFormValues] = useState<Partial<RegistrationFormValues>>({});
+  const [formValues, setFormValues] = useState<Partial<RegistrationFormValues>>({
+    title: content?.title || "",
+    path: content?.path || "",
+    thumbnail: content?.images[0].url || "",
+    description: content?.description || "",
+    tags: content?.tags.map((tag) => tag.name).join(",") || "",
+    file: null,
+  });
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsFormVisible(true);
-    }, 2000);
-  }, []);
+    setTimeout(
+      () => {
+        setIsFormVisible(true);
+      },
+      content ? 0 : 2000,
+    );
+  }, [content]);
 
   const handleOnChangeForm = useCallback((values: RegistrationFormValues) => {
     setFormValues(values);
@@ -72,6 +84,7 @@ const Registration: React.FC<RegistrationProps> = ({
                   onChangeForm={handleOnChangeForm}
                   onSubmit={onSubmit}
                   isSubmitting={isSubmitting}
+                  content={content}
                 />
               </motion.div>
             )}

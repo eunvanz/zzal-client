@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { DEFAULT_TITLE } from "~/constants/text";
+import ROUTES from "~/routes";
 
 const Home: NextPage = () => {
   return (
@@ -13,7 +14,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Link href="/registration">짤 등록하러 가기</Link>
+        <Link href={ROUTES.REGISTRATION__NEW}>짤 등록하러 가기</Link>
       </main>
     </>
   );

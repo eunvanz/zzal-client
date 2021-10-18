@@ -13,6 +13,7 @@ import {
 import Clipboard from "clipboard";
 import { useRouter } from "next/dist/client/router";
 import { useSnackbar } from "notistack";
+import ROUTES from "~/routes";
 import { Content } from "~/types";
 
 export interface ContentDetailCardProps {
@@ -48,7 +49,7 @@ const ContentDetailCard: React.FC<ContentDetailCardProps> = ({ content }) => {
         <Typography gutterBottom variant="body2" color="text.secondary">
           {content.description}
         </Typography>
-        {content.tags.length && (
+        {!!content.tags.length && (
           <Box
             sx={{
               mt: 2,
@@ -71,7 +72,7 @@ const ContentDetailCard: React.FC<ContentDetailCardProps> = ({ content }) => {
         </Button>
         <Button
           size="small"
-          onClick={() => router.push("/registration")}
+          onClick={() => router.push(ROUTES.REGISTRATION__NEW)}
           endIcon={<AddOutlined />}
         >
           다른 짤 등록

@@ -55,11 +55,31 @@ const getRandomContent = async (tagName: string) => {
   return data;
 };
 
+const putContent = async (
+  contentId: number,
+  { path, title, description, images, tags }: CreateContentDto,
+) => {
+  const formData = new FormData();
+  formData.append("path", path);
+  formData.append("title", title || "");
+  formData.append("description", description || "");
+  images.forEach((image) => {
+    formData.append("images", image);
+  });
+  tags.length && formData.append("tags", tags);
+  await requester.put(`/contents/${contentId}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 const api = {
   getContent,
   postContent,
   checkIsExistingPath,
   getRandomContent,
+  putContent,
 };
 
 export default api;

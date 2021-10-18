@@ -1,30 +1,43 @@
 import { useCallback } from "react";
 import { useSnackbar } from "notistack";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { RegistrationFormValues } from "~/components/RegistrationForm";
 import usePostContentMutation from "~/queries/usePostContentMutation";
+import usePutContentMutation from "~/queries/usePutContentMutation";
 import uploadedContentsState from "~/state/uploadedContents";
 import { RegistrationProps } from "./Registration.view";
+import { RegistrationPageProps } from "./[path].page";
 
-const useRegistrationProps: () => RegistrationProps = () => {
-  const uploadedContents = useRecoilValue(uploadedContentsState);
+const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps = ({
+  content,
+}) => {
+  const [uploadedContents] = useRecoilState(uploadedContentsState);
 
-  const { mutateAsync, isLoading: isSubmitting } = usePostContentMutation();
+  const { mutateAsync: postContent, isLoading: isPosting } = usePostContentMutation();
+  const { mutateAsync: putContent, isLoading: isPutting } = usePutContentMutation(
+    content?.id || undefined,
+  );
 
   const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = useCallback(
     async (values: RegistrationFormValues) => {
-      await mutateAsync(values);
-      enqueueSnackbar("짤이 등록되었습니다.");
+      if (content) {
+        await putContent(values);
+        enqueueSnackbar("짤이 수정되었습니다.");
+      } else {
+        await postContent(values);
+        enqueueSnackbar("짤이 등록되었습니다.");
+      }
     },
-    [enqueueSnackbar, mutateAsync],
+    [content, enqueueSnackbar, postContent, putContent],
   );
 
   return {
     onSubmit,
     uploadedContents,
-    isSubmitting,
+    isSubmitting: isPosting || isPutting,
+    content: content || undefined,
   };
 };
 

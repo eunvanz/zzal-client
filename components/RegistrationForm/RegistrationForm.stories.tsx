@@ -1,4 +1,5 @@
 import type { ComponentStory, ComponentMeta } from "@storybook/react";
+import mockContent from "~/__mocks__/content";
 import { createStoryComponent } from "~/helpers/storybookHelpers";
 import RegistrationForm from "./RegistrationForm.view";
 
@@ -20,3 +21,7 @@ const Template: ComponentStory<typeof RegistrationForm> = (args) => (
 export const Default = createStoryComponent(Template);
 
 export const Submitting = createStoryComponent(Template, { isSubmitting: true });
+
+export const HasDefaultValue = createStoryComponent(Template, {
+  content: mockContent.content,
+});
