@@ -213,7 +213,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 hasSpace: (v: string) => !v.includes(" ") || "공백은 허용되지 않아요.",
                 isRandom: (v: string) =>
                   !v.startsWith("랜덤") || "'랜덤'으로 시작할 수 없어요.",
-                isNew: (v: string) => v !== "new" || "'new'는 사용할 수 없어요.",
+                isForbidden: (v: string) =>
+                  !FORBIDDEN_PATHS.includes(v) || "사용할 수 없는 경로예요.",
               },
             }}
             render={({ field }) => (
