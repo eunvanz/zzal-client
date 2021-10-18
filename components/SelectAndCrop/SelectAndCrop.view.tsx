@@ -9,6 +9,8 @@ export interface SelectAndCropProps {
   errorMessage?: string;
   disabled: boolean;
   defaultValue?: string;
+  isCropOnly?: boolean;
+  fixedRatio?: number;
 }
 
 const SelectAndCrop: React.FC<SelectAndCropProps> = ({
@@ -16,6 +18,8 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
   errorMessage,
   disabled,
   defaultValue,
+  isCropOnly,
+  fixedRatio,
 }) => {
   const [step, setStep] = useState<"select" | "crop" | "notCrop">("select");
   const [image, setImage] = useState<string | null>(defaultValue || null);
@@ -45,10 +49,10 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
 
   useEffect(() => {
     if (defaultValue) {
-      setStep("notCrop");
+      !isCropOnly && setStep("notCrop");
       setImage(defaultValue);
     }
-  }, [defaultValue, onSettleImage]);
+  }, [defaultValue, isCropOnly, onSettleImage]);
 
   return (
     <>
@@ -65,6 +69,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
             onChange={handleOnChangeCrop}
             height={400}
             disabled={disabled}
+            fixedRatio={fixedRatio}
           />
           <Stack
             direction="row"
@@ -82,14 +87,16 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
             >
               다른 이미지 선택
             </Button>
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={() => setStep("notCrop")}
-              disabled={disabled}
-            >
-              원본 유지
-            </Button>
+            {!isCropOnly && (
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => setStep("notCrop")}
+                disabled={disabled}
+              >
+                원본 유지
+              </Button>
+            )}
           </Stack>
         </>
       ) : step === "notCrop" ? (

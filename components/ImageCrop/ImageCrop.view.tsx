@@ -10,6 +10,7 @@ export interface ImageCropProps extends Pick<CropperProps, "image"> {
   onChange: (image: string) => void;
   height?: number;
   disabled: boolean;
+  fixedRatio?: number;
 }
 
 const ImageCrop: React.FC<ImageCropProps> = ({
@@ -17,12 +18,13 @@ const ImageCrop: React.FC<ImageCropProps> = ({
   onChange,
   height = 500,
   disabled,
+  fixedRatio,
 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const rotationRef = useRef<number>(0);
   const [rotation, setRotation] = useState(0);
-  const [aspect, setAspect] = useState(2 / 1);
+  const [aspect, setAspect] = useState(fixedRatio || 2 / 1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>();
 
   const onCropComplete = useCallback(
@@ -99,47 +101,49 @@ const ImageCrop: React.FC<ImageCropProps> = ({
             alignItems: "center",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "stretch",
-              height: 50,
-            }}
-          >
+          {!fixedRatio && (
             <Box
               sx={{
-                px: 2,
+                display: "flex",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "stretch",
+                height: 50,
               }}
             >
-              <Typography variant="body2" sx={{ width: 60, display: "inline-block" }}>
-                비율
-              </Typography>
+              <Box
+                sx={{
+                  px: 2,
+                }}
+              >
+                <Typography variant="body2" sx={{ width: 60, display: "inline-block" }}>
+                  비율
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  px: 1,
+                  flexGrow: 1,
+                }}
+              >
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                  <Select
+                    labelId="aspect"
+                    id="aspect"
+                    value={aspect}
+                    onChange={(e) => setAspect(e.target.value as number)}
+                    label="Aspect"
+                    disabled={disabled}
+                  >
+                    <MenuItem value={1}>1:1</MenuItem>
+                    <MenuItem value={4 / 3}>4:3</MenuItem>
+                    <MenuItem value={16 / 9}>16:9</MenuItem>
+                    <MenuItem value={2 / 1}>2:1</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
             </Box>
-            <Box
-              sx={{
-                px: 1,
-                flexGrow: 1,
-              }}
-            >
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                <Select
-                  labelId="aspect"
-                  id="aspect"
-                  value={aspect}
-                  onChange={(e) => setAspect(e.target.value as number)}
-                  label="Aspect"
-                  disabled={disabled}
-                >
-                  <MenuItem value={1}>1:1</MenuItem>
-                  <MenuItem value={4 / 3}>4:3</MenuItem>
-                  <MenuItem value={16 / 9}>16:9</MenuItem>
-                  <MenuItem value={2 / 1}>2:1</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          </Box>
+          )}
           <Box
             sx={{
               display: "flex",

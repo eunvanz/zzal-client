@@ -23,3 +23,7 @@ export const HasDefaultValue = createStoryComponent(Template, {
   defaultValue:
     "https://s3.ap-northeast-2.amazonaws.com/files.zzal.me/images/%ED%84%B0%EC%A0%B8%EB%B3%BC%EB%9E%98_1634384919326.Z",
 });
+
+export const CropOnly = createStoryComponent(Template, {
+  isCropOnly: true,
+});

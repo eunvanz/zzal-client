@@ -20,3 +20,5 @@ export default {
 const Template: ComponentStory<typeof ImageCrop> = (args) => <ImageCrop {...args} />;
 
 export const Default = createStoryComponent(Template);
+
+export const FixedRatio = createStoryComponent(Template, { fixedRatio: 1 / 2 });
