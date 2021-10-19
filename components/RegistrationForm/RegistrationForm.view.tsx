@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { AutoFixHigh } from "@mui/icons-material";
 import {
   Box,
   FormControl,
@@ -10,8 +11,10 @@ import {
   Button,
   FormHelperText,
   CircularProgress,
+  IconButton,
 } from "@mui/material";
 import { debounce, isEqual } from "lodash-es";
+import { nanoid } from "nanoid";
 import { Controller, useForm } from "react-hook-form";
 import { FORBIDDEN_PATHS } from "~/constants/rules";
 import useExistingPathQuery from "~/queries/useExistingPathQuery";
@@ -161,6 +164,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     [],
   );
 
+  const handleOnGenerateAutoPath = useCallback(() => {
+    const randomPath = nanoid(4);
+    setValue("path", randomPath);
+    setIsPathValidating(true);
+    clearErrors("path");
+    handleOnChangePath();
+  }, [clearErrors, handleOnChangePath, setValue]);
+
   const handleOnSubmit = useCallback(async () => {
     await handleSubmit(async (values) => {
       if (isExistingPathFetching || isPathValidating) {
@@ -237,17 +248,21 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                   }
                   endAdornment={
                     <InputAdornment position="end">
-                      {
-                        <CircularProgress
-                          size={16}
-                          sx={{
-                            visibility:
-                              isExistingPathFetching || isPathValidating
-                                ? "visible"
-                                : "hidden",
-                          }}
-                        />
-                      }
+                      <CircularProgress
+                        size={16}
+                        sx={{
+                          visibility:
+                            isExistingPathFetching || isPathValidating
+                              ? "visible"
+                              : "hidden",
+                        }}
+                      />
+                      <IconButton
+                        onClick={handleOnGenerateAutoPath}
+                        disabled={isSubmitting}
+                      >
+                        <AutoFixHigh />
+                      </IconButton>
                     </InputAdornment>
                   }
                   error={!!formState.errors.path}
