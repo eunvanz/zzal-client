@@ -24,12 +24,16 @@ const CommonContentDetail: React.FC<ContentDetailPageProps> = ({ content }) => {
             content={d || content.description || undefined}
           />
         )}
-        <meta property="og:image" content={image.url} />
-        <meta property="og:image:url" content={image.url} />
-        <meta property="og:image:secure_url" content={image.url} />
-        <meta property="og:image:type" content={image.type} />
-        <meta property="og:image:width" content={image.width.toString()} />
-        <meta property="og:image:height" content={image.height.toString()} />
+        {image && (
+          <>
+            <meta property="og:image" content={image.url} />
+            <meta property="og:image:url" content={image.url} />
+            <meta property="og:image:secure_url" content={image.url} />
+            <meta property="og:image:type" content={image.type} />
+            <meta property="og:image:width" content={image.width.toString()} />
+            <meta property="og:image:height" content={image.height.toString()} />
+          </>
+        )}
       </Head>
       <ContentDetail
         content={{
