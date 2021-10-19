@@ -267,7 +267,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             gutterBottom
             component="label"
           >
-            이미지 *
+            이미지 및 썸네일 *
           </Typography>
           <SelectAndCrop
             key={selectAndCropKey}

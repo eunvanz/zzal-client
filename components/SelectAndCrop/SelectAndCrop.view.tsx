@@ -5,7 +5,8 @@ import FileDrop from "../FileDrop";
 import ImageCrop from "../ImageCrop";
 
 export interface SelectAndCropProps {
-  onSettleImage: (image: string, file?: File) => void;
+  onSelectImage: (file?: File) => void;
+  onCropImage: (image: string, file?: File) => void;
   errorMessage?: string;
   disabled: boolean;
   defaultValue?: string;
@@ -14,7 +15,8 @@ export interface SelectAndCropProps {
 }
 
 const SelectAndCrop: React.FC<SelectAndCropProps> = ({
-  onSettleImage,
+  onSelectImage,
+  onCropImage,
   errorMessage,
   disabled,
   defaultValue,
@@ -25,34 +27,43 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
   const [image, setImage] = useState<string | null>(defaultValue || null);
   const [file, setFile] = useState<File | null>(null);
 
-  const handleOnChangeFiles = useCallback(async (files: File[]) => {
-    if (files[0]) {
-      const base64Image = await convertFileToBase64(files[0]);
-      setImage(base64Image as string);
-      setFile(files[0]);
-      setStep("crop");
-    }
-  }, []);
+  const handleOnChangeFiles = useCallback(
+    async (files: File[]) => {
+      if (files[0]) {
+        onSelectImage(files[0]);
+        const base64Image = await convertFileToBase64(files[0]);
+        setImage(base64Image as string);
+        setFile(files[0]);
+        setStep("crop");
+      }
+    },
+    [onSelectImage],
+  );
 
   const handleOnChangeCrop = useCallback(
     (croppedImage: string) => {
-      onSettleImage(croppedImage, file as File);
+      onCropImage(croppedImage, file as File);
     },
-    [file, onSettleImage],
+    [file, onCropImage],
   );
+
+  const handleOnSelectAgain = useCallback(() => {
+    setStep("select");
+    onSelectImage(undefined);
+  }, [onSelectImage]);
 
   useEffect(() => {
     if (step === "notCrop") {
-      onSettleImage(image as string, file as File);
+      onCropImage(image as string, file as File);
     }
-  }, [file, image, onSettleImage, step]);
+  }, [file, image, onCropImage, step]);
 
   useEffect(() => {
     if (defaultValue) {
       !isCropOnly && setStep("notCrop");
       setImage(defaultValue);
     }
-  }, [defaultValue, isCropOnly, onSettleImage]);
+  }, [defaultValue, isCropOnly, onCropImage]);
 
   return (
     <>
@@ -82,7 +93,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
             <Button
               variant="outlined"
               size="small"
-              onClick={() => setStep("select")}
+              onClick={handleOnSelectAgain}
               disabled={disabled}
             >
               다른 이미지 선택
@@ -129,7 +140,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
             <Button
               variant="outlined"
               size="small"
-              onClick={() => setStep("select")}
+              onClick={handleOnSelectAgain}
               disabled={disabled}
             >
               다른 이미지 선택
