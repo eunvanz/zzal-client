@@ -15,18 +15,19 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ content }) => {
       }}
     >
       <Container
-        maxWidth="sm"
+        maxWidth="md"
         sx={{
           height: "100vh",
         }}
       >
         <Box
           sx={{
-            height: "100vh",
+            minHeight: "100vh",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            p: 2,
           }}
         >
           <ContentDetailCard content={content} />
