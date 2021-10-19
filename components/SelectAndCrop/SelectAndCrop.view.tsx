@@ -59,8 +59,14 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
 
   useEffect(() => {
     if (defaultValue) {
+      const img = new Image();
+      img.onload = () => {
+        setImage(img.src);
+      };
+      img.src = defaultValue;
+      img.crossOrigin = "Anonymous";
       setStep(isCropOnly ? "crop" : "notCrop");
-      setImage(defaultValue);
+      // setImage(defaultValue);
     }
   }, [defaultValue, isCropOnly, onCropImage]);
 

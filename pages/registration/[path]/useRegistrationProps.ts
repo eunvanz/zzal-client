@@ -7,7 +7,7 @@ import usePostContentMutation from "~/queries/usePostContentMutation";
 import usePutContentMutation from "~/queries/usePutContentMutation";
 import uploadedContentsState from "~/state/uploadedContents";
 import { RegistrationProps } from "./Registration.view";
-import { RegistrationPageProps } from "./[path].page";
+import { RegistrationPageProps } from "./index.page";
 
 const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps = ({
   content: ssrContent,
