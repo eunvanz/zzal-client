@@ -25,7 +25,7 @@ export interface RegistrationFormValues {
   path: string;
   thumbnail: string;
   description: string;
-  file?: File | null;
+  imageFile?: File | null;
   tags: string;
 }
 
@@ -49,7 +49,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       thumbnail: content?.images[0].url || "",
       description: content?.description || "",
       tags: content?.tags.map((tag) => tag.name).join(",") || "",
-      file: null,
+      thumbnailFile: null,
+      imageFile: null,
     };
   }, [
     content?.description,
@@ -87,13 +88,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     return !isEqual(defaultValues, watchedValues);
   }, [defaultValues, watchedValues]);
 
-  const handleOnSettleImage = useCallback(
-    (image: string, file?: File) => {
-      setValue("thumbnail", image);
-      file && setValue("file", file);
+  const handleOnCropImage = useCallback(
+    (image?: string) => {
+      setValue("thumbnail", image || "");
       clearErrors("thumbnail");
     },
     [clearErrors, setValue],
+  );
+
+  const handleOnSelectImage = useCallback(
+    (file?: File) => {
+      setValue("imageFile", file);
+    },
+    [setValue],
   );
 
   useEffect(() => {
@@ -123,7 +130,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       thumbnail: "",
       description: "",
       tags: "",
-      file: null,
+      imageFile: null,
     });
     setSelectAndCropKey((key) => ++key);
     resetExistingPath();
@@ -271,7 +278,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </Typography>
           <SelectAndCrop
             key={selectAndCropKey}
-            onSettleImage={handleOnSettleImage}
+            onSelectImage={handleOnSelectImage}
+            onCropImage={handleOnCropImage}
             errorMessage={formState.errors.thumbnail?.message}
             disabled={isSubmitting}
             defaultValue={defaultValues.thumbnail}

@@ -14,17 +14,17 @@ const usePutContentMutation = (contentId?: number) => {
   return useMutation(
     async (values: RegistrationFormValues) => {
       if (!contentId) return;
-      const { file } = values;
-      let image: File | null = null;
-      if (file) {
-        image = await convertURLtoFile(
+      const { imageFile } = values;
+      let thumbnailFile: File | null = null;
+      if (imageFile) {
+        thumbnailFile = await convertURLtoFile(
           values.thumbnail,
-          path.extname(file!.name.replace(".", "")),
+          path.extname(imageFile!.name.replace(".", "")),
         );
       }
       newContentRef.current = {
         path: values.path,
-        images: image ? [image] : [],
+        images: imageFile && thumbnailFile ? [thumbnailFile, imageFile] : [],
         description: values.description,
         title: values.title,
         tags: values.tags,

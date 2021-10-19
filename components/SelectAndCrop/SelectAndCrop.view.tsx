@@ -6,7 +6,7 @@ import ImageCrop from "../ImageCrop";
 
 export interface SelectAndCropProps {
   onSelectImage: (file?: File) => void;
-  onCropImage: (image: string, file?: File) => void;
+  onCropImage: (image?: string) => void;
   errorMessage?: string;
   disabled: boolean;
   defaultValue?: string;
@@ -25,7 +25,6 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
 }) => {
   const [step, setStep] = useState<"select" | "crop" | "notCrop">("select");
   const [image, setImage] = useState<string | null>(defaultValue || null);
-  const [file, setFile] = useState<File | null>(null);
 
   const handleOnChangeFiles = useCallback(
     async (files: File[]) => {
@@ -33,7 +32,6 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
         onSelectImage(files[0]);
         const base64Image = await convertFileToBase64(files[0]);
         setImage(base64Image as string);
-        setFile(files[0]);
         setStep("crop");
       }
     },
@@ -42,21 +40,22 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
 
   const handleOnChangeCrop = useCallback(
     (croppedImage: string) => {
-      onCropImage(croppedImage, file as File);
+      onCropImage(croppedImage);
     },
-    [file, onCropImage],
+    [onCropImage],
   );
 
   const handleOnSelectAgain = useCallback(() => {
     setStep("select");
     onSelectImage(undefined);
-  }, [onSelectImage]);
+    onCropImage(undefined);
+  }, [onCropImage, onSelectImage]);
 
   useEffect(() => {
     if (step === "notCrop") {
-      onCropImage(image as string, file as File);
+      onCropImage(image as string);
     }
-  }, [file, image, onCropImage, step]);
+  }, [image, onCropImage, step]);
 
   useEffect(() => {
     if (defaultValue) {

@@ -43,7 +43,7 @@ const ContentDetailCard: React.FC<ContentDetailCardProps> = ({ content }) => {
     <Card sx={{ boxShadow: 20 }}>
       <CardMedia
         component="img"
-        image={content.images[0].url}
+        image={content.images.pop()?.url}
         alt={content.title || "untitled"}
       />
       <CardContent>
