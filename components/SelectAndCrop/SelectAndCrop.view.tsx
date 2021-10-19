@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Box, Button, Stack } from "@mui/material";
-import { convertFileToBase64 } from "~/helpers/imageHelpers";
+import { convertFileToBase64, getBase64ImageFromUrl } from "~/helpers/imageHelpers";
 import FileDrop from "../FileDrop";
 import ImageCrop from "../ImageCrop";
 
@@ -59,14 +59,11 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
 
   useEffect(() => {
     if (defaultValue) {
-      const img = new Image();
-      img.onload = () => {
-        setImage(img.src);
-      };
-      img.src = defaultValue;
-      img.crossOrigin = "Anonymous";
-      setStep(isCropOnly ? "crop" : "notCrop");
-      // setImage(defaultValue);
+      (async () => {
+        const image = await getBase64ImageFromUrl(defaultValue);
+        setStep(isCropOnly ? "crop" : "notCrop");
+        setImage(image);
+      })();
     }
   }, [defaultValue, isCropOnly, onCropImage]);
 

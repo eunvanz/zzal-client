@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import path from "path";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 import api, { CreateContentDto } from "~/api";
@@ -17,7 +16,7 @@ const usePostContentMutation = () => {
       const { imageFile } = values;
       const thumbnailFile = await convertURLtoFile(
         values.thumbnail,
-        path.extname(imageFile!.name).replace(".", ""),
+        "png",
         `${imageFile!.name}_thumbnail`,
       );
       newContentRef.current = {

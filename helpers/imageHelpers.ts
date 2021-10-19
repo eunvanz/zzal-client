@@ -20,7 +20,7 @@ export const convertURLtoFile = async (
   return new File([data], `${filename!}${extension ? `.${extension}` : ""}`, metadata);
 };
 
-const createImage = (url: string) =>
+export const createImage = (url: string) =>
   new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
     image.addEventListener("load", () => resolve(image));
@@ -28,6 +28,17 @@ const createImage = (url: string) =>
     image.setAttribute("crossOrigin", "anonymous"); // needed to avoid cross-origin issues on CodeSandbox
     image.src = url;
   });
+
+export const getBase64ImageFromUrl = async (url: string) => {
+  const img = await createImage(url);
+  const canvas = document.createElement("canvas");
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+  const ctx = canvas.getContext("2d");
+  ctx!.drawImage(img, 0, 0);
+  const dataURL = canvas.toDataURL("image/png");
+  return dataURL;
+};
 
 const getRadianAngle = (degreeValue: number) => {
   return (degreeValue * Math.PI) / 180;

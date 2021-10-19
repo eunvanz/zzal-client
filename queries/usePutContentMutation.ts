@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import path from "path";
 import { useMutation, useQueryClient } from "react-query";
 import api, { CreateContentDto } from "~/api";
 import { RegistrationFormValues } from "~/components/RegistrationForm";
@@ -19,7 +18,8 @@ const usePutContentMutation = (contentId?: number) => {
       if (imageFile) {
         thumbnailFile = await convertURLtoFile(
           values.thumbnail,
-          path.extname(imageFile!.name.replace(".", "")),
+          "png",
+          `${imageFile!.name}_thumbnail`,
         );
       }
       newContentRef.current = {
