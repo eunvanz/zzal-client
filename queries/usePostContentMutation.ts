@@ -17,7 +17,8 @@ const usePostContentMutation = () => {
       const { imageFile } = values;
       const thumbnailFile = await convertURLtoFile(
         values.thumbnail,
-        path.extname(imageFile!.name.replace(".", "")),
+        path.extname(imageFile!.name).replace(".", ""),
+        `${imageFile!.name}_thumbnail`,
       );
       newContentRef.current = {
         path: values.path,
