@@ -26,7 +26,7 @@ const Registration: React.FC<RegistrationProps> = ({
     thumbnail: content?.images[0].url || "",
     description: content?.description || "",
     tags: content?.tags.map((tag) => tag.name).join(",") || "",
-    file: null,
+    imageFile: null,
   });
 
   useEffect(() => {
