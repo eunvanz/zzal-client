@@ -8,10 +8,7 @@ export const catchServerSideError = (error: AxiosError) => {
     switch (status) {
       case 404:
         return {
-          redirect: {
-            destination: ROUTES.NOT_FOUND,
-            permanent: false,
-          },
+          notFound: true,
         };
       default:
         return {

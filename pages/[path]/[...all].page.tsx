@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { GetServerSidePropsContext } from "next";
 import api from "~/api";
 import { catchServerSideError } from "~/helpers/errorHelpers";
-import { CommonContentDetail, ContentDetailPageProps } from "./index.page";
+import CommonContentDetail, { ContentDetailPageProps } from "./CommonContentDetail.view";
 
 const ContentDetailPage: React.FC<ContentDetailPageProps> = ({ content }) => {
   return <CommonContentDetail content={content} />;
