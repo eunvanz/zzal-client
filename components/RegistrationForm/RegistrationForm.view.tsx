@@ -124,17 +124,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   });
 
   const handleOnReset = useCallback(() => {
-    reset({
-      title: "",
-      path: "",
-      thumbnail: "",
-      description: "",
-      tags: "",
-      imageFile: null,
-    });
+    reset(defaultValues);
     setSelectAndCropKey((key) => ++key);
     resetExistingPath();
-  }, [reset, resetExistingPath]);
+  }, [defaultValues, reset, resetExistingPath]);
 
   const existingMessage = useMemo(() => {
     const message = isExistingPathFetched

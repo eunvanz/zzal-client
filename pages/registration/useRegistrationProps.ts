@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useSnackbar } from "notistack";
 import { useRecoilState } from "recoil";
 import { RegistrationFormValues } from "~/components/RegistrationForm";
+import useContentByPathQuery from "~/queries/useContentByPathQuery";
 import usePostContentMutation from "~/queries/usePostContentMutation";
 import usePutContentMutation from "~/queries/usePutContentMutation";
 import uploadedContentsState from "~/state/uploadedContents";
@@ -9,10 +10,14 @@ import { RegistrationProps } from "./Registration.view";
 import { RegistrationPageProps } from "./[path].page";
 
 const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps = ({
-  content,
+  content: ssrContent,
 }) => {
   const [uploadedContents] = useRecoilState(uploadedContentsState);
 
+  const { data: content, isFetching } = useContentByPathQuery(ssrContent?.path, {
+    initialData: ssrContent || undefined,
+    enabled: false,
+  });
   const { mutateAsync: postContent, isLoading: isPosting } = usePostContentMutation();
   const { mutateAsync: putContent, isLoading: isPutting } = usePutContentMutation(
     content?.id || undefined,
@@ -36,7 +41,7 @@ const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps 
   return {
     onSubmit,
     uploadedContents,
-    isSubmitting: isPosting || isPutting,
+    isSubmitting: isPosting || isPutting || isFetching,
     content: content || undefined,
   };
 };
