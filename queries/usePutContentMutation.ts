@@ -32,8 +32,9 @@ const usePutContentMutation = (contentId?: number) => {
       return api.putContent(contentId, newContentRef.current);
     },
     {
-      // TODO: refetch content
-      onSuccess: () => {},
+      onSuccess: () => {
+        queryClient.refetchQueries(QUERY_KEY.CONTENT);
+      },
     },
   );
 };

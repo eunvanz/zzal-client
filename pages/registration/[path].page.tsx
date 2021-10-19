@@ -3,6 +3,7 @@ import { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import api from "~/api";
 import { catchServerSideError } from "~/helpers/errorHelpers";
+import useContentByPathQuery from "~/queries/useContentByPathQuery";
 import { Content } from "~/types";
 import Registration from "./Registration.view";
 import useRegistrationProps from "./useRegistrationProps";
@@ -12,7 +13,12 @@ export interface RegistrationPageProps {
 }
 
 const RegistrationPage: NextPage<RegistrationPageProps> = ({ content }) => {
-  const props = useRegistrationProps({ content });
+  const { data } = useContentByPathQuery(content?.path, {
+    initialData: content || undefined,
+    enabled: false,
+  });
+
+  const props = useRegistrationProps({ content: data || null });
 
   return (
     <>

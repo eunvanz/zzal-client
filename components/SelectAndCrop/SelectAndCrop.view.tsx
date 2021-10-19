@@ -59,7 +59,7 @@ const SelectAndCrop: React.FC<SelectAndCropProps> = ({
 
   useEffect(() => {
     if (defaultValue) {
-      !isCropOnly && setStep("notCrop");
+      setStep(isCropOnly ? "crop" : "notCrop");
       setImage(defaultValue);
     }
   }, [defaultValue, isCropOnly, onCropImage]);
