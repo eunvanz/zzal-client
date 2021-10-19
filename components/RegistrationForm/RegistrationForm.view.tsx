@@ -88,7 +88,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const { path, title, description, thumbnail, tags } = watchedValues;
 
   const isModified = useMemo(() => {
-    return !isEqual(defaultValues, watchedValues);
+    return !isEqual(
+      {
+        ...defaultValues,
+        thumbnail: undefined,
+      },
+      { ...watchedValues, thumbnail: undefined },
+    );
   }, [defaultValues, watchedValues]);
 
   const handleOnCropImage = useCallback(
