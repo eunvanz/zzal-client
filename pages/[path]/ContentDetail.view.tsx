@@ -1,5 +1,6 @@
-import { Container, Box } from "@mui/material";
+import { Container, Box, useTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import BaseLayout from "~/components/BaseLayout";
 import ContentDetailCard from "~/components/ContentDetailCard";
 import { Content } from "~/types";
 
@@ -8,32 +9,34 @@ export interface ContentDetailProps {
 }
 
 const ContentDetail: React.FC<ContentDetailProps> = ({ content }) => {
+  const theme = useTheme();
+
   return (
-    <Box
-      sx={{
-        bgcolor: grey[200],
-      }}
-    >
-      <Container
-        maxWidth="md"
+    <BaseLayout>
+      <Box
         sx={{
-          height: "100vh",
+          bgcolor: grey[200],
         }}
       >
-        <Box
-          sx={{
-            minHeight: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            p: 2,
-          }}
-        >
-          <ContentDetailCard content={content} />
-        </Box>
-      </Container>
-    </Box>
+        <Container maxWidth="md">
+          <Box
+            sx={{
+              minHeight: {
+                xs: `calc(100vh - ${theme.spacing(7)})`,
+                sm: `calc(100vh - ${theme.spacing(8)})`,
+              },
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              py: 2,
+            }}
+          >
+            <ContentDetailCard content={content} />
+          </Box>
+        </Container>
+      </Box>
+    </BaseLayout>
   );
 };
 

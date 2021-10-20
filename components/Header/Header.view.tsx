@@ -27,10 +27,10 @@ const Header: React.FC<HeaderProps> = ({}) => {
               variant="h5"
               component="span"
             >
-              zzal
+              짤
             </Typography>
             <Typography variant="h5" component="span">
-              .me
+              .미
             </Typography>
           </Box>
         </Toolbar>
