@@ -4,6 +4,7 @@ const ROUTES = {
   NOT_FOUND: "/not-found",
   COMMON_ERROR: "/error",
   SIGN_IN: "/sign-in",
+  ROOT: "/",
 };
 
 export default ROUTES;
