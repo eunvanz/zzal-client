@@ -9,7 +9,10 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
       <Header />
       <Box
         sx={{
-          mt: 7,
+          mt: {
+            xs: 7,
+            sm: 8,
+          },
         }}
       >
         {children}
