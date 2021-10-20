@@ -16,8 +16,8 @@ import {
   FormControl,
   InputLabel,
   IconButton,
+  InputAdornment,
 } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import { AnimatePresence, motion } from "framer-motion";
 import { Controller, useForm } from "react-hook-form";
 
@@ -112,15 +112,17 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
                   <Input
                     {...field}
                     endAdornment={
-                      <IconButton
-                        onClick={onSubmit}
-                        disabled={
-                          field.value?.length === 0 || !!fieldState.error || disabled
-                        }
-                        type="submit"
-                      >
-                        <AddOutlined />
-                      </IconButton>
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={onSubmit}
+                          disabled={
+                            field.value?.length === 0 || !!fieldState.error || disabled
+                          }
+                          type="submit"
+                        >
+                          <AddOutlined />
+                        </IconButton>
+                      </InputAdornment>
                     }
                     error={!!fieldState.error}
                     disabled={disabled || isMaxReached}
@@ -181,7 +183,7 @@ const TagsInput: React.FC<TagsInputProps> = forwardRef(
                   }}
                   exit={{
                     transform: "scale(0)",
-                    position: index === 0 ? "absolute" : undefined,
+                    position: index === 0 && tags.length === 1 ? "absolute" : undefined,
                   }}
                 >
                   <Chip
