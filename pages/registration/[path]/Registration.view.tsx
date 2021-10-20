@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Container, Box } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
+import BaseLayout from "~/components/BaseLayout";
 import Example from "~/components/Example";
 import { PreviewProps } from "~/components/Preview";
 import RegistrationForm, { RegistrationFormValues } from "~/components/RegistrationForm";
@@ -43,55 +44,57 @@ const Registration: React.FC<RegistrationProps> = ({
   }, []);
 
   return (
-    <Container maxWidth="sm">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+    <BaseLayout>
+      <Container maxWidth="sm">
         <Box
           sx={{
-            transition: "width 500ms",
-            width: "100%",
-            pt: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Example
-            items={[...uploadedContents, formValues]}
-            completeCount={uploadedContents.length}
-          />
+          <Box
+            sx={{
+              transition: "width 500ms",
+              width: "100%",
+              pt: 2,
+            }}
+          >
+            <Example
+              items={[...uploadedContents, formValues]}
+              completeCount={uploadedContents.length}
+            />
+          </Box>
+          <Box
+            sx={{
+              height: "100%",
+              transition: "width 500ms",
+              width: "100%",
+            }}
+          >
+            <AnimatePresence>
+              {isFormVisible && (
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                  }}
+                  animate={{
+                    opacity: 1,
+                  }}
+                >
+                  <RegistrationForm
+                    onChangeForm={handleOnChangeForm}
+                    onSubmit={onSubmit}
+                    isSubmitting={isSubmitting}
+                    content={content}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Box>
         </Box>
-        <Box
-          sx={{
-            height: "100%",
-            transition: "width 500ms",
-            width: "100%",
-          }}
-        >
-          <AnimatePresence>
-            {isFormVisible && (
-              <motion.div
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-              >
-                <RegistrationForm
-                  onChangeForm={handleOnChangeForm}
-                  onSubmit={onSubmit}
-                  isSubmitting={isSubmitting}
-                  content={content}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </Box>
-      </Box>
-    </Container>
+      </Container>
+    </BaseLayout>
   );
 };
 

@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import BaseLayout from "~/components/BaseLayout";
 import { DEFAULT_TITLE } from "~/constants/text";
 import ROUTES from "~/routes";
 
@@ -14,7 +15,9 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Link href={ROUTES.REGISTRATION__NEW}>짤 등록하러 가기</Link>
+        <BaseLayout>
+          <Link href={ROUTES.REGISTRATION__NEW}>짤 등록하러 가기</Link>
+        </BaseLayout>
       </main>
     </>
   );

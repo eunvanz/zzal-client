@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../Header";
 
 export interface BaseLayoutProps {}
@@ -7,13 +7,13 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
-      <Container
+      <Box
         sx={{
-          mt: 10,
+          mt: 7,
         }}
       >
         {children}
-      </Container>
+      </Box>
     </>
   );
 };
