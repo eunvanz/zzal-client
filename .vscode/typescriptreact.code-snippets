@@ -178,6 +178,7 @@
     "prefix": "viewstoryt",
     "body": [
       "import type { ComponentStory, ComponentMeta } from \"@storybook/react\";",
+      "import { createStoryComponent } from \"~helpers/storybookHelpers\";",
       "import ${TM_FILENAME_BASE/\\.stories//} from \"./${TM_FILENAME_BASE/\\.stories//}.view\";",
       "",
       "export default {",
