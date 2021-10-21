@@ -8,6 +8,7 @@ import {
   CardMedia,
   Typography,
   Button,
+  ImageListItem,
 } from "@mui/material";
 import Clipboard from "clipboard";
 import { useRouter } from "next/dist/client/router";
@@ -35,16 +36,17 @@ const ContentItem: React.FC<ContentItemProps> = ({ content }) => {
 
   return (
     <MasonryItem>
-      <Card variant="outlined">
+      <Card
+        sx={{ cursor: "pointer" }}
+        variant="outlined"
+        onClick={() => router.push(`/${content.path}`)}
+      >
         <CardMedia
           component="img"
           image={content.images[content.images.length - 1]?.url}
           alt={content.title || "untitled"}
         />
-        <CardContent
-          sx={{ cursor: "pointer" }}
-          onClick={() => router.push(`/${content.path}`)}
-        >
+        <CardContent>
           <Typography gutterBottom variant="body1" component="div">
             {content.title}
           </Typography>
