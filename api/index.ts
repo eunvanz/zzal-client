@@ -74,18 +74,13 @@ const putContent = async (
   });
 };
 
-export interface ContentListRequestParams {
+export interface ContentListRequestParams extends PageRequestOptions {
   orderBy: CONTENT_ORDER;
   tags?: string[];
-  pageOptions?: PageRequestOptions;
 }
 const getContentList = async (params: ContentListRequestParams) => {
-  const { data } = await requester.get<Pageable<Content>>("/content", {
-    params: {
-      orderBy: params.orderBy,
-      tags: params.tags,
-      ...params.pageOptions,
-    },
+  const { data } = await requester.get<Pageable<Content>>("/contents", {
+    params,
   });
   return data;
 };

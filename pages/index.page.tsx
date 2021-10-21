@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import BaseLayout from "~/components/BaseLayout";
 import { DEFAULT_TITLE } from "~/constants/text";
-import ROUTES from "~/routes";
+import Main from "./Main.view";
+import useMainProps from "./useMainProps";
 
 const Home: NextPage = () => {
+  const props = useMainProps();
+
   return (
     <>
       <Head>
@@ -14,11 +15,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <BaseLayout>
-          <Link href={ROUTES.REGISTRATION__NEW}>짤 등록하러 가기</Link>
-        </BaseLayout>
-      </main>
+      <Main {...props} />
     </>
   );
 };

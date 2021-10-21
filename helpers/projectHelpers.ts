@@ -1,4 +1,4 @@
-import { Content } from "~/types";
+import { Content, Pageable } from "~/types";
 
 export const convertContentToPreview = (content: Content) => {
   return {
@@ -7,4 +7,8 @@ export const convertContentToPreview = (content: Content) => {
     title: content.title,
     description: content.description,
   };
+};
+
+export const getMergedPageData = <T>(data: Pageable<T>[]) => {
+  return data.reduce((prev: T[], item) => [...prev, ...item.items], []);
 };

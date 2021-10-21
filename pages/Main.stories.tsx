@@ -6,8 +6,14 @@ import Main from "./Main.view";
 export default {
   title: "Pages/Main",
   component: Main,
+  argTypes: {
+    onFetchNextPage: {
+      action: "onFetchNext",
+    },
+  },
   args: {
     contents: mockContent.contents,
+    hasNextPage: true,
   },
 } as ComponentMeta<typeof Main>;
 
