@@ -41,3 +41,19 @@ export enum CONTENT_ORDER {
   POPULARITY = "popularity",
   LATEST = "latest",
 }
+
+export interface Pageable<T> {
+  items: T[];
+  meta: {
+    itemCount: number;
+    totalItems: number;
+    itemsPerPage: number;
+    totalPages: number;
+    currentPage: number;
+  };
+}
+
+export interface PageRequestOptions {
+  page?: number;
+  limit?: number;
+}
