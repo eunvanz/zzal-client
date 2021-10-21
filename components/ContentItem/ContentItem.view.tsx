@@ -46,7 +46,7 @@ const ContentItem: React.FC<ContentItemProps> = ({ content }) => {
           image={content.images[content.images.length - 1]?.url}
           alt={content.title || "untitled"}
         />
-        <CardContent>
+        {/* <CardContent>
           <Typography gutterBottom variant="body1" component="div">
             {content.title}
           </Typography>
@@ -66,7 +66,7 @@ const ContentItem: React.FC<ContentItemProps> = ({ content }) => {
           >
             링크 복사
           </Button>
-        </CardActions>
+        </CardActions> */}
       </Card>
     </MasonryItem>
   );
