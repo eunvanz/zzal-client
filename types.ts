@@ -36,3 +36,8 @@ export enum QUERY_KEY {
   EXISTING_CONTENT = "EXISTING_CONTENT",
   CONTENT = "CONTENT",
 }
+
+export enum CONTENT_ORDER {
+  POPULARITY = "popularity",
+  LATEST = "latest",
+}

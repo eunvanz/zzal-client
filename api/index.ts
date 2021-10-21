@@ -1,4 +1,4 @@
-import { Content } from "~/types";
+import { Content, CONTENT_ORDER } from "~/types";
 import requester from "./requester";
 
 const getContent = async (path: string) => {
@@ -74,12 +74,24 @@ const putContent = async (
   });
 };
 
+export interface ContentListRequestParams {
+  orderBy: CONTENT_ORDER;
+  tags: string[];
+}
+const getContentList = async (params: ContentListRequestParams) => {
+  const { data } = await requester.get<Content>("/content", {
+    params,
+  });
+  return data;
+};
+
 const api = {
   getContent,
   postContent,
   checkIsExistingPath,
   getRandomContent,
   putContent,
+  getContentList,
 };
 
 export default api;
