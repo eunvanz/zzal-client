@@ -3,14 +3,17 @@ import api from "~/api";
 import { Content, CONTENT_ORDER, Pageable, QUERY_KEY } from "~/types";
 import useCommonInfiniteQuery from "./useCommonInfiniteQuery";
 
+export interface UseContentListQueryOptions {
+  orderBy: CONTENT_ORDER;
+  tags?: string[];
+}
 const useContentListQuery = (
-  orderBy: CONTENT_ORDER,
-  tags?: string[],
+  options: UseContentListQueryOptions,
   queryOptions?: UseInfiniteQueryOptions<Pageable<Content>>,
 ) => {
   const query = useCommonInfiniteQuery<Content>(
     QUERY_KEY.CONTENT_LIST,
-    (pageOptions) => api.getContentList({ orderBy, tags, ...pageOptions }),
+    (pageOptions) => api.getContentList({ ...options, ...pageOptions }),
     queryOptions,
   );
   return query;
