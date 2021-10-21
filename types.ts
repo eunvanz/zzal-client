@@ -9,6 +9,7 @@ export interface Content extends TimeRecord {
   path: string;
   title?: string | null;
   description?: string | null;
+  viewCnt: number;
   images: Image[];
   tags: Tag[];
 }
@@ -58,3 +59,5 @@ export interface PageRequestOptions {
   page?: number;
   limit?: number;
 }
+
+export type ExtendableHTMLProps<T extends HTMLElement> = React.HTMLProps<T>;

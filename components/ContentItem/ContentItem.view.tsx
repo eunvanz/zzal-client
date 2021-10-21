@@ -12,7 +12,6 @@ import {
 import Clipboard from "clipboard";
 import { useRouter } from "next/dist/client/router";
 import { useSnackbar } from "notistack";
-import ROUTES from "~/routes";
 import { Content } from "~/types";
 
 export interface ContentItemProps {
@@ -39,7 +38,7 @@ const ContentItem: React.FC<ContentItemProps> = ({ content }) => {
       <Card variant="outlined">
         <CardMedia
           component="img"
-          image={content.images.pop()?.url}
+          image={content.images[content.images.length - 1]?.url}
           alt={content.title || "untitled"}
         />
         <CardContent
