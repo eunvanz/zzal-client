@@ -1,4 +1,4 @@
-import { Content, CONTENT_ORDER } from "~/types";
+import { Content, CONTENT_ORDER, Pageable, PageRequestOptions } from "~/types";
 import requester from "./requester";
 
 const getContent = async (path: string) => {
@@ -76,11 +76,16 @@ const putContent = async (
 
 export interface ContentListRequestParams {
   orderBy: CONTENT_ORDER;
-  tags: string[];
+  tags?: string[];
+  pageOptions?: PageRequestOptions;
 }
 const getContentList = async (params: ContentListRequestParams) => {
-  const { data } = await requester.get<Content>("/content", {
-    params,
+  const { data } = await requester.get<Pageable<Content>>("/content", {
+    params: {
+      orderBy: params.orderBy,
+      tags: params.tags,
+      ...params.pageOptions,
+    },
   });
   return data;
 };

@@ -35,6 +35,7 @@ export enum STATE_KEY {
 export enum QUERY_KEY {
   EXISTING_CONTENT = "EXISTING_CONTENT",
   CONTENT = "CONTENT",
+  CONTENT_LIST = "CONTENT_LIST",
 }
 
 export enum CONTENT_ORDER {
