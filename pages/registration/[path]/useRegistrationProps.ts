@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useSnackbar } from "notistack";
 import { useRecoilState } from "recoil";
 import { RegistrationFormValues } from "~/components/RegistrationForm";
@@ -12,7 +12,7 @@ import { RegistrationPageProps } from "./index.page";
 const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps = ({
   content: ssrContent,
 }) => {
-  const [uploadedContents] = useRecoilState(uploadedContentsState);
+  const [uploadedContents, setUploadedContents] = useRecoilState(uploadedContentsState);
 
   const { data: content, isFetching } = useContentByPathQuery(ssrContent?.path, {
     initialData: ssrContent || undefined,
@@ -37,6 +37,12 @@ const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps 
     },
     [content, enqueueSnackbar, postContent, putContent],
   );
+
+  useEffect(() => {
+    return () => {
+      setUploadedContents([]);
+    };
+  }, [setUploadedContents]);
 
   return {
     onSubmit,
