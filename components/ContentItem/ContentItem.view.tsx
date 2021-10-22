@@ -1,72 +1,21 @@
-import { useEffect } from "react";
-import { ContentCopyOutlined } from "@mui/icons-material";
 import MasonryItem from "@mui/lab/MasonryItem";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-  Button,
-  ImageListItem,
-} from "@mui/material";
-import Clipboard from "clipboard";
-import { useRouter } from "next/dist/client/router";
-import { useSnackbar } from "notistack";
+import { Card, CardMedia } from "@mui/material";
 import { Content } from "~/types";
 
 export interface ContentItemProps {
   content: Content;
+  onClick: VoidFunction;
 }
 
-const ContentItem: React.FC<ContentItemProps> = ({ content }) => {
-  const router = useRouter();
-
-  const { enqueueSnackbar } = useSnackbar();
-
-  useEffect(() => {
-    const clipboard = new Clipboard("#copy-to-clipboard");
-    clipboard.on("success", () => {
-      enqueueSnackbar("링크가 복사되었습니다.");
-    });
-    return () => {
-      clipboard.destroy();
-    };
-  }, [enqueueSnackbar]);
-
+const ContentItem: React.FC<ContentItemProps> = ({ content, onClick }) => {
   return (
     <MasonryItem>
-      <Card
-        sx={{ cursor: "pointer" }}
-        variant="outlined"
-        onClick={() => router.push(`/${content.path}`)}
-      >
+      <Card sx={{ cursor: "pointer" }} variant="outlined" onClick={onClick}>
         <CardMedia
           component="img"
           image={content.images[content.images.length - 1]?.url}
           alt={content.title || "untitled"}
         />
-        {/* <CardContent>
-          <Typography gutterBottom variant="body1" component="div">
-            {content.title}
-          </Typography>
-          <Typography gutterBottom variant="body2" color="text.secondary">
-            {content.description}
-          </Typography>
-          <Typography variant="body2" color="text.disabled">
-            zzal.me/{content.path}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button
-            size="small"
-            endIcon={<ContentCopyOutlined />}
-            id="copy-to-clipboard"
-            data-clipboard-text={`https://zzal.me/${content.path}`}
-          >
-            링크 복사
-          </Button>
-        </CardActions> */}
       </Card>
     </MasonryItem>
   );

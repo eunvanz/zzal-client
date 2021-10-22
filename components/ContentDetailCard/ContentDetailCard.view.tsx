@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   AddOutlined,
   ContentCopyOutlined,
@@ -19,6 +19,7 @@ import { useRouter } from "next/dist/client/router";
 import { useSnackbar } from "notistack";
 import ROUTES from "~/routes";
 import { Content } from "~/types";
+import ContentModal from "../ContentModal";
 
 export interface ContentDetailCardProps {
   content: Content;
