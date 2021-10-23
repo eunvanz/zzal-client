@@ -18,7 +18,7 @@
     "@mui/lab": "^5.0.0-alpha.51",
     "@mui/material": "^5.0.3",
     "axios": "^0.22.0",
-    "clipboard": "^2.0.8",
+    "copy-to-clipboard": "^3.3.1",
     "framer-motion": "^4.1.17",
     "lodash-es": "^4.17.21",
     "nanoid": "^3.1.30",

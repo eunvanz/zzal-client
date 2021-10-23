@@ -1,4 +1,4 @@
-import { useEffect, forwardRef } from "react";
+import { forwardRef, useCallback } from "react";
 import {
   AddOutlined,
   CloseOutlined,
@@ -16,7 +16,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import Clipboard from "clipboard";
+import copy from "copy-to-clipboard";
 import { useRouter } from "next/dist/client/router";
 import { useSnackbar } from "notistack";
 import ROUTES from "~/routes";
@@ -34,15 +34,10 @@ const ContentDetailCard = forwardRef<HTMLDivElement, ContentDetailCardProps>(
 
     const { enqueueSnackbar } = useSnackbar();
 
-    useEffect(() => {
-      const clipboard = new Clipboard("#copy-to-clipboard");
-      clipboard.on("success", () => {
-        enqueueSnackbar("링크가 복사되었습니다.");
-      });
-      return () => {
-        clipboard.destroy();
-      };
-    }, [enqueueSnackbar]);
+    const handleOnCopyLink = useCallback(() => {
+      copy(`https://zzal.me/${content.path}`);
+      enqueueSnackbar("링크가 복사되었습니다.");
+    }, [content.path, enqueueSnackbar]);
 
     return (
       <Card sx={{ boxShadow: 20 }} ref={forwardedRef}>
@@ -83,11 +78,7 @@ const ContentDetailCard = forwardRef<HTMLDivElement, ContentDetailCardProps>(
           >
             <Box>
               <Tooltip title="링크 복사" placement="top">
-                <IconButton
-                  aria-label="링크 복사"
-                  id="copy-to-clipboard"
-                  data-clipboard-text={`https://zzal.me/${content.path}`}
-                >
+                <IconButton aria-label="링크 복사" onClick={handleOnCopyLink}>
                   <ContentCopyOutlined />
                 </IconButton>
               </Tooltip>

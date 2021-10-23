@@ -13,7 +13,7 @@ export interface MainProps {
 const Main: React.FC<MainProps> = ({ contents, onFetchNextPage, hasNextPage }) => {
   return (
     <BaseLayout>
-      <Container sx={{ py: 1 }}>
+      <Container sx={{ py: 2 }}>
         {contents && <ContentList contents={contents} />}
         {hasNextPage && <Intersection onIntersect={onFetchNextPage} />}
       </Container>
