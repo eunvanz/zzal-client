@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <RecoilRoot>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <SnackbarProvider maxSnack={3}>
+          <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
             <Component {...pageProps} />
           </SnackbarProvider>
         </ThemeProvider>
