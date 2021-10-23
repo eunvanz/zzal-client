@@ -14,6 +14,7 @@ import {
   CardContent,
   CardActions,
   IconButton,
+  Tooltip,
 } from "@mui/material";
 import Clipboard from "clipboard";
 import { useRouter } from "next/dist/client/router";
@@ -81,35 +82,43 @@ const ContentDetailCard = forwardRef<HTMLDivElement, ContentDetailCardProps>(
             }}
           >
             <Box>
-              <IconButton
-                aria-label="링크 복사"
-                id="copy-to-clipboard"
-                data-clipboard-text={`https://zzal.me/${content.path}`}
-              >
-                <ContentCopyOutlined />
-              </IconButton>
-              {!content.userId && (
+              <Tooltip title="링크 복사" placement="top">
                 <IconButton
-                  aria-label="짤 수정"
-                  size="small"
-                  onClick={() => router.push(`${ROUTES.REGISTRATION}/${content.path}`)}
+                  aria-label="링크 복사"
+                  id="copy-to-clipboard"
+                  data-clipboard-text={`https://zzal.me/${content.path}`}
                 >
-                  <ModeEditOutlineOutlined />
+                  <ContentCopyOutlined />
                 </IconButton>
+              </Tooltip>
+              {!content.userId && (
+                <Tooltip title="짤 수정" placement="top">
+                  <IconButton
+                    aria-label="짤 수정"
+                    size="small"
+                    onClick={() => router.push(`${ROUTES.REGISTRATION}/${content.path}`)}
+                  >
+                    <ModeEditOutlineOutlined />
+                  </IconButton>
+                </Tooltip>
               )}
             </Box>
 
             {onClose ? (
-              <IconButton aria-label="닫기" onClick={onClose}>
-                <CloseOutlined />
-              </IconButton>
+              <Tooltip title="닫기" placement="top">
+                <IconButton aria-label="닫기" onClick={onClose}>
+                  <CloseOutlined />
+                </IconButton>
+              </Tooltip>
             ) : (
-              <IconButton
-                aria-label="다른 짤 추가"
-                onClick={() => router.push(ROUTES.REGISTRATION__NEW)}
-              >
-                <AddOutlined />
-              </IconButton>
+              <Tooltip title="다른 짤 추가" placement="top">
+                <IconButton
+                  aria-label="다른 짤 추가"
+                  onClick={() => router.push(ROUTES.REGISTRATION__NEW)}
+                >
+                  <AddOutlined />
+                </IconButton>
+              </Tooltip>
             )}
           </Box>
         </CardActions>
