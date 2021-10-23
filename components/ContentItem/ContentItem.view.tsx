@@ -2,8 +2,7 @@ import { useState, useCallback } from "react";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import MasonryItem from "@mui/lab/MasonryItem";
 import { Card, CardMedia, Box, Typography, IconButton } from "@mui/material";
-import copy from "copy-to-clipboard";
-import { useSnackbar } from "notistack";
+import useCopyToClipboard from "~/hooks/useCopyToClipboard";
 import { Content } from "~/types";
 
 export interface ContentItemProps {
@@ -14,15 +13,14 @@ export interface ContentItemProps {
 const ContentItem: React.FC<ContentItemProps> = ({ content, onClick }) => {
   const [isInfoVisible, setIsInfoVisible] = useState(false);
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { copyToClipboard } = useCopyToClipboard();
 
   const handleOnCopyLink = useCallback(
     (e) => {
       e.stopPropagation();
-      copy(`https://zzal.me/${content.path}`);
-      enqueueSnackbar("링크가 복사되었습니다.");
+      copyToClipboard(`${process.env.SERVICE_HOST}/${content.path}`);
     },
-    [content.path, enqueueSnackbar],
+    [content.path, copyToClipboard],
   );
 
   return (
