@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import MasonryItem from "@mui/lab/MasonryItem";
 import { Card, CardMedia, Box, Typography, IconButton } from "@mui/material";
+import { isMobile } from "react-device-detect";
 import useCopyToClipboard from "~/hooks/useCopyToClipboard";
 import { Content } from "~/types";
 
@@ -29,8 +30,8 @@ const ContentItem: React.FC<ContentItemProps> = ({ content, onClick }) => {
         sx={{ cursor: "pointer", position: "relative" }}
         variant="outlined"
         onClick={onClick}
-        onMouseOver={() => setIsInfoVisible(true)}
-        onMouseOut={() => setIsInfoVisible(false)}
+        onMouseOver={isMobile ? undefined : () => setIsInfoVisible(true)}
+        onMouseOut={isMobile ? undefined : () => setIsInfoVisible(false)}
       >
         <CardMedia
           component="img"
@@ -50,13 +51,15 @@ const ContentItem: React.FC<ContentItemProps> = ({ content, onClick }) => {
             transition: "transform 250ms",
           }}
         >
-          <Typography variant="body2" color="white">
-            zzal.me/{content.path}{" "}
-            <IconButton size="small" sx={{ color: "white" }} onClick={handleOnCopyLink}>
-              {/* @ts-ignore */}
-              <ContentCopyOutlinedIcon fontSize="6px" />
-            </IconButton>
-          </Typography>
+          {!isMobile && (
+            <Typography variant="body2" color="white">
+              zzal.me/{content.path}{" "}
+              <IconButton size="small" sx={{ color: "white" }} onClick={handleOnCopyLink}>
+                {/* @ts-ignore */}
+                <ContentCopyOutlinedIcon fontSize="6px" />
+              </IconButton>
+            </Typography>
+          )}
         </Box>
       </Card>
     </MasonryItem>
