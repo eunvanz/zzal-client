@@ -45,7 +45,7 @@ const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps 
   useEffect(() => {
     return () => {
       setUploadedContents([]);
-      queryClient.resetQueries(QUERY_KEY.CONTENT);
+      queryClient.removeQueries(QUERY_KEY.CONTENT);
     };
   }, [queryClient, setUploadedContents]);
 
