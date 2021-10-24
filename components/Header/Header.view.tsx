@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 import { useRouter } from "next/dist/client/router";
 import ROUTES from "~/routes";
 
@@ -17,6 +17,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
               "& span": {
                 fontFamily: "'Jua', sans-serif",
               },
+              flexGrow: 1,
             }}
             onClick={() => router.push(ROUTES.ROOT)}
           >
@@ -33,6 +34,9 @@ const Header: React.FC<HeaderProps> = ({}) => {
               .미
             </Typography>
           </Box>
+          <Button color="inherit" onClick={() => router.push(ROUTES.REGISTRATION__NEW)}>
+            짤 등록
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
