@@ -5,7 +5,7 @@ import useCommonInfiniteQuery from "./useCommonInfiniteQuery";
 
 export interface UseContentListQueryOptions {
   orderBy: CONTENT_ORDER;
-  tags?: string[];
+  keyword?: string;
 }
 const useContentListQuery = (
   options: UseContentListQueryOptions,

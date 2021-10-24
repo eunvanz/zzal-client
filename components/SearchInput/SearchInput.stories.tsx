@@ -5,6 +5,11 @@ import SearchInput from "./SearchInput.view";
 export default {
   title: "Components/SearchInput",
   component: SearchInput,
+  argTypes: {
+    isSearching: {
+      type: "boolean",
+    },
+  },
   args: {},
 } as ComponentMeta<typeof SearchInput>;
 

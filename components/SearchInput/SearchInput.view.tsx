@@ -4,9 +4,10 @@ import { IconButton, Input, InputAdornment } from "@mui/material";
 
 export interface SearchInputProps {
   onSubmit: (value: string) => void;
+  isSearching: boolean;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ onSubmit }) => {
+const SearchInput: React.FC<SearchInputProps> = ({ onSubmit, isSearching }) => {
   const [keyword, setKeyword] = useState("");
 
   const handleOnSubmit = useCallback(() => {
@@ -25,7 +26,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSubmit }) => {
         onChange={(e) => setKeyword(e.target.value)}
         endAdornment={
           <InputAdornment position="end">
-            <IconButton onClick={handleOnSubmit} type="submit">
+            <IconButton onClick={handleOnSubmit} type="submit" disabled={isSearching}>
               <SearchIcon />
             </IconButton>
           </InputAdornment>

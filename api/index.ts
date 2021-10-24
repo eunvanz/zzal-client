@@ -76,7 +76,7 @@ const putContent = async (
 
 export interface ContentListRequestParams extends PageRequestOptions {
   orderBy: CONTENT_ORDER;
-  tags?: string[];
+  keyword?: string;
 }
 const getContentList = async (params: ContentListRequestParams) => {
   const { data } = await requester.get<Pageable<Content>>("/contents", {

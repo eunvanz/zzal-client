@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { getMergedPageData } from "~/helpers/projectHelpers";
 import useContentListQuery from "~/queries/useContentListQuery";
 import { CONTENT_ORDER } from "~/types";
@@ -7,8 +7,11 @@ import { MainProps } from "./Main.view";
 const useMainProps: () => MainProps = () => {
   const [order, setOrder] = useState(CONTENT_ORDER.POPULARITY);
 
-  const { data, fetchNextPage, hasNextPage, refetch } = useContentListQuery({
+  const [keyword, setKeyword] = useState("");
+
+  const { data, fetchNextPage, hasNextPage, refetch, isFetching } = useContentListQuery({
     orderBy: order,
+    keyword: keyword || undefined,
   });
 
   const contents = useMemo(() => {
@@ -16,10 +19,14 @@ const useMainProps: () => MainProps = () => {
   }, [data]);
 
   useEffect(() => {
-    if (order) {
+    if (order || keyword) {
       refetch();
     }
-  }, [order, refetch]);
+  }, [keyword, order, refetch]);
+
+  const onSearch = useCallback((value: string) => {
+    setKeyword(value);
+  }, []);
 
   return {
     contents,
@@ -27,6 +34,8 @@ const useMainProps: () => MainProps = () => {
     hasNextPage,
     order,
     onChangeOrder: setOrder,
+    onSearch,
+    isSearching: isFetching,
   };
 };
 
