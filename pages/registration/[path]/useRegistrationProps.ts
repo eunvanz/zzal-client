@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from "react";
+import { useRouter } from "next/dist/client/router";
 import { useSnackbar } from "notistack";
 import { useQueryClient } from "react-query";
 import { useRecoilState } from "recoil";
@@ -6,6 +7,7 @@ import { RegistrationFormValues } from "~/components/RegistrationForm";
 import useContentByPathQuery from "~/queries/useContentByPathQuery";
 import usePostContentMutation from "~/queries/usePostContentMutation";
 import usePutContentMutation from "~/queries/usePutContentMutation";
+import ROUTES from "~/routes";
 import uploadedContentsState from "~/state/uploadedContents";
 import { QUERY_KEY } from "~/types";
 import { RegistrationProps } from "./Registration.view";
@@ -27,6 +29,8 @@ const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps 
 
   const queryClient = useQueryClient();
 
+  const router = useRouter();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = useCallback(
@@ -34,12 +38,15 @@ const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps 
       if (content) {
         await putContent(values);
         enqueueSnackbar("짤이 수정되었습니다.");
+        if (values.path !== content.path) {
+          router.replace(`${ROUTES.REGISTRATION}/${values.path}`);
+        }
       } else {
         await postContent(values);
         enqueueSnackbar("짤이 등록되었습니다.");
       }
     },
-    [content, enqueueSnackbar, postContent, putContent],
+    [content, enqueueSnackbar, postContent, putContent, router],
   );
 
   useEffect(() => {
