@@ -7,7 +7,6 @@ import { RegistrationFormValues } from "~/components/RegistrationForm";
 import useContentByPathQuery from "~/queries/useContentByPathQuery";
 import usePostContentMutation from "~/queries/usePostContentMutation";
 import usePutContentMutation from "~/queries/usePutContentMutation";
-import ROUTES from "~/routes";
 import uploadedContentsState from "~/state/uploadedContents";
 import { QUERY_KEY } from "~/types";
 import { RegistrationProps } from "./Registration.view";
@@ -38,9 +37,7 @@ const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps 
       if (content) {
         await putContent(values);
         enqueueSnackbar("짤이 수정되었습니다.");
-        if (values.path !== content.path) {
-          router.replace(`${ROUTES.REGISTRATION}/${values.path}`);
-        }
+        router.push(`/${values.path}`);
       } else {
         await postContent(values);
         enqueueSnackbar("짤이 등록되었습니다.");
