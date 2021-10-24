@@ -36,6 +36,8 @@ const useMainProps: () => MainProps = () => {
     onChangeOrder: setOrder,
     onSearch,
     isSearching: isFetching,
+    keyword,
+    totalItems: data?.pages[0].meta.totalItems,
   };
 };
 

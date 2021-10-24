@@ -1,4 +1,12 @@
-import { Container, Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import {
+  Container,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import BaseLayout from "~/components/BaseLayout";
 import ContentList from "~/components/ContentList";
 import Intersection from "~/components/Intersection";
@@ -13,6 +21,8 @@ export interface MainProps {
   order: CONTENT_ORDER;
   onSearch: (keyword: string) => void;
   isSearching: boolean;
+  keyword: string;
+  totalItems?: number;
 }
 
 const Main: React.FC<MainProps> = ({
@@ -23,6 +33,8 @@ const Main: React.FC<MainProps> = ({
   order,
   onSearch,
   isSearching,
+  keyword,
+  totalItems,
 }) => {
   return (
     <BaseLayout>
@@ -40,6 +52,38 @@ const Main: React.FC<MainProps> = ({
           </FormControl>
           <SearchInput onSubmit={onSearch} isSearching={isSearching} />
         </Box>
+        {totalItems !== undefined && (
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="body2">
+              {keyword && (
+                <>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "primary.main", fontWeight: "bold" }}
+                    component="b"
+                  >
+                    {keyword}
+                  </Typography>{" "}
+                  키워드로{" "}
+                </>
+              )}
+              {totalItems > 0 ? (
+                <>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "primary.main", fontWeight: "bold" }}
+                    component="b"
+                  >
+                    {totalItems.toLocaleString()}
+                  </Typography>
+                  건의 짤을 찾았습니다.
+                </>
+              ) : (
+                <>검색된 짤이 없습니다.</>
+              )}
+            </Typography>
+          </Box>
+        )}
         {contents && <ContentList contents={contents} />}
         {hasNextPage && <Intersection onIntersect={onFetchNextPage} />}
       </Container>
