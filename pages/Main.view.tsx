@@ -7,6 +7,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
+import { useWindowSize } from "react-use";
 import BaseLayout from "~/components/BaseLayout";
 import ContentList from "~/components/ContentList";
 import Intersection from "~/components/Intersection";
@@ -36,6 +37,8 @@ const Main: React.FC<MainProps> = ({
   keyword,
   totalItems,
 }) => {
+  const { width } = useWindowSize();
+
   return (
     <BaseLayout>
       <Container sx={{ py: 2 }}>
@@ -84,7 +87,12 @@ const Main: React.FC<MainProps> = ({
             </Typography>
           </Box>
         )}
-        {contents && <ContentList contents={contents} />}
+        {contents && (
+          <ContentList
+            width={Math.min(width - (width >= 820 ? 48 : 32) + 4, 1152)}
+            contents={contents}
+          />
+        )}
         {hasNextPage && <Intersection onIntersect={onFetchNextPage} />}
       </Container>
     </BaseLayout>

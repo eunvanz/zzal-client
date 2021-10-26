@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
-import MasonryItem from "@mui/lab/MasonryItem";
 import { Card, CardMedia, Box, Typography, IconButton } from "@mui/material";
 import { isMobile } from "react-device-detect";
 import useCopyToClipboard from "~/hooks/useCopyToClipboard";
@@ -25,44 +24,42 @@ const ContentItem: React.FC<ContentItemProps> = ({ content, onClick }) => {
   );
 
   return (
-    <MasonryItem>
-      <Card
-        sx={{ cursor: "pointer", position: "relative" }}
-        variant="outlined"
-        onClick={onClick}
-        onMouseOver={isMobile ? undefined : () => setIsInfoVisible(true)}
-        onMouseOut={isMobile ? undefined : () => setIsInfoVisible(false)}
+    <Card
+      sx={{ cursor: "pointer", position: "relative" }}
+      variant="outlined"
+      onClick={onClick}
+      onMouseOver={isMobile ? undefined : () => setIsInfoVisible(true)}
+      onMouseOut={isMobile ? undefined : () => setIsInfoVisible(false)}
+    >
+      <CardMedia
+        component="img"
+        image={content.images[content.images.length - 1]?.url}
+        alt={content.title || "untitled"}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          width: "100%",
+          backgroundColor: "rgba(0, 0, 0, .5)",
+          height: 30,
+          px: 1,
+          display: "flex",
+          alignItems: "center",
+          transform: `translateY(-${isInfoVisible ? 30 : 0}px)`,
+          transition: "transform 250ms",
+        }}
       >
-        <CardMedia
-          component="img"
-          image={content.images[content.images.length - 1]?.url}
-          alt={content.title || "untitled"}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            width: "100%",
-            backgroundColor: "rgba(0, 0, 0, .5)",
-            height: 30,
-            px: 1,
-            display: "flex",
-            alignItems: "center",
-            transform: `translateY(-${isInfoVisible ? 30 : 0}px)`,
-            transition: "transform 250ms",
-          }}
-        >
-          {!isMobile && (
-            <Typography variant="body2" color="white">
-              zzal.me/{content.path}{" "}
-              <IconButton size="small" sx={{ color: "white" }} onClick={handleOnCopyLink}>
-                {/* @ts-ignore */}
-                <ContentCopyOutlinedIcon fontSize="6px" />
-              </IconButton>
-            </Typography>
-          )}
-        </Box>
-      </Card>
-    </MasonryItem>
+        {!isMobile && (
+          <Typography variant="body2" color="white">
+            zzal.me/{content.path}{" "}
+            <IconButton size="small" sx={{ color: "white" }} onClick={handleOnCopyLink}>
+              {/* @ts-ignore */}
+              <ContentCopyOutlinedIcon fontSize="6px" />
+            </IconButton>
+          </Typography>
+        )}
+      </Box>
+    </Card>
   );
 };
 
