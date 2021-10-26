@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Box } from "@mui/material";
-import { debounce } from "lodash-es";
 import { Masonry } from "masonic";
 import { useWindowSize } from "react-use";
 import { Content } from "~/types";
@@ -37,17 +36,9 @@ const ContentList: React.FC<ContentListProps> = ({ contents }) => {
 
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // eslint-disable-next-line
-  const refreshMasonry = useCallback(
-    debounce(() => {
-      setRefreshKey((refreshedCnt) => ++refreshedCnt);
-    }, 500),
-    [],
-  );
-
   useEffect(() => {
-    refreshMasonry();
-  }, [refreshMasonry, width, contents]);
+    setRefreshKey((refreshedCnt) => ++refreshedCnt);
+  }, [contents]);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 1200 }}>
@@ -70,11 +61,13 @@ const ContentList: React.FC<ContentListProps> = ({ contents }) => {
 };
 
 const WrappedContentItem = ({
+  index,
   data: { content, onClick },
 }: {
+  index: number;
   data: ContentItemProps;
 }) => {
-  return <ContentItem content={content} onClick={onClick} />;
+  return <ContentItem key={index} content={content} onClick={onClick} />;
 };
 
 export default ContentList;
