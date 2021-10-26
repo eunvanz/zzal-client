@@ -40,8 +40,6 @@ const ContentList: React.FC<ContentListProps> = ({
     }
   }, [width]);
 
-  const [refreshKey, setRefreshKey] = useState(0);
-
   const loadMore = useInfiniteLoader(onLoadMore, {
     isItemLoaded: (index, items) => !!items[index],
     totalItems,
@@ -50,7 +48,6 @@ const ContentList: React.FC<ContentListProps> = ({
   return (
     <Box sx={{ width: "100%", maxWidth: 1200 }}>
       <Masonry
-        key={refreshKey}
         items={contents.map((content) => ({
           content,
           onClick: () => setContentModalState({ content, isOpen: true }),

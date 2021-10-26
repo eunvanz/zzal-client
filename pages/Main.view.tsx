@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Container, Box, FormControl, Select, MenuItem, Typography } from "@mui/material";
 import BaseLayout from "~/components/BaseLayout";
 import ContentList from "~/components/ContentList";
@@ -74,7 +75,7 @@ const Main: React.FC<MainProps> = ({
             </Typography>
           </Box>
         )}
-        {contents && (
+        {contents && !isSearching && (
           <ContentList
             contents={contents}
             onLoadMore={onFetchNextPage}
