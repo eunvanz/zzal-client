@@ -1,7 +1,6 @@
 import { Container, Box, FormControl, Select, MenuItem, Typography } from "@mui/material";
 import BaseLayout from "~/components/BaseLayout";
 import ContentList from "~/components/ContentList";
-// import Intersection from "~/components/Intersection";
 import SearchInput from "~/components/SearchInput";
 import { Content, CONTENT_ORDER } from "~/types";
 
@@ -20,7 +19,6 @@ export interface MainProps {
 const Main: React.FC<MainProps> = ({
   contents,
   onFetchNextPage,
-  hasNextPage,
   onChangeOrder,
   order,
   onSearch,
@@ -83,7 +81,6 @@ const Main: React.FC<MainProps> = ({
             totalItems={totalItems}
           />
         )}
-        {/* {hasNextPage && <Intersection onIntersect={onFetchNextPage} />} */}
       </Container>
     </BaseLayout>
   );

@@ -42,10 +42,6 @@ const ContentList: React.FC<ContentListProps> = ({
 
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // useEffect(() => {
-  //   setRefreshKey((refreshedCnt) => ++refreshedCnt);
-  // }, [contents]);
-
   const loadMore = useInfiniteLoader(onLoadMore, {
     isItemLoaded: (index, items) => !!items[index],
     totalItems,
