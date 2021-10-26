@@ -21,6 +21,7 @@
     "copy-to-clipboard": "^3.3.1",
     "framer-motion": "^4.1.17",
     "lodash-es": "^4.17.21",
+    "masonic": "^3.6.1",
     "nanoid": "^3.1.30",
     "next": "11.1.2",
     "notistack": "^2.0.2",
