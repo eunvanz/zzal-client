@@ -1,7 +1,7 @@
 import { Container, Box, FormControl, Select, MenuItem, Typography } from "@mui/material";
 import BaseLayout from "~/components/BaseLayout";
 import ContentList from "~/components/ContentList";
-import Intersection from "~/components/Intersection";
+// import Intersection from "~/components/Intersection";
 import SearchInput from "~/components/SearchInput";
 import { Content, CONTENT_ORDER } from "~/types";
 
@@ -76,8 +76,14 @@ const Main: React.FC<MainProps> = ({
             </Typography>
           </Box>
         )}
-        {contents && <ContentList contents={contents} />}
-        {hasNextPage && <Intersection onIntersect={onFetchNextPage} />}
+        {contents && (
+          <ContentList
+            contents={contents}
+            onLoadMore={onFetchNextPage}
+            totalItems={totalItems}
+          />
+        )}
+        {/* {hasNextPage && <Intersection onIntersect={onFetchNextPage} />} */}
       </Container>
     </BaseLayout>
   );

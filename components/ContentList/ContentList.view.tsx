@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Box } from "@mui/material";
-import { Masonry } from "masonic";
+import { Masonry, useInfiniteLoader } from "masonic";
 import { useWindowSize } from "react-use";
 import { Content } from "~/types";
 import ContentItem, { ContentItemProps } from "../ContentItem";
@@ -8,9 +8,15 @@ import ContentModal from "../ContentModal";
 
 export interface ContentListProps {
   contents: Content[];
+  onLoadMore: VoidFunction;
+  totalItems?: number;
 }
 
-const ContentList: React.FC<ContentListProps> = ({ contents }) => {
+const ContentList: React.FC<ContentListProps> = ({
+  contents,
+  onLoadMore,
+  totalItems,
+}) => {
   const [contentModalState, setContentModalState] = useState<{
     content?: Content;
     isOpen: boolean;
@@ -36,9 +42,14 @@ const ContentList: React.FC<ContentListProps> = ({ contents }) => {
 
   const [refreshKey, setRefreshKey] = useState(0);
 
-  useEffect(() => {
-    setRefreshKey((refreshedCnt) => ++refreshedCnt);
-  }, [contents]);
+  // useEffect(() => {
+  //   setRefreshKey((refreshedCnt) => ++refreshedCnt);
+  // }, [contents]);
+
+  const loadMore = useInfiniteLoader(onLoadMore, {
+    isItemLoaded: (index, items) => !!items[index],
+    totalItems,
+  });
 
   return (
     <Box sx={{ width: "100%", maxWidth: 1200 }}>
@@ -51,6 +62,7 @@ const ContentList: React.FC<ContentListProps> = ({ contents }) => {
         columnGutter={4}
         columnCount={columnCount}
         render={WrappedContentItem}
+        onRender={loadMore}
       />
       {contentModalState.content && (
         // @ts-ignore
