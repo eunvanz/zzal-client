@@ -19,7 +19,7 @@ const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps 
 
   const { data: content, isFetching } = useContentByPathQuery(ssrContent?.path, {
     initialData: ssrContent || undefined,
-    enabled: false,
+    enabled: !ssrContent,
   });
   const { mutateAsync: postContent, isLoading: isPosting } = usePostContentMutation();
   const { mutateAsync: putContent, isLoading: isPutting } = usePutContentMutation(

@@ -1,3 +1,4 @@
+import { GetServerSidePropsContext } from "next";
 import { Content, Pageable } from "~/types";
 
 export const convertContentToPreview = (content: Content) => {
@@ -11,4 +12,9 @@ export const convertContentToPreview = (content: Content) => {
 
 export const getMergedPageData = <T>(data: Pageable<T>[]) => {
   return data.reduce((prev: T[], item) => [...prev, ...item.items], []);
+};
+
+export const checkIsCSR = (context: GetServerSidePropsContext) => {
+  const { req } = context;
+  return !req || !!req.url?.startsWith("/_next/data");
 };

@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { GetStaticPropsContext, NextPage } from "next";
+import { GetServerSidePropsContext, NextPage } from "next";
 import api from "~/api";
 import { catchServerSideError } from "~/helpers/errorHelpers";
 import { Content } from "~/types";
@@ -9,7 +9,7 @@ export const ContentDetailPage: NextPage<ContentDetailPageProps> = ({ content })
   return <CommonContentDetail content={content} />;
 };
 
-export async function getStaticProps(context: GetStaticPropsContext) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { params } = context;
 
   const { path } = params as { path: string };
@@ -32,13 +32,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   } catch (error) {
     return catchServerSideError(error as AxiosError);
   }
-}
-
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
 }
 
 export default ContentDetailPage;
