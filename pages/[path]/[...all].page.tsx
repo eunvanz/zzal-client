@@ -19,7 +19,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       props: {
         content,
       },
-      revalidate: 60,
     };
   } catch (error) {
     return catchServerSideError(error as AxiosError);
