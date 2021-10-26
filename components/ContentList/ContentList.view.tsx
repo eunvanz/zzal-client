@@ -47,7 +47,7 @@ const ContentList: React.FC<ContentListProps> = ({ contents }) => {
 
   useEffect(() => {
     refreshMasonry();
-  }, [refreshMasonry, width]);
+  }, [refreshMasonry, width, contents]);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 1200 }}>
