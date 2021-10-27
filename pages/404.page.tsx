@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Link from "next/link";
-import ROUTES from "~/routes";
+import BaseLayout from "~/components/BaseLayout";
+import NotFound from "~/components/NotFound";
 
 const NotFoundPage: React.FC<void> = () => {
   return (
@@ -11,10 +11,9 @@ const NotFoundPage: React.FC<void> = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h2>등록되지 않은 짤입니다.</h2>
-        <Link href={ROUTES.REGISTRATION__NEW}>짤 등록하러 가기</Link>
-      </main>
+      <BaseLayout>
+        <NotFound />
+      </BaseLayout>
     </>
   );
 };

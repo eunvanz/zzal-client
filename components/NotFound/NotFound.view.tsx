@@ -23,11 +23,14 @@ const NotFound: React.FC<NotFoundProps> = ({}) => {
         py: 2,
       }}
     >
-      <Typography variant="h5" sx={{ mb: 2 }}>
+      <Typography variant="h5" sx={{ mb: 1 }}>
         등록되지 않은 짤입니다.
       </Typography>
+      <Typography variant="body2" sx={{ mb: 3 }}>
+        짤을 등록 후 사용해주세요.
+      </Typography>
       <Button variant="contained" onClick={() => router.push(ROUTES.REGISTRATION__NEW)}>
-        새로운 짤 등록하기
+        짤 등록하기
       </Button>
     </Box>
   );
