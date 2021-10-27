@@ -14,12 +14,13 @@ import { RegistrationPageProps } from "./index.page";
 
 const useRegistrationProps: (props: RegistrationPageProps) => RegistrationProps = ({
   content: ssrContent,
+  isNew,
 }) => {
   const [uploadedContents, setUploadedContents] = useRecoilState(uploadedContentsState);
 
   const { data: content, isFetching } = useContentByPathQuery(ssrContent?.path, {
     initialData: ssrContent || undefined,
-    enabled: !ssrContent,
+    enabled: !ssrContent && !isNew,
   });
   const { mutateAsync: postContent, isLoading: isPosting } = usePostContentMutation();
   const { mutateAsync: putContent, isLoading: isPutting } = usePutContentMutation(

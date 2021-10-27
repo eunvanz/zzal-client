@@ -9,10 +9,11 @@ import useRegistrationProps from "./useRegistrationProps";
 
 export interface RegistrationPageProps {
   content: Content | null;
+  isNew?: boolean;
 }
 
-const RegistrationPage: NextPage<RegistrationPageProps> = ({ content }) => {
-  const props = useRegistrationProps({ content });
+const RegistrationPage: NextPage<RegistrationPageProps> = ({ content, isNew }) => {
+  const props = useRegistrationProps({ content, isNew });
 
   return (
     <>
@@ -34,6 +35,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       return {
         props: {
           content: null,
+          isNew: true,
         },
       };
     } else {
@@ -41,6 +43,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       return {
         props: {
           content,
+          isNew: false,
         },
       };
     }
