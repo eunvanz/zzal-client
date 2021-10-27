@@ -3,7 +3,6 @@ import { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import api from "~/api";
 import { catchServerSideError } from "~/helpers/errorHelpers";
-import { checkIsCSR } from "~/helpers/projectHelpers";
 import { Content } from "~/types";
 import Registration from "./Registration.view";
 import useRegistrationProps from "./useRegistrationProps";
@@ -26,11 +25,6 @@ const RegistrationPage: NextPage<RegistrationPageProps> = ({ content }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const isCSR = checkIsCSR(context);
-  if (isCSR) {
-    return {};
-  }
-
   const { params } = context;
 
   const { path, all } = params as { path: string; all: string[] };
