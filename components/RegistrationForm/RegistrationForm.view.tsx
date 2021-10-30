@@ -12,6 +12,7 @@ import {
   FormHelperText,
   CircularProgress,
   IconButton,
+  Fade,
 } from "@mui/material";
 import { debounce, isEqual } from "lodash-es";
 import { nanoid } from "nanoid";
@@ -254,15 +255,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                   }
                   endAdornment={
                     <InputAdornment position="end">
-                      <CircularProgress
-                        size={16}
-                        sx={{
-                          visibility:
-                            isExistingPathFetching || isPathValidating
-                              ? "visible"
-                              : "hidden",
-                        }}
-                      />
+                      <Fade in={isExistingPathFetching || isPathValidating}>
+                        <CircularProgress size={16} />
+                      </Fade>
                       <IconButton
                         onClick={handleOnGenerateAutoPath}
                         disabled={isSubmitting}
