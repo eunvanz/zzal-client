@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useCallback } from "react";
 import {
   AddOutlined,
   CloseOutlined,
@@ -19,7 +19,7 @@ import {
 import { useRouter } from "next/dist/client/router";
 import useCopyToClipboard from "~/hooks/useCopyToClipboard";
 import ROUTES from "~/routes";
-import { Content } from "~/types";
+import { Content, Tag } from "~/types";
 
 export interface ContentDetailCardProps {
   content: Content;
@@ -32,6 +32,13 @@ const ContentDetailCard = forwardRef<HTMLDivElement, ContentDetailCardProps>(
     const router = useRouter();
 
     const { copyToClipboard } = useCopyToClipboard();
+
+    const handleOnClickTag = useCallback(
+      (tag: Tag) => {
+        router.push(`${ROUTES.ROOT}?search=${tag.name}`);
+      },
+      [router],
+    );
 
     return (
       <Card sx={{ boxShadow: 20 }} ref={forwardedRef}>
@@ -54,7 +61,12 @@ const ContentDetailCard = forwardRef<HTMLDivElement, ContentDetailCardProps>(
               }}
             >
               {content.tags.map((tag) => (
-                <Chip sx={{ mr: 0.5, mb: 0.5 }} key={tag.id} label={tag.name} />
+                <Chip
+                  sx={{ mr: 0.5, mb: 0.5, cursor: "pointer" }}
+                  key={tag.id}
+                  label={tag.name}
+                  onClick={() => handleOnClickTag(tag)}
+                />
               ))}
             </Box>
           )}
