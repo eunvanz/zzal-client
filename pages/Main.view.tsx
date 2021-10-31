@@ -41,7 +41,11 @@ const Main: React.FC<MainProps> = ({
               <MenuItem value={CONTENT_ORDER.LATEST}>최신순</MenuItem>
             </Select>
           </FormControl>
-          <SearchInput onSubmit={onSearch} isSearching={isSearching} />
+          <SearchInput
+            onSubmit={onSearch}
+            isSearching={isSearching}
+            defaultValue={keyword}
+          />
         </Box>
         {totalItems !== undefined && (
           <Box sx={{ mb: 2 }}>

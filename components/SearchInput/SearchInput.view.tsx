@@ -5,10 +5,15 @@ import { IconButton, Input, InputAdornment } from "@mui/material";
 export interface SearchInputProps {
   onSubmit: (value: string) => void;
   isSearching: boolean;
+  defaultValue?: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ onSubmit, isSearching }) => {
-  const [keyword, setKeyword] = useState("");
+const SearchInput: React.FC<SearchInputProps> = ({
+  onSubmit,
+  isSearching,
+  defaultValue,
+}) => {
+  const [keyword, setKeyword] = useState(defaultValue || "");
 
   const handleOnSubmit = useCallback(() => {
     onSubmit(keyword);
