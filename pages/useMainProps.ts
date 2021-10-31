@@ -13,11 +13,9 @@ const useMainProps: () => MainProps = () => {
 
   const { search } = router.query;
 
-  const keywordToSearch = useMemo(() => {
-    return Array.isArray(search) ? search[0] : search;
+  const keyword = useMemo(() => {
+    return (Array.isArray(search) ? search[0] : search) || "";
   }, [search]);
-
-  const [keyword, setKeyword] = useState(keywordToSearch || "");
 
   const { data, fetchNextPage, hasNextPage, refetch, isFetching } = useContentListQuery({
     orderBy: order,
@@ -27,10 +25,6 @@ const useMainProps: () => MainProps = () => {
   const contents = useMemo(() => {
     return data ? getMergedPageData(data.pages) : undefined;
   }, [data]);
-
-  useEffect(() => {
-    setKeyword(keywordToSearch || "");
-  }, [keywordToSearch]);
 
   useEffect(() => {
     if (order || keyword) {

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton, Input, InputAdornment } from "@mui/material";
 
@@ -19,6 +19,10 @@ const SearchInput: React.FC<SearchInputProps> = ({
     onSubmit(keyword);
   }, [keyword, onSubmit]);
 
+  useEffect(() => {
+    setKeyword(defaultValue || "");
+  }, [defaultValue]);
+
   return (
     <form
       onSubmit={(e) => {
@@ -29,6 +33,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
       <Input
         placeholder="검색어를 입력해주세요"
         onChange={(e) => setKeyword(e.target.value)}
+        value={keyword}
         endAdornment={
           <InputAdornment position="end">
             <IconButton onClick={handleOnSubmit} type="submit" disabled={isSearching}>
