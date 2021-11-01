@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.3.0",
     "@fontsource/roboto": "^4.5.1",
     "@mui/icons-material": "^5.0.5",
-    "@mui/lab": "^5.0.0-alpha.52",
+    "@mui/lab": "^5.0.0-alpha.53",
     "@mui/material": "^5.0.5",
     "axios": "^0.22.0",
     "copy-to-clipboard": "^3.3.1",

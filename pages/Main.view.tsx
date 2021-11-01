@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { Container, Box, FormControl, Select, MenuItem, Typography } from "@mui/material";
 import BaseLayout from "~/components/BaseLayout";
 import ContentList from "~/components/ContentList";
+import Intersection from "~/components/Intersection";
 import SearchInput from "~/components/SearchInput";
 import { Content, CONTENT_ORDER } from "~/types";
 
@@ -26,6 +26,7 @@ const Main: React.FC<MainProps> = ({
   isSearching,
   keyword,
   totalItems,
+  hasNextPage,
 }) => {
   return (
     <BaseLayout>
@@ -79,13 +80,8 @@ const Main: React.FC<MainProps> = ({
             </Typography>
           </Box>
         )}
-        {contents && !isSearching && (
-          <ContentList
-            contents={contents}
-            onLoadMore={onFetchNextPage}
-            totalItems={totalItems}
-          />
-        )}
+        {contents && !isSearching && <ContentList contents={contents} />}
+        {hasNextPage && <Intersection onIntersect={onFetchNextPage} />}
       </Container>
     </BaseLayout>
   );

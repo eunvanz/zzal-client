@@ -1,22 +1,15 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Box } from "@mui/material";
-import { Masonry, useInfiniteLoader } from "masonic";
-import { useWindowSize } from "react-use";
+import { useCallback, useState } from "react";
+import Masonry from "@mui/lab/Masonry";
+import { Box, Stack } from "@mui/material";
 import { Content } from "~/types";
-import ContentItem, { ContentItemProps } from "../ContentItem";
+import ContentItem from "../ContentItem";
 import ContentModal from "../ContentModal";
 
 export interface ContentListProps {
   contents: Content[];
-  onLoadMore: VoidFunction;
-  totalItems?: number;
 }
 
-const ContentList: React.FC<ContentListProps> = ({
-  contents,
-  onLoadMore,
-  totalItems,
-}) => {
+const ContentList: React.FC<ContentListProps> = ({ contents }) => {
   const [contentModalState, setContentModalState] = useState<{
     content?: Content;
     isOpen: boolean;
@@ -26,53 +19,24 @@ const ContentList: React.FC<ContentListProps> = ({
     setContentModalState((state) => ({ ...state, isOpen: false }));
   }, []);
 
-  const { width } = useWindowSize();
-
-  const columnCount = useMemo(() => {
-    if (width >= 600 && width < 900) {
-      return 3;
-    } else if (width >= 900 && width < 1200) {
-      return 4;
-    } else if (width >= 1200) {
-      return 5;
-    } else {
-      return 2;
-    }
-  }, [width]);
-
-  const loadMore = useInfiniteLoader(onLoadMore, {
-    isItemLoaded: (index, items) => !!items[index],
-    totalItems,
-  });
-
   return (
-    <Box sx={{ width: "100%", maxWidth: 1200 }}>
-      <Masonry
-        items={contents.map((content) => ({
-          content,
-          onClick: () => setContentModalState({ content, isOpen: true }),
-        }))}
-        columnGutter={4}
-        columnCount={columnCount}
-        render={WrappedContentItem}
-        onRender={loadMore}
-      />
+    <Box sx={{ width: "100%", minHeight: 100 }}>
+      <Masonry columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} spacing={1}>
+        {contents.map((content) => (
+          <Stack key={content.id}>
+            <ContentItem
+              content={content}
+              onClick={() => setContentModalState({ content, isOpen: true })}
+            />
+          </Stack>
+        ))}
+      </Masonry>
       {contentModalState.content && (
         // @ts-ignore
         <ContentModal {...contentModalState} onClose={handleOnCloseModal} />
       )}
     </Box>
   );
-};
-
-const WrappedContentItem = ({
-  index,
-  data: { content, onClick },
-}: {
-  index: number;
-  data: ContentItemProps;
-}) => {
-  return <ContentItem key={index} content={content} onClick={onClick} />;
 };
 
 export default ContentList;
