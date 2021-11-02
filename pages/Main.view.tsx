@@ -80,7 +80,7 @@ const Main: React.FC<MainProps> = ({
             </Typography>
           </Box>
         )}
-        {contents && !isSearching && <ContentList contents={contents} />}
+        {contents && <ContentList contents={contents} />}
         {hasNextPage && <Intersection onIntersect={onFetchNextPage} />}
       </Container>
     </BaseLayout>
