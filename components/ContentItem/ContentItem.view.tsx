@@ -8,9 +8,10 @@ import { Content } from "~/types";
 export interface ContentItemProps {
   content: Content;
   onClick: VoidFunction;
+  className: string;
 }
 
-const ContentItem: React.FC<ContentItemProps> = ({ content, onClick }) => {
+const ContentItem: React.FC<ContentItemProps> = ({ content, onClick, className }) => {
   const [isInfoVisible, setIsInfoVisible] = useState(false);
 
   const { copyToClipboard } = useCopyToClipboard();
@@ -25,6 +26,7 @@ const ContentItem: React.FC<ContentItemProps> = ({ content, onClick }) => {
 
   return (
     <Card
+      className={className}
       sx={{ cursor: "pointer", position: "relative" }}
       variant="outlined"
       onClick={onClick}

@@ -1,9 +1,10 @@
 import { useCallback, useState } from "react";
-import Masonry from "@mui/lab/Masonry";
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
+import Masonry from "react-masonry-component";
 import { Content } from "~/types";
 import ContentItem from "../ContentItem";
 import ContentModal from "../ContentModal";
+import style from "./ContentList.module.css";
 
 export interface ContentListProps {
   contents: Content[];
@@ -21,14 +22,14 @@ const ContentList: React.FC<ContentListProps> = ({ contents }) => {
 
   return (
     <Box sx={{ width: "100%", minHeight: 100 }}>
-      <Masonry columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} spacing={1}>
+      <Masonry options={{ gutter: 4 }}>
         {contents.map((content) => (
-          <Stack key={content.id}>
-            <ContentItem
-              content={content}
-              onClick={() => setContentModalState({ content, isOpen: true })}
-            />
-          </Stack>
+          <ContentItem
+            key={content.id}
+            className={style.item}
+            content={content}
+            onClick={() => setContentModalState({ content, isOpen: true })}
+          />
         ))}
       </Masonry>
       {contentModalState.content && (

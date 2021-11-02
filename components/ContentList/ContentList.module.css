@@ -1,0 +1,27 @@
+@media (max-width: 600px) {
+  .item {
+    width: calc(50% - 4px);
+    margin-bottom: 4px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .item {
+    width: calc(33% - 8px);
+    margin-bottom: 4px;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .item {
+    width: calc(25% - 12px);
+    margin-bottom: 4px;
+  }
+}
+
+@media (min-width: 1201px) {
+  .item {
+    width: calc(20% - 16px);
+    margin-bottom: 4px;
+  }
+}
