@@ -36,8 +36,9 @@ const ContentDetailCard = forwardRef<HTMLDivElement, ContentDetailCardProps>(
     const handleOnClickTag = useCallback(
       (tag: Tag) => {
         router.push(`${ROUTES.ROOT}?search=${tag.name}`);
+        onClose?.();
       },
-      [router],
+      [onClose, router],
     );
 
     return (
