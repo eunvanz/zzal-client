@@ -35,7 +35,7 @@ const ContentItem: React.FC<ContentItemProps> = ({ content, onClick, className }
     >
       <CardMedia
         component="img"
-        image={content.images[content.images.length > 1 ? 1 : 0]?.url}
+        image={content.images[content.images.length - 1]?.url}
         alt={content.title || "untitled"}
       />
       <Box
