@@ -44,7 +44,7 @@ const ContentDetailCard = forwardRef<HTMLDivElement, ContentDetailCardProps>(
       <Card sx={{ boxShadow: 20 }} ref={forwardedRef}>
         <CardMedia
           component="img"
-          image={content.images[content.images.length - 1]?.url}
+          image={content.images[content.images.length > 1 ? 1 : 0]?.url}
           alt={content.title || "untitled"}
         />
         <CardContent>
