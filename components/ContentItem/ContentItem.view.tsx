@@ -52,13 +52,24 @@ const ContentItem: React.FC<ContentItemProps> = ({ content, onClick, className }
         }}
       >
         {!isMobile && (
-          <Typography variant="body2" color="white">
-            zzal.me/{content.path}{" "}
+          <Box sx={{ width: "100%", display: "flex" }}>
+            <Typography
+              variant="body2"
+              color="white"
+              sx={{
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                py: "5px",
+              }}
+            >
+              zzal.me/{content.path}{" "}
+            </Typography>
             <IconButton size="small" sx={{ color: "white" }} onClick={handleOnCopyLink}>
               {/* @ts-ignore */}
               <ContentCopyOutlinedIcon fontSize="6px" />
             </IconButton>
-          </Typography>
+          </Box>
         )}
       </Box>
     </Card>
