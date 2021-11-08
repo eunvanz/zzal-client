@@ -13,26 +13,32 @@ const Header: React.FC<HeaderProps> = ({}) => {
         <Toolbar>
           <Box
             sx={{
-              cursor: "pointer",
-              "& span": {
-                fontFamily: "'Jua', sans-serif",
-              },
               flexGrow: 1,
             }}
-            onClick={() => router.push(ROUTES.ROOT)}
           >
-            <Typography
+            <Box
               sx={{
-                color: "secondary.main",
+                "& span": {
+                  fontFamily: "'Jua', sans-serif",
+                },
+                cursor: "pointer",
+                display: "inline",
               }}
-              variant="h5"
-              component="span"
+              onClick={() => router.push(ROUTES.ROOT)}
             >
-              짤
-            </Typography>
-            <Typography variant="h5" component="span">
-              .미
-            </Typography>
+              <Typography
+                sx={{
+                  color: "secondary.main",
+                }}
+                variant="h5"
+                component="span"
+              >
+                짤
+              </Typography>
+              <Typography variant="h5" component="span">
+                .미
+              </Typography>
+            </Box>
           </Box>
           <Button color="inherit" onClick={() => router.push(ROUTES.REGISTRATION__NEW)}>
             짤 등록
