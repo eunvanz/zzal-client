@@ -66,6 +66,7 @@ const ContentItem: React.FC<ContentItemProps> = ({ content, onClick, className }
               zzal.me/{content.path}{" "}
             </Typography>
             <IconButton size="small" sx={{ color: "white" }} onClick={handleOnCopyLink}>
+              {/* @ts-ignore */}
               <ContentCopyOutlinedIcon fontSize="6px" />
             </IconButton>
           </Box>
