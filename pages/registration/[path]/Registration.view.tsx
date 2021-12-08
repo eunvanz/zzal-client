@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { Container, Box } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
+import { debounce } from "lodash-es";
+import { isMobile } from "react-device-detect";
 import BaseLayout from "~/components/BaseLayout";
 import Example from "~/components/Example";
 import { PreviewProps } from "~/components/Preview";
@@ -39,9 +41,15 @@ const Registration: React.FC<RegistrationProps> = ({
     );
   }, [content]);
 
-  const handleOnChangeForm = useCallback((values: RegistrationFormValues) => {
-    setFormValues(values);
-  }, []);
+  const handleOnChangeForm = useCallback(
+    debounce(
+      (values: RegistrationFormValues) => {
+        setFormValues(values);
+      },
+      isMobile ? 700 : 0,
+    ),
+    [],
+  );
 
   return (
     <BaseLayout>
