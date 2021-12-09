@@ -43,26 +43,24 @@ const Example: React.FC<ExampleProps> = ({ items, completeCount }) => {
       <Animate delay={!isItemExisting ? 1.5 : 0}>
         <MyChat text="짤 드릴테니 목숨만은 살려주십쇼 😖" />
       </Animate>
-      {items?.[0] && items[0].path && (
-        <Animate delay={0}>
-          <MyChat text={`zzal.me/${items[0].path}`} isLink />
-          <MyChat>
-            <Box
-              sx={{
-                width: "50%",
-                maxWidth: 350,
-                minWidth: 250,
-              }}
-            >
-              <Preview
-                thumbnail={items[0].thumbnail}
-                title={items[0].title}
-                description={items[0].description}
-              />
-            </Box>
-          </MyChat>
-        </Animate>
-      )}
+      <Animate delay={0} isVisible={!!(items?.[0] && items[0].path)}>
+        <MyChat text={`zzal.me/${items![0].path}`} isLink />
+        <MyChat>
+          <Box
+            sx={{
+              width: "50%",
+              maxWidth: 350,
+              minWidth: 250,
+            }}
+          >
+            <Preview
+              thumbnail={items![0].thumbnail}
+              title={items![0].title}
+              description={items![0].description}
+            />
+          </Box>
+        </MyChat>
+      </Animate>
       {!!completeCount &&
         Array.from({ length: completeCount }).map((_, index) => (
           <ExtraChat item={items![index + 1]} key={index} seq={index} />
@@ -209,24 +207,31 @@ const MyChat: React.FC<ChatProps> = ({ text, children, isLink, isFirst }) => {
 
 interface AnimateProps {
   delay: number;
+  isVisible?: boolean;
 }
 
-const Animate: React.FC<AnimateProps> = ({ delay, children }) => {
+const Animate: React.FC<AnimateProps> = ({ delay, children, isVisible = true }) => {
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{
-          opacity: 0,
-          height: 0,
-        }}
-        animate={{
-          opacity: 1,
-          height: "inherit",
-        }}
-        transition={{ delay }}
-      >
-        {children}
-      </motion.div>
+      {isVisible && (
+        <motion.div
+          initial={{
+            opacity: 0,
+            height: 0,
+          }}
+          animate={{
+            opacity: 1,
+            height: "inherit",
+          }}
+          exit={{
+            opacity: 0,
+            height: 0,
+          }}
+          transition={{ delay }}
+        >
+          {children}
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 };

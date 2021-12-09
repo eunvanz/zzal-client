@@ -8,6 +8,7 @@ import {
   LOGO_IMAGE_WIDTH,
 } from "~/constants/text";
 
+// need not-found page cause 404 page does not serve og tags.
 const NotFoundPage: React.FC<void> = () => {
   return (
     <>
